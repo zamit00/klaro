@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> טניס - משחקי מגדל</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid blue;
+
+        }
+        th {
+            background-color: blue;
+	    color: white;
+        }
+        .button {
+            margin: 20px -550px 0px 0px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+		
+        }
+        .button:hover {
+            background-color: blue;
+	
+        }
+	h2{text-align: right;color:blue;font-weight: bold;font-size: 2em;}
+    </style>
+</head>
+<body>
+
+<h2> משחקי הטניס של קבוצת מגדל לעונת 2024-2025</h2>
+
+<button class="button" onclick="showNextGame()">משחק הבא</button>
+
+<table id="MyTable" style="width: 750px; height: 450px;">
+    <tr >
+        <th>מספר מחזור</th>
+        <th>תאריך</th>
+        <th>יום</th>
+        <th>שעה</th>
+        <th>יריבה</th>
+        <th>מיקום</th>
+    </tr>
+    <tr>
+        <td>מחזור 1</td>
+        <td>09.12.2024</td>
+        <td>ב'</td>
+        <td>19:00</td>
+        <td>בזק תל אביב</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 2</td>
+        <td>09.01.2025</td>
+        <td>א'</td>
+        <td>19:00</td>
+        <td>בנק לאומי</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 3</td>
+        <td>30.01.2025</td>
+        <td>ה'</td>
+        <td>19:00</td>
+        <td>כלל ביטוח</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 4</td>
+        <td>18.03.2025</td>
+        <td>ג'</td>
+        <td>19:00</td>
+        <td>ישראכרט</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 5</td>
+        <td>22.04.2025</td>
+        <td>ג'</td>
+        <td>19:00</td>
+        <td>בלל מרכז</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 6</td>
+        <td>07.05.2025</td>
+        <td>ד'</td>
+        <td>19:00</td>
+        <td>קופח מאוחדת</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+    <tr>
+        <td>מחזור 7</td>
+        <td>17.06.2025</td>
+        <td>ג'</td>
+        <td>19:00</td>
+        <td>משמר-שדה טניס</td>
+        <td>מועדון טניס הדר יוסף</td>
+    </tr>
+</table>
+
+
+
+<script>
+    function showNextGame() {
+	let da; let mo; let yr;
+	
+	const table=document.getElementById('MyTable');
+	
+	for(let i= 1; i<table.rows.length; i++){
+		let cell=table.rows[i].cells[1].textContent;
+		var cell1= table.rows[i].cells[4].textContent;
+		var cell2= table.rows[i].cells[1].textContent;
+		console.log(cell1+" " + cell2);
+		da=cell.slice(0,2);mo=cell.slice(3,5);yr=cell.slice(6);
+		const date=new Date(yr,mo-1,da);
+		const today=new Date();
+		
+		
+
+		if(today.getTime()<date.getTime()){
+			
+			alert(`המשחק הקרוב הוא נגד ${cell1} בתאריך ${cell2} בשעה ${"19:00"}`);
+			return;
+			}
+		
+        
+        }
+        
+       
+   }
+</script>
+
+</body>
+</html>
