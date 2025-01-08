@@ -13,9 +13,9 @@
 	.kot{display:flex;flex-direction:column;align-items:center;width:100vw;}
 	    
         table {
-            width: 90ה';
+            width: 60vw;
             border-collapse: collapse;
-            margin: 20px 5vw;
+            margin: 0px 5vw;
 		
         }
         th, td {
@@ -28,13 +28,14 @@
 	    color: white;
         }
         .button {
-            margin: 20px 50px 0px 0px;
-            padding: 10px 20px;
+           
+            padding: 10px 0px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
             font-size: 16px;
+	    text-align:center;
 		
 		
         }
@@ -45,7 +46,9 @@
 	.logo{position:fixed;left:20px;top:10px;}
 	h1{text-align: center;color:blue;font-weight: bold;width:100vw;margin-top:20px;}
 	h2{text-align: center;color:green;font-weight: bold;width:100vw;}
-	.
+	@media screen and (max-width: 768px){
+		 table {width: 90vw;}
+	}
     </style>
 </head>
 <body>
@@ -53,7 +56,7 @@
 	<img class="logo" height="90px" src="https://www.migdal.co.il/imgs/migdal_logo.png" width="49px"></img>
 	<h1> קבוצת הטניס של מגדל </h1>
 	<h2>טבלת משחקים לעונת 2024-2025</h2>
-</div>
+
 	
 <button class="button" onclick="showNextGame()">משחק הבא</button>
 
@@ -140,7 +143,7 @@
 	<td></td>	    
     </tr>
 </table>
-
+</div>
 
 
 <script>
