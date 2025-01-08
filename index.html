@@ -10,6 +10,8 @@
             direction: rtl;
             text-align: center;
         }
+	.kot{display:flex;flex-direction:column;align-items:center;}
+	    
         table {
             width: 100%;
             border-collapse: collapse;
@@ -39,13 +41,19 @@
             background-color: blue;
 	
         }
-	h2{text-align: right;color:blue;font-weight: bold;font-size: 2em;}
+	.logo{position:fixed;left:20px;top:10px;}
+	h1{text-align: center;color:blue;font-weight: bold;width:100vw;margin-top:20px;}
+	h2{text-align: center;color:green;font-weight: bold;width:100vw;}
+	.
     </style>
 </head>
 <body>
-
-<h2> משחקי הטניס של קבוצת מגדל לעונת 2024-2025</h2>
-
+<div class="kot">
+	<img class="logo" height="90px" src="https://www.migdal.co.il/imgs/migdal_logo.png" width="49px"></img>
+	<h1> קבוצת הטניס של מגדל </h1>
+	<h2>טבלת משחקים לעונת 2024-2025</h2>
+</div>
+	
 <button class="button" onclick="showNextGame()">משחק הבא</button>
 
 <table id="MyTable" style="width: 750px; height: 450px;">
