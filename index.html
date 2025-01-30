@@ -51,6 +51,11 @@
 	@media only screen and (max-width: 768px){
 		 table {max-width: 90vw;margin:20px 5vw;}
 	}
+    #MyTable {
+  margin-left: auto;
+  margin-right: auto;
+}
+.kot a{width: 80%;text-align: left;margin: 5px 10vw;}
     </style>
 </head>
 <body>
@@ -58,6 +63,7 @@
 	<img class="logo" height="90px" src="https://www.migdal.co.il/imgs/migdal_logo.png" width="49px"></img>
 	<h1> קבוצת הטניס של מגדל </h1>
 	<h2>טבלת משחקים לעונת 2024-2025</h2>
+    <a href="https://hapoel-telaviv-ma.co.il/?m=leagues&season=29&branch=12&league=767" target="_blank">לטבלת הליגה</a>
 
 	
 	<button class="button" onclick="showNextGame()">משחק הבא</button>
@@ -91,8 +97,8 @@
         <td>19:00</td>
         <td>שירותי בריאות כללית</td>
         <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>
+	<td>3:0</td> 
+	<td>3</td>
     </tr>
     <tr>
         <td>מחזור 3</td>
@@ -149,34 +155,46 @@
 
 
 <script>
-    function showNextGame() {
-	let da; let mo; let yr;
-	
-	const table=document.getElementById('MyTable');
-	
-	for(let i= 1; i<table.rows.length; i++){
-		let cell=table.rows[i].cells[1].textContent;
-		var cell1= table.rows[i].cells[4].textContent;
-		var cell2= table.rows[i].cells[1].textContent;
-		console.log(cell1+" " + cell2);
-		da=cell.slice(0,2);mo=cell.slice(3,5);yr=cell.slice(6);
-		const date=new Date(yr,mo-1,da);
-		const today=new Date();
-		
-		
+    
+ // הקישור לאתר שמכיל את הטבלה
+            
 
-		if(today.getTime()<date.getTime()){
-			
-			alert(`המשחק הקרוב הוא נגד ${cell1} בתאריך ${cell2} בשעה ${"19:00"}`);
-			return;
-			}
-		
+
+
+ function showNextGame() {
+    let da, mo, yr;
+    const table = document.getElementById('MyTable');
+    
+    for (let i = 1; i < table.rows.length; i++) {
+        let cell = table.rows[i].cells[1].textContent;
+        let cell1 = table.rows[i].cells[4].textContent;
+        let cell2 = table.rows[i].cells[1].textContent;
         
+        da = cell.slice(0, 2);
+        mo = cell.slice(3, 5);
+        yr = cell.slice(6);
+
+        // יצירת תאריך מהתוכן שבטבלה
+        let datex = new Date(yr, mo - 1, da); // חודש ב-JavaScript הוא מ-0
+        let todayx = new Date();
+        
+        // ניקוי שעות ומילישניות כדי להשוות תאריכים בלבד
+        let dateOnly = new Date(datex.getFullYear(), datex.getMonth(), datex.getDate());
+        let todayOnly = new Date(todayx.getFullYear(), todayx.getMonth(), todayx.getDate());
+
+        // אם התאריך הנוכחי קטן או שווה לתאריך שבטבלה
+        if (todayOnly <= dateOnly) {
+            alert(`המשחק הקרוב הוא נגד ${cell1} בתאריך ${cell2} בשעה ${"19:00"}`);
+            return;
         }
-        
-       
-   }
+    }
+}
+
 </script>
 
 </body>
 </html>
+
+
+
+
