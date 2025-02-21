@@ -1,0 +1,312 @@
+html, body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.kotamod h1 {
+  color: green;
+  margin-top: 0px;
+  width: 100%;
+  text-align: center;
+}
+
+#tbltoz, #tbltoz th, #tbltoz td {
+  border-collapse: collapse;
+}
+
+.alltoz {
+  display: none;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 767px) {
+  #tbltoz, #tbltoz tr, #tbltoz td {
+    font-size: 10px !important;
+  }
+  .divtozz {
+    width: 60vw;
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+  }
+  .divtozz div {
+    width: 40vw;
+  }
+  .ribitother {
+    margin-right: 10vw;
+  }
+  .selecttoz {
+    width: 50px;
+    font-size: 10px;
+    margin-right: 2vw;
+  }
+  .lbltoz {
+    font-size: 18px;
+    color: blue;
+    font-weight: bold;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  body {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    padding-top: 2vh;
+    overflow-x: hidden;
+  }
+  .sughashkaa button, .schomhashkaa button, .tkofa button {
+    width: 60vw;
+    height: auto;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .dropdown-sug label, .schomhashkaa label, .tkofa label {
+    color: green;
+    height: 3vh;
+    font-size: 16px;
+  }
+  .dropdown-schom, .dropdown-sug, .dropdown-tkofa {
+    display: block;
+    flex-direction: column;
+    background-color: #c4e5e5;
+    width: 60vw;
+    padding-top: 1.5vh;
+  }
+  .dmeynihul {
+    padding-bottom: 1.5vh;
+  }
+  .dropdown-schom div, .dropdown-sug div, .dropdown-tkofa div {
+    width: 60vw;
+    margin: 5px 0px;
+  }
+  .lbltxt {
+    margin-right: 20px;
+  }
+  .txtbutton {
+    width: 80px;
+    display: inline;
+    float: left;
+    margin-left: 10vw;
+    text-align: center;
+  }
+  .hetz {
+    margin-left: 10px;
+    float: left;
+  }
+  #txttkofa1, #txttkofa2, #hadpeami, #hodshi,#dmeyH1
+  #dmeyZ1,#dmeyH2,#dmeyZ2 {
+    width: 80px;
+    text-align: center;
+  }
+  #schom, #sug, #tkofa {
+    text-align: right;
+    padding-right: 2vw;
+    border: 1px solid rgba(211, 211, 211, 0.2);
+  }
+  #hashev {
+    width: 60vw;
+    border-radius: 0px 0px 10px 10px !important;
+    height: auto;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  #tozaot, #tozaot tr, #tozaot td, #tozaot th {
+    width: 60vw;
+  }
+  .kottoz {
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .txttd {
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: right;
+    padding-right: 2vw;
+  }
+  .numtd {
+    background-color: white;
+    color: #333;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+  }
+  #tozaot {
+    margin-top: 2vh;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #sug, #schom, #tkofa {
+    font-size: 14px;
+  }
+  .divtozz {
+    width: 100vw;
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+  }
+  .divtozz div {
+    width: 100vw;
+  }
+  .ribitother {
+    margin-right: 7vw;
+  }
+  .selecttoz {
+    width: 45px;
+    font-size: 13px;
+    margin-right: 2vw;
+  }
+  .lbltoz {
+    font-size: 12px;
+    color: blue;
+    font-weight: bold;
+  }
+  .alltoz {
+    display: none;
+    flex-direction: column;
+    font-size: 12px !important;
+  }
+  #tozaot {
+    margin-top: 2vh;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .sughashkaa button, .schomhashkaa button, .tkofa button {
+    width: 100vw;
+    height: auto;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .dropdown-sug label, .schomhashkaa label, .tkofa label {
+    color: green;
+    height: 3vh;
+    font-size: 16px;
+  }
+  .dropdown-schom, .dropdown-sug, .dropdown-tkofa {
+    display: block;
+    flex-direction: column;
+    background-color: #c4e5e5;
+    width: 100vw;
+    padding-top: 1.5vh;
+  }
+  .dmeynihul {
+    padding-bottom: 1.5vh;
+  }
+  .dropdown-schom div, .dropdown-sug div, .dropdown-tkofa div {
+    width: 100vw;
+    margin: 5px 0px;
+  }
+  .lbltxt {
+    margin-right: 20px;
+  }
+  .txtbutton {
+    width: 80px;
+    display: inline;
+    float: left;
+    margin-left: 10vw;
+    text-align: center;
+  }
+  .hetz {
+    margin-left: 10px;
+    float: left;
+  }
+  #txttkofa1, #txttkofa2, #hadpeami, #hodshi,#dmeyH1
+  #dmeyZ1,#dmeyH2,#dmeyZ2 {
+    width: 80px;
+    text-align: center;
+  }
+  #schom, #sug, #tkofa {
+    text-align: right;
+    padding-right: 2vw;
+    border: 1px solid rgba(211, 211, 211, 0.2);
+  }
+  #hashev {
+    width: 100vw;
+    height: auto;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  #tozaot, #tozaot tr, #tozaot td, #tozaot th {
+    width: 100vw;
+  }
+  .kottoz {
+    color: green;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  .txttd {
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: right;
+    padding-right: 2vw;
+  }
+  .numtd {
+    background-color: white;
+    color: blue;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .kotamod h1 {
+    font-size: 20px;
+  }
+  
+}
+
+#sug {
+  border-radius: 10px 10px 0px 0px !important;
+  height: 35px;
+}
+
+#schom, #tkofa {
+  height: 35px;
+}
+
+#hashev {
+  border-radius: 0px 0px 10px 10px !important;
+}
