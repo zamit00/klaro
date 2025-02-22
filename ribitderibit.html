@@ -9,7 +9,6 @@
     <!-- תיקיית אייקונים -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="ribit.css">
-    <link rel="stylesheet" href="koteretstyle.css"/>
     <script src="ribit.js" defer></script>
     <script>
         function hideIframe(x){
@@ -27,7 +26,7 @@ window.parent.hideframe();
   
     <main>
         <div class="kotamod">
-            <h1>מחשבון השקעה ריבית דריבית</h1>
+            <h1>מחשבון השוואת דמי ניהול</h1>
         </div>
         <div class="sughashkaa">
             <button id="sug" onclick="opn('dropdown-sug')">בחר סוג השקעה<i class="fa fa-arrow-down hetz"></i></button>
@@ -68,25 +67,23 @@ window.parent.hideframe();
                     <label for="txttkofa1" class="lbltxt">תקופה בשנים</label>    
                     <select  onchange="onch()" class="txtbutton" id="txttkofa1" ></select>    
                 </div >
-                <div id="dmeynihul1">
+                <div id="dmeynihul">
                     <div>
-                        <label for="txttkofa2" class="lbltxt"> דמי ניהול מחסכון 1</label>
-                        <select   onchange="onch()"  class="txtbutton" id="dmeyZ1" ></select> 
+                        <label for="txttkofa2" class="lbltxt"> שיעור דמי ניהול מצבירה 1</label>
+                        <select   onchange="onch()"  class="txtbutton" id="dmnz1" ></select>
                     </div>
                     <div>
-                        <label for="txttkofa2" class="lbltxt"> דמי ניהול הפקדה 1</label>
-                        <select   onchange="onch()"  class="txtbutton" id="dmeyH1" ></select>   
-                    </div>
-                </div>
-                <div id="dmeynihul2">
-                    <div>
-                        <label for="txttkofa2" class="lbltxt"> דמי ניהול מחסכון 2</label>
-                        <select   onchange="onch()"  class="txtbutton" id="dmeyZ2" ></select>   
+                        <label for="txttkofa2" class="lbltxt">שיעור דמי ניהול מהפקדה 1</label>
+                        <select   onchange="onch()"  class="txtbutton" id="dmnh1" ></select>
                     </div>
                     <div>
-                        <label for="txttkofa2" class="lbltxt"> דמי ניהול הפקדה 2</label>
-                        <select   onchange="onch()"  class="txtbutton" id="dmeyH2" ></select>   
+                        <label for="txttkofa2" class="lbltxt">שיעור דמי ניהול מצבירה 2</label>
+                        <select   onchange="onch()"  class="txtbutton" id="dmnz2" ></select>
                     </div>
+                    <div>
+                        <label for="txttkofa2" class="lbltxt">שיעור דמי ניהול מהפקדה 2</label>
+                        <select   onchange="onch()"  class="txtbutton" id="dmnh2" ></select>
+                    </div>     
                 </div>
             </div>
 
@@ -102,9 +99,6 @@ window.parent.hideframe();
                 </div>
 
                 </select>
-            </div>
-            <div class="divtozz1">
-                
             </div>
             
         </div>
