@@ -29,7 +29,7 @@ html, body {
 
 @media only screen and (min-width: 767px) {
   #tbltoz, #tbltoz tr, #tbltoz td {
-    font-size: 10px !important;
+    font-size: 12px !important;
   }
   .divtozz {
     width: 60vw;
@@ -113,8 +113,7 @@ html, body {
     margin-left: 10px;
     float: left;
   }
-  #txttkofa1, #txttkofa2, #hadpeami, #hodshi,#dmeyH1
-  #dmeyZ1,#dmeyH2,#dmeyZ2 {
+  #txttkofa1, #txttkofa2, #hadpeami, #hodshi {
     width: 80px;
     text-align: center;
   }
@@ -140,7 +139,7 @@ html, body {
     font-size: 18px;
     font-weight: bold;
   }
-  .txttd {
+  .tdth {
     background-color: blue;
     color: white;
     border: 1px solid green;
@@ -149,6 +148,8 @@ html, body {
     font-weight: bolder;
     text-align: right;
     padding-right: 2vw;
+    text-align: center;
+    
   }
   .numtd {
     background-color: white;
@@ -243,8 +244,7 @@ html, body {
     margin-left: 10px;
     float: left;
   }
-  #txttkofa1, #txttkofa2, #hadpeami, #hodshi,#dmeyH1
-  #dmeyZ1,#dmeyH2,#dmeyZ2 {
+  #txttkofa1, #txttkofa2, #hadpeami, #hodshi {
     width: 80px;
     text-align: center;
   }
@@ -270,7 +270,7 @@ html, body {
     font-weight: bold;
     margin-right: 5px;
   }
-  .txttd {
+  .tdth {
     background-color: blue;
     color: white;
     border: 1px solid green;
@@ -289,13 +289,30 @@ html, body {
     font-weight: bolder;
     text-align: center;
   }
+  .numtdkot{
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 480px) {
   .kotamod h1 {
     font-size: 20px;
   }
-  
+  .numtdkot{
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: center;
+  }
 }
 
 #sug {
@@ -310,3 +327,4 @@ html, body {
 #hashev {
   border-radius: 0px 0px 10px 10px !important;
 }
+
