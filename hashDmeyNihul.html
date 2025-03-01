@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>השוואת דמי ניהול</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100px;
+            max-width: 120px;
+            height: 15px;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .div_rd{
+            display: flex;
+            justify-content: right;
+            width: 100%;
+        }
+        .rdbutton{
+            transform: scale(0.5);
+            max-width: 50px;
+        }
+        .amount{
+            display: flex;
+            justify-content: space-between;
+            max-width: 90%;
+            margin-right: 20px;
+        }
+        select{font-size: 16px;transform: scaleY(1.5);margin: 10px 0;text-align: center;width: 90%;}
+        #tbltoz, #tbltoz th, #tbltoz td {
+            border-collapse: collapse;
+        }
+
+        .alltoz {
+            display: none;
+            flex-direction: column;
+        }
+        @media only screen and (min-width: 767px) {
+            #tbltoz, #tbltoz tr, #tbltoz #tbltoz th {
+                font-size: 10px !important;
+            }
+            .divtozz {
+                width: 60vw;
+                display: flex;
+                justify-content: right;
+                margin-top: 10px;
+            }
+            .divtozz div {
+                width: 40vw;
+            }
+            .ribitother {
+                margin-right: 10vw;
+            }
+            .selecttoz {
+                width: 50px;
+                font-size: 10px;
+                margin-right: 2vw;
+            }
+            .lbltoz {
+                font-size: 18px;
+                color: blue;
+                font-weight: bold;
+            }
+            #tozaot, #tozaot tr {
+             width: 60vw;
+            }
+            .kottoz {
+                color: green;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .tdth {
+                background-color: blue;
+                color: white;
+                border: 1px solid green;
+                border-collapse: collapse;
+                font-size: 16px;
+                font-weight: bolder;
+                text-align: right;
+                padding-right: 2vw;
+                text-align: center;
+                
+            }
+            .numtd,.numtdx {
+                background-color: white;
+                color: #333;
+                border: 1px solid green;
+                border-collapse: collapse;
+                font-size: 12px;
+                font-weight: bolder;
+                text-align: center;
+            }
+            .numtdx {
+                background-color: lightgray;
+                color: green;
+                border: 1px solid green;
+                border-collapse: collapse;
+                font-size: 12px;
+                font-weight: bold;
+                text-align: center;
+                width: 25vw;
+            }
+            
+            #tozaot {
+                margin-top: 2vh;
+            }
+                }
+                    
+        @media screen and (max-width:600px) {
+            label {font-size: 12px;}
+            .amount{flex-direction: column;align-items: center;}
+            input{width: 90%;max-width: 90%;}
+            #tbltoz, #tbltoz tr, #tbltoz #tbltoz th {
+            font-size: 10px !important;
+        }
+        .divtozz {
+            width:clamp(280px,90vw,400px)!important;
+
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .divtozz div {
+            width: 40vw;
+        }
+        .ribitother {
+            margin-right: 10vw;
+        }
+        .selecttoz {
+            width: 50px;
+            font-size: 10px;
+            margin-right: 2vw;
+        }
+        .lbltoz {
+            font-size: 18px;
+            color: blue;
+            font-weight: bold;
+        }
+        .numtdkot{
+        background-color: blue;
+        color: white;
+        border: 1px solid green;
+        border-collapse: collapse;
+        font-size: 10px;
+        font-weight: bolder;
+        text-align: center;
+        }
+        .numtd {
+        width: 25vw;
+        font-size: 10px;
+        color: #333;
+        border: 1px solid green;
+        text-align: center;
+                }
+            .numtdx {
+                color: lightgray;
+                background-color: green;
+                border: 1px solid green;
+                border-collapse: collapse;
+                font-size: 10px;
+                font-weight: bold;
+                text-align: center;
+                width: 25vw;
+            }
+            .tdts{
+                width: 15vw;
+                font-size: 10px;
+                text-align: center;
+            }
+            #sug, #schom, #tkofa {
+                font-size: 14px;
+            }
+            .divtozz {
+                width: 100vw;
+                display: flex;
+                justify-content: right;
+                margin-top: 10px;
+            }
+            .divtozz div {
+                width: 100vw;
+            }
+            .ribitother {
+                margin-right: 7vw;
+            }
+            .selecttoz {
+                width: 45px;
+                font-size: 13px;
+                margin-right: 2vw;
+            }
+            .lbltoz {
+                font-size: 12px;
+                color: blue;
+                font-weight: bold;
+            }
+            .alltoz {
+                display: none;
+                flex-direction: column;
+                font-size: 12px !important;
+            }
+            #tozaot {
+                margin-top: 2vh;
+            }
+            #tozaot  ,#tozaot tr {
+    width: 90%;
+    max-width: 90%;
+    font-size:10px;
+    
+  }
+ #tozaot td{width:20%}
+  #tozaot th{width:40%}
+  .kottoz {
+    color: green;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  .tdth {
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-weight: bolder;
+    text-align: right;
+    padding-right: 2vw;
+  }
+  
+  .numtdkot{
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-weight: bolder;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .kotamod h1 {
+    font-size: 20px;
+  }
+  .numtdkot{
+    background-color: blue;
+    color: white;
+    border: 1px solid green;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-weight: bolder;
+    text-align: center;
+  }
+}
+    </style>
+    <script src="dmeyNihulScript.js"></script>
+</head>
+<body dir="rtl">
+    <div class="container">
+        <h2>השוואת דמי ניהול</h2>
+        <form id="feeForm">
+            <label>בחר סוג חישוב:</label><br>
+            <div class="div_rd">
+                <input class="rdbutton" id="rd1" type="radio" name="calcType" value="saving" > 
+                <label for="rd1">סכום צבירה בלבד</label>
+            </div>
+            <div class="div_rd">
+                <input class="rdbutton" id="rd2" type="radio" name="calcType" value="deposit">
+                <label for="rd2">סכום הפקדה חודשי בלבד</label>
+            </div>
+            <div class="div_rd">
+                <input class="rdbutton" id="rd3" type="radio" name="calcType" value="both" checked> 
+                <label for="rd3">סכום צבירה + הפקדה חודשי</label>
+            </div>
+            <div id="amountInputs" >
+                <div id="saving" class="amount">
+                    <label for="savingAmount">סכום צבירה:</label>
+                    <input type="text" id="savingAmount" oninput="formatNumber(this)">
+                </div>
+                <div id="deposit" class="amount">
+                    <label for="depositAmount">סכום הפקדה חודשי:</label>
+                    <input type="text" id="depositAmount" oninput="formatNumber(this)">
+                </div>
+            </div>
+            <div class="amount">
+                <label for="age">בחר גיל:</label>
+                <select  id="age" style="text-align: center;"></select>
+            </div>
+            <div class="amount">
+           
+                <label for="feeSaving1">דמי ניהול מצבירה1</label>
+                <select id="feeSaving1"></select>
+                <label for="feeDeposit1">דמי ניהול מהפקדה1</label>
+                <select id="feeDeposit1"></select>
+                <label for="feeSaving2">דמי ניהול מצבירה2</label>
+                <select id="feeSaving2"></select>
+                <label for="feeDeposit2">דמי ניהול מהפקדה2</label>
+                <select id="feeDeposit2"></select>
+               
+
+               </div>
+            
+        </form>
+        <div class="amount">
+            <button type="submit" onclick="hashev(0.04)">בצע חישוב</button>
+        </div>
+    </div>
+    <div class="alltoz" id="alltoz">
+        <div class="divtozz">
+            <div class="kottoz" id="kottoz"> לפי ריבית 4% שנתי:</div>
+            <div class="ribitother">
+                <label class="lbltoz">בחר ריבית אחרת</label>
+                <select class="selecttoz" id="selecttoz" onchange="othribit()">
+            </div>
+
+            </select>
+        </div>
+        
+    </div>
+    <div class="tozaot colComp12" id="tozaot" style="display: block;"></div>
+    <div class="maskana" id="maskana" style="font-size: 16px;
+    color: darkgreen;margin-top: 10px;"></div>
+    <script>
+        
+    </script>
+</body>
+</html>
