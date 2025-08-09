@@ -1,200 +1,184 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> טניס - משחקי מגדל</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: center;
-	    margin:10px;
-        }
-	.kot{display:flex;flex-direction:column;align-items:center;width:100vw;}
-	    
-        table {
-            width: 60vw;
-            border-collapse: collapse;
-            margin: 30px 5vw;
-	    box-sizing: border-box;	
-		
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid blue;
-
-        }
-        th {
-            background-color: blue;
-	    color: white;
-        }
-        .button {
-           
-            padding: 10px 0px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-	    text-align:center;
-		
-		
-        }
-        .button:hover {
-            background-color: blue;
-	
-        }
-	.logo{position:fixed;left:40px;top:10px;}
-	h1{text-align: center;color:blue;font-weight: bold;width:100vw;margin-top:20px;font-size:2rem;white-space:nowrap;}
-	h2{text-align: center;color:green;font-weight: bold;width:100vw;font-size:1.5rem;}
-	@media only screen and (max-width: 768px){
-		 table {max-width: 90vw;margin:20px 5vw;}
-	}
-    #MyTable {
-  margin-left: auto;
-  margin-right: auto;
-}
-.kot a{width: 80%;text-align: left;margin: 5px 10vw;}
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>בדיקת שירות mislaka-service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#0A2540;
+      --accent:#F37253;
+      --bg:#F4F6F8;
+      --card:#ffffff;
+      --muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--primary);
+      font-family:'Varela Round', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height:1.6;
+    }
+    header{
+      background:var(--primary); color:#fff; padding:16px 20px; font-weight:700;
+      font-family:'Montserrat', sans-serif; letter-spacing:.3px;
+    }
+    .container{
+      max-width:900px; margin:24px auto; padding:0 16px;
+    }
+    .card{
+      background:var(--card); border-radius:14px; box-shadow:0 6px 20px rgba(10,37,64,.06);
+      padding:24px;
+    }
+    h1{ font-family:'Montserrat', sans-serif; font-size:22px; margin:0 0 8px }
+    .muted{ color:var(--muted); margin:0 0 20px }
+    .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    input[type="text"]{
+      flex:1 1 260px; padding:12px 14px; border:1px solid #e5e7eb; border-radius:10px;
+      font-size:16px; outline:none;
+    }
+    button{
+      background:var(--accent); color:#fff; border:none; border-radius:10px;
+      padding:12px 18px; font-weight:700; cursor:pointer; transition:.2s;
+    }
+    button:hover{ filter:brightness(.95) }
+    .status{ margin-top:12px; font-size:14px; color:var(--muted) }
+    pre{
+      background:#0f172a; color:#e5e7eb; padding:16px; border-radius:12px; overflow:auto;
+      font-size:13px; line-height:1.5; direction:ltr; text-align:left;
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .hidden{ display:none }
+    .spinner{
+      width:18px; height:18px; border:3px solid #ffffff70; border-top-color:#fff;
+      border-radius:50%; display:inline-block; vertical-align:middle;
+      animation:spin 1s linear infinite; margin-inline-start:8px;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg) } }
+    .chip{
+      display:inline-block; background:#eef2f7; color:#334155; padding:6px 10px; border-radius:999px; font-size:12px;
+      margin-inline-start:6px;
+    }
+  </style>
 </head>
 <body>
-<div class="kot">
-	<img class="logo" height="90px" src="https://www.migdal.co.il/imgs/migdal_logo.png" width="49px"></img>
-	<h1> קבוצת הטניס של מגדל </h1>
-	<h2>טבלת משחקים לעונת 2024-2025</h2>
-    <a href="https://hapoel-telaviv-ma.co.il/?m=leagues&season=29&branch=12&league=767" target="_blank">לטבלת הליגה</a>
+  <header>PENSIFY – בדיקת שירות Cloud Run</header>
+  <div class="container">
+    <div class="card">
+      <h1>קריאה לשירות /get-by-id</h1>
+      <p class="muted">הזן תעודת זהות ולחץ “שלח בקשה”. התוצאה תודפס מטה כפי שמוחזרת מהשירות (JSON).</p>
 
-	
-	<button class="button" onclick="showNextGame()">משחק הבא</button>
-</div>
-<table id="MyTable" style="width: 750px; height: 450px;">
-    <tr >
-        <th>מספר מחזור</th>
-        <th>תאריך</th>
-        <th>יום</th>
-        <th>שעה</th>
-        <th>יריבה</th>
-        <th>מיקום</th>
-	<th>תוצאה</th>
-	<th>ניקוד מצטבר</th>    
-    </tr>
+      <div class="row">
+        <label for="mispar" class="chip">mispar (ת״ז)</label>
+        <input id="mispar" type="text" value="024019507" inputmode="numeric" autocomplete="off" />
+        <button id="btn">שלח בקשה</button>
+      </div>
+
+      <div id="status" class="status"></div>
+      <table border="1" style="border-collapse:collapse; width:50%;">
+  <thead>
     <tr>
-        <td>מחזור 1</td>
-        <td>09.12.2024</td>
-        <td>ב'</td>
-        <td>19:00</td>
-        <td>בזק תל אביב</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td>2:1</td>
-	<td>1</td>    
-	    
+      <th>שם מוצר</th>
+      <th>סכום</th>
     </tr>
-    <tr>
-        <td>מחזור 2</td>
-        <td>19.01.2025</td>
-        <td>א'</td>
-        <td>19:00</td>
-        <td>שירותי בריאות כללית</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td>3:0</td> 
-	<td>3</td>
-    </tr>
-    <tr>
-        <td>מחזור 3</td>
-        <td>30.01.2025</td>
-        <td>ה'</td>
-        <td>19:00</td>
-        <td>כלל ביטוח</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>	    
-    </tr>
-    <tr>
-        <td>מחזור 4</td>
-        <td>18.03.2025</td>
-        <td>ג'</td>
-        <td>19:00</td>
-        <td>ישראכרט</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>	    
-    </tr>
-    <tr>
-        <td>מחזור 5</td>
-        <td>22.04.2025</td>
-        <td>ג'</td>
-        <td>19:00</td>
-        <td>בלל מרכז</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>	    
-    </tr>
-    <tr>
-        <td>מחזור 6</td>
-        <td>07.05.2025</td>
-        <td>ד'</td>
-        <td>19:00</td>
-        <td>קופח מאוחדת</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>	    
-    </tr>
-    <tr>
-        <td>מחזור 7</td>
-        <td>17.06.2025</td>
-        <td>ג'</td>
-        <td>19:00</td>
-        <td>משמר-שדה טניס</td>
-        <td>מועדון טניס הדר יוסף</td>
-	<td></td> 
-	<td></td>	    
-    </tr>
+  </thead>
+  <tbody id="productTable"></tbody>
 </table>
+      <h2 style="margin:20px 0 8px;font-size:18px;">תוצאה:<div id="totals"></div></h2>
+      <pre id="output" class="hidden">// התוצאה תופיע כאן</pre>
+    </div>
+  </div>
+  
 
+  <script>
+    const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
+    const btn = document.getElementById('btn');
+    const misparInput = document.getElementById('mispar');
+    const out = document.getElementById('output');
+    const statusEl = document.getElementById('status');
 
-
-<script>
-    
- // הקישור לאתר שמכיל את הטבלה
-            
-
-
-
- function showNextGame() {
-    let da, mo, yr;
-    const table = document.getElementById('MyTable');
-    
-    for (let i = 1; i < table.rows.length; i++) {
-        let cell = table.rows[i].cells[1].textContent;
-        let cell1 = table.rows[i].cells[4].textContent;
-        let cell2 = table.rows[i].cells[1].textContent;
-        
-        da = cell.slice(0, 2);
-        mo = cell.slice(3, 5);
-        yr = cell.slice(6);
-
-        // יצירת תאריך מהתוכן שבטבלה
-        let datex = new Date(yr, mo - 1, da); // חודש ב-JavaScript הוא מ-0
-        let todayx = new Date();
-        
-        // ניקוי שעות ומילישניות כדי להשוות תאריכים בלבד
-        let dateOnly = new Date(datex.getFullYear(), datex.getMonth(), datex.getDate());
-        let todayOnly = new Date(todayx.getFullYear(), todayx.getMonth(), todayx.getDate());
-
-        // אם התאריך הנוכחי קטן או שווה לתאריך שבטבלה
-        if (todayOnly <= dateOnly) {
-            alert(`המשחק הקרוב הוא נגד ${cell1} בתאריך ${cell2} בשעה ${"19:00"}`);
-            return;
-        }
+    function setStatus(msg, loading=false){
+      statusEl.innerHTML = loading ? `${msg} <span class="spinner"></span>` : msg;
     }
-}
 
-</script>
+    function show(data){
+      out.classList.remove('hidden');
+      out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+ 
+        const tbody = document.getElementById("productTable");
 
+
+        // מיפוי קוד → שם סוג המוצר
+
+        const productTypeMap = {
+        1: "פוליסת ביטוח חיים משולב חיסכון",
+        2: "קרן פנסיה",
+        3: "קופת גמל",
+        4: "קרן השתלמות",
+        5: "פוליסת חיסכון טהור",
+        6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ\"ע SA)",
+        7: "ביטוח חיים משכנתא",
+        8: "פוליסת סיכון טהור קולקטיב",
+        9: "קופת גמל להשקעה",
+        10: "חיסכון לכל ילד"
+        };
+
+        // אובייקט לאגירת סכומים לפי סוג מוצר
+        const totalsByType = {};
+
+        data.matches.forEach(item => {
+        const type = item.productType;
+        const amount = parseFloat(item.totalAmount) || 0;
+
+        if (!totalsByType[type]) {
+            totalsByType[type] = 0;
+        }
+        totalsByType[type] += amount;
+        });
+
+        // הכנסת השורות לטבלה
+        let totalSum = 0;
+        Object.entries(totalsByType).forEach(([type, total]) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${productTypeMap[type] || type}</td>
+        <td>${total.toLocaleString()}</td>`;
+        tbody.appendChild(row);
+        totalSum += total;
+        document.getElementById("totals").textContent = `סכום כולל: ${totalSum.toLocaleString()} ש״ח`;
+        });
+
+
+    }
+
+    btn.addEventListener('click', async () => {
+      const mispar = misparInput.value.trim();
+      if(!mispar){
+        setStatus('❗ יש להזין מספר ת״ז תקין');
+        return;
+      }
+      const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
+      setStatus('מבצע קריאה לשירות…', true);
+      out.classList.add('hidden');
+
+      try{
+        const res = await fetch(url, { method:'GET' });
+        // טיפ: אם תקבל כאן שגיאת CORS, צריך לאפשר CORS בצד השרת (אפרט למטה).
+        if(!res.ok){
+          const text = await res.text();
+          setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
+          show(text);
+          return;
+        }
+        const json = await res.json();
+        setStatus('הצלחה ✅');
+        show(json);
+      }catch(err){
+        setStatus('שגיאה בביצוע הבקשה מהדפדפן');
+        show(String(err));
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
