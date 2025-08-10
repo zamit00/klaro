@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <style>
     :root{
       --primary:#0A2540;
@@ -14,6 +15,8 @@
       --bg:#F4F6F8;
       --card:#ffffff;
       --muted:#6b7280;
+      --success:#10b981;
+      --border:#e5e7eb;
     }
     *{box-sizing:border-box}
     body{
@@ -22,28 +25,54 @@
       line-height:1.6;
     }
     header{
-      background:var(--primary); color:#fff; padding:16px 20px; font-weight:700;
+      background:linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+      color:#fff; padding:16px 20px; font-weight:700;
       font-family:'Montserrat', sans-serif; letter-spacing:.3px;
+      box-shadow:0 4px 20px rgba(10,37,64,.15);
     }
     .container{
-      max-width:900px; margin:24px auto; padding:0 16px;
+      max-width:1200px; margin:24px auto; padding:0 16px;
     }
     .card{
-      background:var(--card); border-radius:14px; box-shadow:0 6px 20px rgba(10,37,64,.06);
-      padding:24px;
+      background:var(--card); border-radius:14px; 
+      box-shadow:0 6px 20px rgba(10,37,64,.06);
+      padding:24px; margin-bottom:20px;
+      transition:box-shadow 0.3s ease;
     }
-    h1{ font-family:'Montserrat', sans-serif; font-size:22px; margin:0 0 8px }
+    .card:hover{
+      box-shadow:0 8px 25px rgba(10,37,64,.1);
+    }
+    h1{ 
+      font-family:'Montserrat', sans-serif; font-size:22px; margin:0 0 8px;
+      background:linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    h2{
+      font-family:'Montserrat', sans-serif; font-size:18px; margin:20px 0 15px;
+      color:var(--primary);
+    }
     .muted{ color:var(--muted); margin:0 0 20px }
     .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
     input[type="text"]{
-      flex:1 1 260px; padding:12px 14px; border:1px solid #e5e7eb; border-radius:10px;
-      font-size:16px; outline:none;
+      flex:1 1 260px; padding:12px 14px; border:2px solid var(--border); 
+      border-radius:10px; font-size:16px; outline:none;
+      transition:border-color 0.3s ease, box-shadow 0.3s ease;
+      background:var(--card);
+    }
+    input[type="text"]:focus{
+      border-color:var(--accent); 
+      box-shadow:0 0 0 3px rgba(243,114,83,0.1);
     }
     button{
-      background:var(--accent); color:#fff; border:none; border-radius:10px;
-      padding:12px 18px; font-weight:700; cursor:pointer; transition:.2s;
+      background:linear-gradient(135deg, var(--accent) 0%, #e85a3b 100%);
+      color:#fff; border:none; border-radius:10px;
+      padding:12px 18px; font-weight:700; cursor:pointer; 
+      transition:all 0.3s ease; box-shadow:0 2px 10px rgba(243,114,83,0.3);
     }
-    button:hover{ filter:brightness(.95) }
+    button:hover{ 
+      transform:translateY(-1px);
+      box-shadow:0 4px 15px rgba(243,114,83,0.4);
+    }
     .status{ margin-top:12px; font-size:14px; color:var(--muted) }
     pre{
       background:#0f172a; color:#e5e7eb; padding:16px; border-radius:12px; overflow:auto;
@@ -58,9 +87,119 @@
     }
     @keyframes spin{ to{ transform:rotate(360deg) } }
     .chip{
-      display:inline-block; background:#eef2f7; color:#334155; padding:6px 10px; border-radius:999px; font-size:12px;
-      margin-inline-start:6px;
+      display:inline-block; background:#eef2f7; color:#334155; 
+      padding:6px 10px; border-radius:999px; font-size:12px;
+      margin-inline-start:6px; font-weight:500;
     }
+
+    /* עיצוב טבלה מעוצבת */
+    .table-container{
+      overflow-x:auto; margin:20px 0; border-radius:12px;
+      box-shadow:0 4px 15px rgba(10,37,64,0.08);
+      background:var(--card);
+    }
+    .styled-table{
+      width:100%; border-collapse:collapse; font-size:15px;
+      min-width:400px;
+    }
+    .styled-table thead tr{
+      background:linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+      color:white; text-align:center; font-weight:700;
+      font-family:'Montserrat', sans-serif;
+    }
+    .styled-table th, .styled-table td{
+      padding:15px 20px; border-bottom:1px solid var(--border);
+    }
+    .styled-table th{
+      font-size:14px; letter-spacing:0.5px; text-transform:uppercase;
+      position:relative;
+    }
+    .styled-table tbody tr{
+      transition:all 0.3s ease;
+    }
+    .styled-table tbody tr:nth-child(even){
+      background:rgba(10,37,64,0.02);
+    }
+    .styled-table tbody tr:hover{
+      background:rgba(243,114,83,0.05);
+      transform:scale(1.01);
+      box-shadow:0 2px 10px rgba(10,37,64,0.1);
+    }
+    .styled-table td{
+      font-weight:500;
+    }
+    .styled-table .amount{
+      color:var(--success); font-weight:700; font-size:16px;
+      text-align:left;
+    }
+
+    /* מחזיק הגרף */
+    .chart-container{
+      position:relative; width:100%; max-width:500px; margin:0 auto;
+      background:var(--card); border-radius:14px; padding:20px;
+      box-shadow:0 6px 20px rgba(10,37,64,.06);
+    }
+    .chart-wrapper{
+      position:relative; height:350px;
+    }
+
+    /* סך הכל מעוצב */
+    .total-summary{
+      background:linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color:white; text-align:center; padding:15px 20px; border-radius:12px;
+      margin:20px 0; box-shadow:0 4px 15px rgba(16,185,129,0.3);
+    }
+    .total-amount{
+      font-size:28px; font-weight:700; font-family:'Montserrat', sans-serif;
+      margin:5px 0;
+    }
+
+    /* מקרא */
+    .legend-grid{
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:12px; margin-top:20px; padding:15px;
+      background:rgba(10,37,64,0.02); border-radius:10px;
+    }
+    .legend-item{
+      display:flex; align-items:center; gap:10px; padding:8px 12px;
+      background:var(--card); border-radius:8px; 
+      box-shadow:0 2px 8px rgba(10,37,64,0.05);
+      transition:transform 0.2s ease;
+    }
+    .legend-item:hover{
+      transform:translateY(-2px);
+    }
+    .legend-color{
+      width:16px; height:16px; border-radius:50%; flex-shrink:0;
+    }
+    .legend-text{
+      font-size:13px; font-weight:500; line-height:1.3;
+    }
+    .legend-amount{
+      color:var(--success); font-weight:700; margin-right:auto;
+      font-size:14px;
+    }
+
+    /* רספונסיביות */
+    @media (max-width: 768px){
+      .container{ padding:0 12px }
+      .chart-container{ max-width:100% }
+      .legend-grid{ grid-template-columns:1fr }
+      .row{ flex-direction:column; align-items:stretch }
+      input[type="text"]{ flex:1 }
+      .styled-table th, .styled-table td{ padding:10px 12px }
+      h1{ font-size:20px }
+    }
+
+    /* גרידת תוצאות */
+    .results-grid{
+      display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;
+    }
+    @media (max-width: 768px){
+      .results-grid{ grid-template-columns:1fr }
+    }
+    #output{display: none;}
+      
   </style>
 </head>
 <body>
@@ -68,7 +207,7 @@
   <div class="container">
     <div class="card">
       <h1>קריאה לשירות /get-by-id</h1>
-      <p class="muted">הזן תעודת זהות ולחץ “שלח בקשה”. התוצאה תודפס מטה כפי שמוחזרת מהשירות (JSON).</p>
+      <p class="muted">הזן תעודת זהות ולחץ "שלח בקשה". התוצאה תודפס מטה כפי שמוחזרת מהשירות (JSON).</p>
 
       <div class="row">
         <label for="mispar" class="chip">mispar (ת״ז)</label>
@@ -77,79 +216,215 @@
       </div>
 
       <div id="status" class="status"></div>
-      <table border="1" style="border-collapse:collapse; width:50%;">
-  <thead>
-    <tr>
-      <th>שם מוצר</th>
-      <th>סכום</th>
-    </tr>
-  </thead>
-  <tbody id="productTable"></tbody>
-</table>
-      <h2 style="margin:20px 0 8px;font-size:18px;">תוצאה:<div id="totals"></div></h2>
-      <pre id="output" class="hidden">// התוצאה תופיע כאן</pre>
+    </div>
+
+    <div id="resultsContainer" class="hidden">
+      <div class="total-summary">
+        <div>סכום כולל צבור</div>
+        <div id="totals" class="total-amount">0 ש״ח</div>
+      </div>
+
+      <div class="results-grid">
+        <div class="card">
+          <h2>פירוט לפי סוג מוצר</h2>
+          <div class="table-container">
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th>שם המוצר</th>
+                  <th>סכום צבור</th>
+                </tr>
+              </thead>
+              <tbody id="productTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>התפלגות החיסכון</h2>
+          <div class="chart-container">
+            <div class="chart-wrapper">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>מקרא</h2>
+        <div id="legend" class="legend-grid"></div>
+      </div>
+
+      <div class="card" style="display: none;">
+        <h2>תוצאה מלאה (JSON)</h2>
+        <pre id="output">// התוצאה תופיע כאן</pre>
+      </div>
     </div>
   </div>
   
-
   <script>
     const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
     const btn = document.getElementById('btn');
     const misparInput = document.getElementById('mispar');
     const out = document.getElementById('output');
     const statusEl = document.getElementById('status');
+    const resultsContainer = document.getElementById('resultsContainer');
+    let pieChart = null;
+
+    // צבעים יפים לגרף
+    const chartColors = [
+      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
+      '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+    ];
+
+    // מיפוי קוד → שם סוג המוצר
+    const productTypeMap = {
+      1: "פוליסת ביטוח חיים משולב חיסכון",
+      2: "קרן פנסיה", 
+      3: "קופת גמל",
+      4: "קרן השתלמות",
+      5: "פוליסת חיסכון טהור",
+      6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ״ע SA)",
+      7: "ביטוח חיים משכנתא",
+      8: "פוליסת סיכון טהור קולקטיב", 
+      9: "קופת גמל להשקעה",
+      10: "חיסכון לכל ילד"
+    };
 
     function setStatus(msg, loading=false){
       statusEl.innerHTML = loading ? `${msg} <span class="spinner"></span>` : msg;
     }
 
+    function formatNumber(num) {
+      return new Intl.NumberFormat('he-IL').format(Math.round(num));
+    }
+
+    function createPieChart(data) {
+      const ctx = document.getElementById('pieChart').getContext('2d');
+      
+      if (pieChart) {
+        pieChart.destroy();
+      }
+
+      const labels = [];
+      const amounts = [];
+      const colors = [];
+
+      Object.entries(data).forEach(([type, amount], index) => {
+        labels.push(productTypeMap[type] || `סוג ${type}`);
+        amounts.push(amount);
+        colors.push(chartColors[index % chartColors.length]);
+      });
+
+      pieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: amounts,
+            backgroundColor: colors,
+            borderColor: '#ffffff',
+            borderWidth: 3,
+            hoverBorderWidth: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(10,37,64,0.9)',
+              titleColor: '#ffffff',
+              bodyColor: '#ffffff',
+              borderColor: '#F37253',
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: true,
+              callbacks: {
+                label: function(context) {
+                  const percentage = ((context.parsed / amounts.reduce((a,b) => a+b, 0)) * 100).toFixed(1);
+                  return `${context.label}: ${formatNumber(context.parsed)} ש״ח (${percentage}%)`;
+                }
+              }
+            }
+          },
+          cutout: '50%',
+          animation: {
+            animateRotate: true,
+            duration: 1500
+          }
+        }
+      });
+    }
+
+    function createLegend(data) {
+      const legendContainer = document.getElementById('legend');
+      legendContainer.innerHTML = '';
+
+      Object.entries(data).forEach(([type, amount], index) => {
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+        
+        const color = chartColors[index % chartColors.length];
+        const productName = productTypeMap[type] || `סוג ${type}`;
+        
+        legendItem.innerHTML = `
+          <div class="legend-color" style="background-color: ${color}"></div>
+          <div class="legend-text">${productName}</div>
+          <div class="legend-amount">${formatNumber(amount)} ש״ח</div>
+        `;
+        
+        legendContainer.appendChild(legendItem);
+      });
+    }
+
     function show(data){
-      out.classList.remove('hidden');
       out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
- 
-        const tbody = document.getElementById("productTable");
+      
+      if (!data.matches || !Array.isArray(data.matches)) {
+        return;
+      }
 
+      const tbody = document.getElementById("productTable");
+      tbody.innerHTML = '';
 
-        // מיפוי קוד → שם סוג המוצר
+      // אובייקט לאגירת סכומים לפי סוג מוצר
+      const totalsByType = {};
 
-        const productTypeMap = {
-        1: "פוליסת ביטוח חיים משולב חיסכון",
-        2: "קרן פנסיה",
-        3: "קופת גמל",
-        4: "קרן השתלמות",
-        5: "פוליסת חיסכון טהור",
-        6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ\"ע SA)",
-        7: "ביטוח חיים משכנתא",
-        8: "פוליסת סיכון טהור קולקטיב",
-        9: "קופת גמל להשקעה",
-        10: "חיסכון לכל ילד"
-        };
-
-        // אובייקט לאגירת סכומים לפי סוג מוצר
-        const totalsByType = {};
-
-        data.matches.forEach(item => {
+      data.matches.forEach(item => {
         const type = item.productType;
         const amount = parseFloat(item.totalAmount) || 0;
 
         if (!totalsByType[type]) {
-            totalsByType[type] = 0;
+          totalsByType[type] = 0;
         }
         totalsByType[type] += amount;
-        });
+      });
 
-        // הכנסת השורות לטבלה
-        let totalSum = 0;
-        Object.entries(totalsByType).forEach(([type, total]) => {
+      // הכנסת השורות לטבלה
+      let totalSum = 0;
+      Object.entries(totalsByType).forEach(([type, total]) => {
         const row = document.createElement("tr");
-        row.innerHTML = `<td>${productTypeMap[type] || type}</td>
-        <td>${total.toLocaleString()}</td>`;
+        row.innerHTML = `
+          <td>${productTypeMap[type] || `סוג ${type}`}</td>
+          <td class="amount">${formatNumber(total)} ש״ח</td>
+        `;
         tbody.appendChild(row);
         totalSum += total;
-        document.getElementById("totals").textContent = `סכום כולל: ${totalSum.toLocaleString()} ש״ח`;
-        });
+      });
 
+      // עדכון סכום כולל
+      document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
 
+      // יצירת גרף ומקרא
+      createPieChart(totalsByType);
+      createLegend(totalsByType);
+
+      // הצגת התוצאות
+      resultsContainer.classList.remove('hidden');
     }
 
     btn.addEventListener('click', async () => {
@@ -158,17 +433,18 @@
         setStatus('❗ יש להזין מספר ת״ז תקין');
         return;
       }
+      
       const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
       setStatus('מבצע קריאה לשירות…', true);
-      out.classList.add('hidden');
+      resultsContainer.classList.add('hidden');
 
       try{
         const res = await fetch(url, { method:'GET' });
-        // טיפ: אם תקבל כאן שגיאת CORS, צריך לאפשר CORS בצד השרת (אפרט למטה).
         if(!res.ok){
           const text = await res.text();
           setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
-          show(text);
+          out.textContent = text;
+          resultsContainer.classList.remove('hidden');
           return;
         }
         const json = await res.json();
@@ -176,7 +452,15 @@
         show(json);
       }catch(err){
         setStatus('שגיאה בביצוע הבקשה מהדפדפן');
-        show(String(err));
+        out.textContent = String(err);
+        resultsContainer.classList.remove('hidden');
+      }
+    });
+
+    // הפעלה אוטומטית עם Enter
+    misparInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        btn.click();
       }
     });
   </script>
