@@ -1,172 +1,737 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>בדיקת שירות mislaka-service</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; direction: rtl; }
-    header { background: #0A2540; color: #fff; padding: 16px; font-size: 1.5rem; text-align: center; }
-    .container { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
-    .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1,h2 { margin: 0 0 10px; }
-    .row { display: flex; gap: 10px; flex-wrap: wrap; }
-    input[type="text"] { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; }
-    button { background: #F37253; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
-    th { background: #0A2540; color: #fff; }
-    .amount { color: green; font-weight: bold; }
-    .total-summary { background: #10b981; color: #fff; padding: 12px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
-    pre { background: #111827; color: #fff; padding: 16px; border-radius: 8px; overflow-x: auto; direction: ltr; text-align: left; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>בדיקת שירות mislaka-service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+ <style>
+    :root {
+      --primary: #0A2540;
+      --accent: #F37253;
+      --bg: #F4F6F8;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --success: #10b981;
+      --border: #e5e7eb;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--primary);
+      font-family: 'Varela Round', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+      color: #fff;
+      padding: 16px 20px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: .3px;
+      box-shadow: 0 4px 20px rgba(10, 37, 64, .15);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      box-shadow: 0 8px 25px rgba(10, 37, 64, .1);
+    }
+    
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      margin: 0 0 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      margin: 20px 0 15px;
+      color: var(--primary);
+    }
+    
+    .muted {
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+    
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    input[type="text"] {
+      flex: 1 1 260px;
+      padding: 12px 14px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card);
+    }
+    
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(243, 114, 83, 0.1);
+    }
+    
+    button {
+      background: linear-gradient(135deg, var(--accent) 0%, #e85a3b 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(243, 114, 83, 0.3);
+    }
+    
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(243, 114, 83, 0.4);
+    }
+    
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    
+    pre {
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 16px;
+      border-radius: 12px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      direction: ltr;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, .06);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 3px solid #ffffff70;
+      border-top-color: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+      animation: spin 1s linear infinite;
+      margin-inline-start: 8px;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .chip {
+      display: inline-block;
+      background: #eef2f7;
+      color: #334155;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-inline-start: 6px;
+      font-weight: 500;
+    }
+    
+    /* עיצוב טבלה מעוצבת */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(10, 37, 64, 0.08);
+      background: var(--card);
+    }
+    
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      min-width: 400px;
+    }
+    
+    .styled-table thead tr {
+      background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+      color: white;
+      text-align: center;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .styled-table th, .styled-table td {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .styled-table th {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .styled-table tbody tr {
+      transition: all 0.3s ease;
+    }
+    
+    .styled-table tbody tr:nth-child(even) {
+      background: rgba(10, 37, 64, 0.02);
+    }
+    
+    .styled-table tbody tr:hover {
+      background: rgba(243, 114, 83, 0.05);
+      transform: scale(1.01);
+      box-shadow: 0 2px 10px rgba(10, 37, 64, 0.1);
+    }
+    
+    .styled-table td {
+      font-weight: 500;
+    }
+    
+    .styled-table .amount {
+      color: var(--success);
+      font-weight: 700;
+      font-size: 16px;
+      text-align: left;
+    }
+    
+    /* מחזיק הגרף */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+      box-sizing: border-box;
+    }
+    
+    .chart-wrapper {
+      position: relative;
+      height: 350px;
+    }
+    
+    /* סך הכל מעוצב */
+    .total-summary {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+      text-align: center;
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .total-amount {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      margin: 5px 0;
+    }
+    
+    /* מקרא */
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(10, 37, 64, 0.02);
+      border-radius: 10px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--card);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(10, 37, 64, 0.05);
+      transition: transform 0.2s ease;
+    }
+    
+    .legend-item:hover {
+      transform: translateY(-2px);
+    }
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .legend-text {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    
+    .legend-amount {
+      color: var(--success);
+      font-weight: 700;
+      margin-right: auto;
+      font-size: 14px;
+    }
+    
+    /* גרידת תוצאות */
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    /* רספונסיביות משופרת */
+    @media (max-width: 1024px) {
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 8px;
+        width: 100%;
+        margin: 12px auto;
+      }
+      .card {
+        padding: 16px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+      }
+      .chart-container {
+        max-width: 100%;
+        padding: 15px;
+        margin: 0;
+      }
+      .chart-wrapper {
+        height: 280px;
+      }
+      .legend-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 8px;
+      }
+      .legend-item {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      .legend-text {
+        font-size: 12px;
+      }
+      .legend-amount {
+        font-size: 13px;
+      }
+      .row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      input[type="text"] {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 16px;
+        width: 100%;
+      }
+      .styled-table th, .styled-table td {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+      .styled-table .amount {
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 15px 0 10px;
+      }
+      .total-amount {
+        font-size: 24px;
+      }
+      .total-summary {
+        padding: 12px 16px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 4px;
+      }
+      .card {
+        padding: 12px;
+      }
+      .chart-wrapper {
+        height: 250px;
+      }
+      .styled-table th, .styled-table td {
+        padding: 6px 8px;
+        font-size: 13px;
+      }
+      .total-amount {
+        font-size: 20px;
+      }
+      .legend-text {
+        font-size: 11px;
+      }
+      .legend-amount {
+        font-size: 12px;
+      }
+    }
+    
+    /* מניעת גלילה אופקית */
+    body {
+      overflow-x: hidden;
+    }
+    
+    .container {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .table-container {
+      margin: 15px 0;
+      max-width: 100%;
+    }
+    
+    .styled-table {
+      min-width: 300px;
+      font-size: 14px;
+    }
+    
+</style>
 </head>
 <body>
-  <header>פיננסינט – מידע פנסיוני ללקוח</header>
-  <div class="container">
-    <div class="card">
-      <h1>קריאה לשירות ברשת לפי ת״ז</h1>
-      <div class="row">
-        <input id="mispar" type="text" value="024019507" placeholder="הזן תעודת זהות" />
-        <button id="btn">שלח בקשה</button>
-      </div>
-      <div id="status" style="margin-top: 10px; color: gray;"></div>
-    </div>
+<header style="font-size: 1.8rem;text-align: center;">פיננסינט – מידע פנסיוני ללקוח</header>
+<div class="container">
+<div class="card">
+<h1>קריאה לשירות ברשת לפי תז</h1>
+<p class="muted">הזן תעודת זהות ולחץ "שלח בקשה"</p>
 
-    <div id="resultsContainer" class="hidden">
-      <div class="total-summary">
-        סכום כולל צבור: <span id="totals">0 ש״ח</span>
-      </div>
+<div class="row">
+<label for="mispar" class="chip">mispar (ת״ז)</label>
+<input id="mispar" type="text" value="024019507" inputmode="numeric" autocomplete="off" />
+<button id="btn">שלח בקשה</button>
+</div>
 
-      <div class="card">
-        <h2>פירוט מוצרים</h2>
-        <table>
-          <thead>
-            <tr><th>שם המוצר</th><th>מס׳ פוליסה / חשבון</th><th>סכום צבור</th></tr>
-          </thead>
-          <tbody id="productTable"></tbody>
-        </table>
-      </div>
+<div id="status" class="status"></div>
+</div>
 
-      <div class="card">
-        <h2>גרף התפלגות</h2>
-        <canvas id="pieChart" style="max-height: 350px;"></canvas>
-      </div>
+<div id="resultsContainer" class="hidden">
 
-      <div class="card">
-        <h2>JSON מלא</h2>
-        <pre id="output"></pre>
-      </div>
-    </div>
-  </div>
+<div class="total-summary">
+<div>סכום כולל צבור</div>
+<div id="totals" class="total-amount">0 ש״ח</div>
+</div>
 
-  <script>
-    const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
-    const btn = document.getElementById('btn');
-    const misparInput = document.getElementById('mispar');
-    const out = document.getElementById('output');
-    const statusEl = document.getElementById('status');
-    const resultsContainer = document.getElementById('resultsContainer');
-    let pieChart = null;
+<div class="results-grid">
+<div class="card">
+<h2>פירוט לפי סוג מוצר</h2>
+<div class="table-container">
+<table class="styled-table">
+<thead>
+<tr>
+<th>שם המוצר</th>
+<th>סכום צבור</th>
+</tr>
+</thead>
+<tbody id="productTable"></tbody>
+</table>
+</div>
+</div>
 
-    const chartColors = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9'];
+<div class="card">
+<h2>התפלגות החיסכון</h2>
+<div class="chart-container">
+<div class="chart-wrapper">
+<canvas id="pieChart"></canvas>
+</div>
+</div>
+</div>
+</div>
 
-    function setStatus(msg, loading=false){
-      statusEl.innerHTML = loading ? `${msg} ⏳` : msg;
+<div class="card">
+<h2>מקרא</h2>
+<div id="legend" class="legend-grid"></div>
+</div>
+<div class="card">
+<h2>תוצאה מלאה (JSON)</h2>
+<pre id="output">// התוצאה תופיע כאן</pre>
+</div>
+ 
+</div>
+</div>
+
+<script>
+const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
+const btn = document.getElementById('btn');
+const misparInput = document.getElementById('mispar');
+const out = document.getElementById('output');
+const statusEl = document.getElementById('status');
+const resultsContainer = document.getElementById('resultsContainer');
+let pieChart = null;
+
+// צבעים יפים לגרף
+const chartColors = [
+'#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
+'#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+];
+
+// מיפוי קוד → שם סוג המוצר
+const sugTochnitOHeshbon = {
+1: "פוליסת ביטוח חיים משולב חיסכון",
+2: "קרן פנסיה", 
+3: "קופת גמל",
+4: "קרן השתלמות",
+5: "פוליסת חיסכון טהור",
+6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ״ע SA)",
+7: "ביטוח חיים משכנתא",
+8: "פוליסת סיכון טהור קולקטיב", 
+9: "קופת גמל להשקעה",
+10: "חיסכון לכל ילד"
+};
+
+function setStatus(msg, loading=false){
+statusEl.innerHTML = loading ? `${msg} <span class="spinner"></span>` : msg;
+}
+
+function formatNumber(num) {
+return new Intl.NumberFormat('he-IL').format(Math.round(num));
+}
+
+function createPieChart(data) {
+const ctx = document.getElementById('pieChart').getContext('2d');
+
+if (pieChart) {
+pieChart.destroy();
+}
+
+const labels = [];
+const amounts = [];
+const colors = [];
+
+Object.entries(data).forEach(([type, amount], index) => {
+labels.push(sugTochnitOHeshbon[type] || `סוג ${type}`);
+amounts.push(amount);
+colors.push(chartColors[index % chartColors.length]);
+});
+
+pieChart = new Chart(ctx, {
+type: 'doughnut',
+data: {
+labels: labels,
+datasets: [{
+data: amounts,
+backgroundColor: colors,
+borderColor: '#ffffff',
+borderWidth: 3,
+hoverBorderWidth: 4
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+display: false
+},
+tooltip: {
+backgroundColor: 'rgba(10,37,64,0.9)',
+titleColor: '#ffffff',
+bodyColor: '#ffffff',
+borderColor: '#F37253',
+borderWidth: 1,
+cornerRadius: 8,
+displayColors: true,
+callbacks: {
+label: function(context) {
+const percentage = ((context.parsed / amounts.reduce((a,b) => a+b, 0)) * 100).toFixed(1);
+return `${context.label}: ${formatNumber(context.parsed)} ש״ח (${percentage}%)`;
+}
+}
+}
+},
+cutout: '50%',
+animation: {
+animateRotate: true,
+duration: 1500
+}
+}
+});
+}
+
+function createLegend(data) {
+const legendContainer = document.getElementById('legend');
+legendContainer.innerHTML = '';
+
+Object.entries(data).forEach(([type, amount], index) => {
+const legendItem = document.createElement('div');
+legendItem.className = 'legend-item';
+
+const color = chartColors[index % chartColors.length];
+const productName = sugTochnitOHeshbon[type] || `סוג ${type}`;
+
+legendItem.innerHTML = `
+<div class="legend-color" style="background-color: ${color}"></div>
+<div class="legend-text">${productName}</div>
+<div class="legend-amount">${formatNumber(amount)} ש״ח</div>
+`;
+
+legendContainer.appendChild(legendItem);
+});
+}
+
+function show(data) {
+    // הצגת התוצאה המלאה בבלוק ה-JSON
+    out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+
+    // בדיקה אם יש נתונים תקינים לפני שממשיכים
+    if (!data?.matches || !Array.isArray(data.matches) || data.matches.length === 0) {
+        setStatus('אין נתונים זמינים עבור תעודת הזהות שהוזנה.');
+        resultsContainer.classList.add('hidden');
+        return;
     }
 
-    function formatNumber(num) {
-      return new Intl.NumberFormat('he-IL').format(Math.round(num));
-    }
+    const tbody = document.getElementById("productTable");
+    tbody.innerHTML = '';
 
-    function extractProducts(data) {
-      const products = [];
-      if (!data.matches) return products;
+    // אובייקט לאגירת סכומים לפי סוג מוצר
+    const totalsByType = {};
+    let totalSum = 0;
 
-      data.matches.forEach(match => {
-        match.yeshutYatzran?.forEach(yatzran => {
-          yatzran.mutzarColl?.forEach(mutzar => {
-            products.push({
-              name: mutzar["SHEM-TOCHNIT"] || mutzar["shemTochnit"] || "לא ידוע",
-              number: mutzar["MISPAR-POLISA-O-HESHBON"] || mutzar["misparPolisaOHeshbon"] || "",
-              amount: parseFloat(mutzar.sachHakol || mutzar.totalAmount || 0) || 0
-            });
-            
-          });
+    // נכנסים לתוך המבנה המקונן כדי לחלץ את הנתונים
+    data.matches.forEach(level1 => {
+        level1.forEach(product => {
+            if (product.heshbon && Array.isArray(product.heshbon)) {
+                product.heshbon.forEach(heshbonItem => {
+                    // כאן השינוי - נתוני הסוג נשלפים מ-sugMutzar
+                    const type = heshbonItem.sugMutzar;
+                    if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+                        heshbonItem.taktziv.forEach(taktzivItem => {
+                            if (taktzivItem.yitrot && Array.isArray(taktzivItem.yitrot)) {
+                                taktzivItem.yitrot.forEach(yitraItem => {
+                                    const amount = parseFloat(yitraItem?.yitrot?.totalErkeyPidion) || 0;
+                                    if (type) {
+                                        totalsByType[type] = (totalsByType[type] || 0) + amount;
+                                        totalSum += amount;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         });
-      });
-
-      return products;
-    }
-
-    function createPieChart(data) {
-      const ctx = document.getElementById('pieChart').getContext('2d');
-      if (pieChart) pieChart.destroy();
-
-      const labels = data.map(p => p.name);
-      const amounts = data.map(p => p.amount);
-      const colors = data.map((_, i) => chartColors[i % chartColors.length]);
-
-      pieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels,
-          datasets: [{ data: amounts, backgroundColor: colors, borderColor: '#fff', borderWidth: 2 }]
-        },
-        options: { responsive: true }
-      });
-    }
-
-    function show(data){
-      out.textContent = JSON.stringify(data, null, 2);
-        console.log(JSON.stringify(data, null, 2));
-      const products = extractProducts(data);
-      if (!products.length) return;
-
-      const tbody = document.getElementById("productTable");
-      tbody.innerHTML = '';
-
-      let totalSum = 0;
-      products.forEach(prod => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${prod.name}</td><td>${prod.number}</td><td class="amount">${formatNumber(prod.amount)} ש״ח</td>`;
-        tbody.appendChild(row);
-        totalSum += prod.amount;
-      });
-
-      document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
-      createPieChart(products);
-      resultsContainer.classList.remove('hidden');
-    }
-
-    btn.addEventListener('click', async () => {
-      const mispar = misparInput.value.trim();
-      if(!mispar) { setStatus('❗ יש להזין מספר ת״ז תקין'); return; }
-      
-      const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
-      setStatus('מבצע קריאה לשירות…', true);
-      resultsContainer.classList.add('hidden');
-
-      try {
-        const res = await fetch(url);
-        if(!res.ok){
-          setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
-          out.textContent = await res.text();
-          resultsContainer.classList.remove('hidden');
-          return;
-        }
-        const json = await res.json();
-        setStatus('הצלחה ✅');
-        show(json);
-      } catch(err){
-        setStatus('שגיאה בביצוע הבקשה');
-        out.textContent = String(err);
-        resultsContainer.classList.remove('hidden');
-      }
     });
 
-    misparInput.addEventListener('keypress', e => { if (e.key === 'Enter') btn.click(); });
-  </script>
+    // הכנסת השורות לטבלה
+    Object.entries(totalsByType).forEach(([type, total]) => {
+        if (total > 0) {
+            const row = document.createElement("tr");
+            // כאן השינוי - התאמה של המיפוי לסוג החדש
+            row.innerHTML = `
+            <td>${sugTochnitOHeshbon[type] || `סוג ${type}`}</td>
+            <td class="amount">${formatNumber(total)} ש״ח</td>
+            `;
+            tbody.appendChild(row);
+        }
+    });
+
+    // עדכון סכום כולל
+    document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
+
+    // יצירת גרף ומקרא
+    createPieChart(totalsByType);
+    createLegend(totalsByType);
+
+    // הצגת התוצאות
+    resultsContainer.classList.remove('hidden');
+}
+btn.addEventListener('click', async () => {
+const mispar = misparInput.value.trim();
+if(!mispar){
+setStatus('❗ יש להזין מספר ת״ז תקין');
+return;
+}
+
+const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
+setStatus('מבצע קריאה לשירות…', true);
+resultsContainer.classList.add('hidden');
+
+try{
+const res = await fetch(url, { method:'GET' });
+if(!res.ok){
+const text = await res.text();
+setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
+out.textContent = text;
+resultsContainer.classList.remove('hidden');
+return;
+}
+const json = await res.json();
+setStatus('הצלחה ✅');
+show(json);
+}catch(err){
+setStatus('שגיאה בביצוע הבקשה מהדפדפן');
+out.textContent = String(err);
+resultsContainer.classList.remove('hidden');
+}
+});
+
+// הפעלה אוטומטית עם Enter
+misparInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') {
+btn.click();
+}
+});
+</script>
 </body>
 </html>
