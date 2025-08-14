@@ -10,490 +10,516 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
 <style>
- :root {
- --primary: #0A2540;
- --accent: #F37253;
- --bg: #F4F6F8;
- --card: #ffffff;
- --muted: #6b7280;
- --success: #10b981;
- --border: #e5e7eb;
- }
- 
- * {
- box-sizing: border-box;
- }
- 
- body {
- margin: 0;
- background: var(--bg);
- color: var(--primary);
- font-family: 'Varela Round', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
- line-height: 1.6;
- }
- 
- header {
- background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
- color: #fff;
- padding: 16px 20px;
- font-weight: 700;
- font-family: 'Montserrat', sans-serif;
- letter-spacing: .3px;
- box-shadow: 0 4px 20px rgba(10, 37, 64, .15);
- }
- 
- .container {
- max-width: 1200px;
- margin: 24px auto;
- padding: 0 16px;
- width: 100%;
- box-sizing: border-box;
- }
- 
- .card {
- background: var(--card);
- border-radius: 14px;
- box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
- padding: 24px;
- margin-bottom: 20px;
- transition: box-shadow 0.3s ease;
- }
- 
- .card:hover {
- box-shadow: 0 8px 25px rgba(10, 37, 64, .1);
- }
- 
- h1 {
- font-family: 'Montserrat', sans-serif;
- font-size: 22px;
- margin: 0 0 8px;
- background: linear-gradient(135deg, var(--primary), var(--accent));
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- }
- 
- h2 {
- font-family: 'Montserrat', sans-serif;
- font-size: 18px;
- margin: 20px 0 15px;
- color: var(--primary);
- }
- 
- .muted {
- color: var(--muted);
- margin: 0 0 20px;
- }
- 
- .row {
- display: flex;
- gap: 12px;
- flex-wrap: wrap;
- align-items: center;
- }
+:root {
+--primary: #0A2540;
+--accent: #F37253;
+--bg: #F4F6F8;
+--card: #ffffff;
+--muted: #6b7280;
+--success: #10b981;
+--border: #e5e7eb;
+}
 
-    .product-select-container {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-    }
-    
-    select {
-        flex: 1 1 260px;
-        padding: 12px 14px;
-        border: 2px solid var(--border);
-        border-radius: 10px;
-        font-size: 16px;
-        outline: none;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        background: var(--card);
-        color: var(--primary);
-        appearance: none;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-        background-repeat: no-repeat;
-        background-position: left 10px center;
-        padding-left: 40px;
-        direction: rtl;
-    }
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+background: var(--bg);
+color: var(--primary);
+font-family: 'Varela Round', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+line-height: 1.6;
+}
+
+header {
+background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+color: #fff;
+padding: 16px 20px;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+letter-spacing: .3px;
+box-shadow: 0 4px 20px rgba(10, 37, 64, .15);
+}
+
+.container {
+max-width: 1200px;
+margin: 24px auto;
+padding: 0 16px;
+width: 100%;
+box-sizing: border-box;
+}
+
+.card {
+background: var(--card);
+border-radius: 14px;
+box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+padding: 24px;
+margin-bottom: 20px;
+transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+box-shadow: 0 8px 25px rgba(10, 37, 64, .1);
+}
+
+h1 {
+font-family: 'Montserrat', sans-serif;
+font-size: 22px;
+margin: 0 0 8px;
+background: linear-gradient(135deg, var(--primary), var(--accent));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+h2 {
+font-family: 'Montserrat', sans-serif;
+font-size: 18px;
+margin: 20px 0 15px;
+color: var(--primary);
+}
+
+.muted {
+color: var(--muted);
+margin: 0 0 20px;
+}
+
+.row {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+align-items: center;
+}
+
+  .product-select-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
  
- input[type="text"] {
- flex: 1 1 260px;
- padding: 12px 14px;
- border: 2px solid var(--border);
- border-radius: 10px;
- font-size: 16px;
- outline: none;
- transition: border-color 0.3s ease, box-shadow 0.3s ease;
- background: var(--card);
- }
- 
- input[type="text"]:focus, select:focus {
- border-color: var(--accent);
- box-shadow: 0 0 0 3px rgba(243, 114, 83, 0.1);
- }
- 
- button {
- background: linear-gradient(135deg, var(--accent) 0%, #e85a3b 100%);
- color: #fff;
- border: none;
- border-radius: 10px;
- padding: 12px 18px;
- font-weight: 700;
- cursor: pointer;
- transition: all 0.3s ease;
- box-shadow: 0 2px 10px rgba(243, 114, 83, 0.3);
- }
- 
- button:hover {
- transform: translateY(-1px);
- box-shadow: 0 4px 15px rgba(243, 114, 83, 0.4);
- }
- 
- .status {
- margin-top: 12px;
- font-size: 14px;
- color: var(--muted);
- }
- 
- pre {
- background: #0f172a;
- color: #e5e7eb;
+  select {
+    flex: 1 1 260px;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--card);
+    color: var(--primary);
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    padding-left: 40px;
+    direction: rtl;
+  }
+
+input[type="text"] {
+flex: 1 1 260px;
+padding: 12px 14px;
+border: 2px solid var(--border);
+border-radius: 10px;
+font-size: 16px;
+outline: none;
+transition: border-color 0.3s ease, box-shadow 0.3s ease;
+background: var(--card);
+}
+
+input[type="text"]:focus, select:focus {
+border-color: var(--accent);
+box-shadow: 0 0 0 3px rgba(243, 114, 83, 0.1);
+}
+
+button {
+background: linear-gradient(135deg, var(--accent) 0%, #e85a3b 100%);
+color: #fff;
+border: none;
+border-radius: 10px;
+padding: 12px 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 2px 10px rgba(243, 114, 83, 0.3);
+}
+
+button:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 15px rgba(243, 114, 83, 0.4);
+}
+
+.status {
+margin-top: 12px;
+font-size: 14px;
+color: var(--muted);
+}
+
+pre {
+background: #0f172a;
+color: #e5e7eb;
+padding: 16px;
+border-radius: 12px;
+overflow: auto;
+font-size: 13px;
+line-height: 1.5;
+direction: ltr;
+text-align: left;
+border: 1px solid rgba(255, 255, 255, .06);
+}
+
+.hidden {
+display: none;
+}
+
+.spinner {
+width: 18px;
+height: 18px;
+border: 3px solid #ffffff70;
+border-top-color: #fff;
+border-radius: 50%;
+display: inline-block;
+vertical-align: middle;
+animation: spin 1s linear infinite;
+margin-inline-start: 8px;
+}
+
+@keyframes spin {
+to {
+ transform: rotate(360deg);
+}
+}
+
+.chip {
+display: inline-block;
+background: #eef2f7;
+color: #334155;
+padding: 6px 10px;
+border-radius: 999px;
+font-size: 12px;
+margin-inline-start: 6px;
+font-weight: 500;
+}
+
+/* עיצוב טבלה מעוצבת */
+.table-container {
+overflow-x: auto;
+margin: 20px 0;
+border-radius: 12px;
+box-shadow: 0 4px 15px rgba(10, 37, 64, 0.08);
+background: var(--card);
+}
+
+.styled-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 15px;
+min-width: 400px;
+}
+
+.styled-table thead tr {
+background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+color: white;
+text-align: center;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+}
+
+.styled-table th, .styled-table td {
+padding: 15px 20px;
+border-bottom: 1px solid var(--border);
+}
+
+.styled-table th {
+font-size: 14px;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+position: relative;
+}
+
+.styled-table tbody tr {
+transition: all 0.3s ease;
+}
+
+.styled-table tbody tr:nth-child(even) {
+background: rgba(10, 37, 64, 0.02);
+}
+
+.styled-table tbody tr:hover {
+background: rgba(243, 114, 83, 0.05);
+transform: scale(1.01);
+box-shadow: 0 2px 10px rgba(10, 37, 64, 0.1);
+cursor: pointer;
+}
+
+.styled-table td {
+font-weight: 500;
+}
+
+.styled-table .amount {
+color: var(--success);
+font-weight: 700;
+font-size: 16px;
+text-align: left;
+}
+
+/* מחזיק הגרף */
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 100%;
+margin: 0 auto;
+background: var(--card);
+border-radius: 14px;
+padding: 20px;
+box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+box-sizing: border-box;
+}
+
+.chart-wrapper {
+position: relative;
+height: 350px;
+}
+
+/* סך הכל מעוצב */
+.total-summary {
+background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+color: white;
+text-align: center;
+padding: 15px 20px;
+border-radius: 12px;
+margin: 20px 0;
+box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.total-amount {
+font-size: 28px;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+margin: 5px 0;
+}
+
+.total-summary p {
+margin: 0;
+font-size: 16px;
+font-weight: 500;
+}
+
+/* מקרא */
+.legend-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 12px;
+margin-top: 20px;
+padding: 15px;
+background: rgba(10, 37, 64, 0.02);
+border-radius: 10px;
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 12px;
+background: var(--card);
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(10, 37, 64, 0.05);
+transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+transform: translateY(-2px);
+}
+
+.legend-color {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.legend-text {
+font-size: 13px;
+font-weight: 500;
+line-height: 1.3;
+}
+
+.legend-amount {
+color: var(--success);
+font-weight: 700;
+margin-right: auto;
+font-size: 14px;
+}
+
+/* גרידת תוצאות */
+.results-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+margin-top: 20px;
+}
+#backButton {
+background: #6b7280;
+box-shadow: none;
+font-size: 14px;
+padding: 8px 16px;
+}
+
+#backButton:hover {
+background: #4b5563;
+}
+
+  .details-selector {
+    padding: 24px;
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+    margin-bottom: 20px;
+  }
+
+/* רספונסיביות משופרת */
+@media (max-width: 1024px) {
+.results-grid {
+ grid-template-columns: 1fr;
+}
+}
+
+@media (max-width: 768px) {
+.container {
+ padding: 0 8px;
+ width: 100%;
+ margin: 12px auto;
+}
+.card {
  padding: 16px;
- border-radius: 12px;
- overflow: auto;
- font-size: 13px;
- line-height: 1.5;
- direction: ltr;
- text-align: left;
- border: 1px solid rgba(255, 255, 255, .06);
- }
- 
- .hidden {
- display: none;
- }
- 
- .spinner {
- width: 18px;
- height: 18px;
- border: 3px solid #ffffff70;
- border-top-color: #fff;
- border-radius: 50%;
- display: inline-block;
- vertical-align: middle;
- animation: spin 1s linear infinite;
- margin-inline-start: 8px;
- }
- 
- @keyframes spin {
- to {
-  transform: rotate(360deg);
- }
- }
- 
- .chip {
- display: inline-block;
- background: #eef2f7;
- color: #334155;
- padding: 6px 10px;
- border-radius: 999px;
- font-size: 12px;
- margin-inline-start: 6px;
- font-weight: 500;
- }
- 
- /* עיצוב טבלה מעוצבת */
- .table-container {
- overflow-x: auto;
- margin: 20px 0;
- border-radius: 12px;
- box-shadow: 0 4px 15px rgba(10, 37, 64, 0.08);
- background: var(--card);
- }
- 
- .styled-table {
- width: 100%;
- border-collapse: collapse;
- font-size: 15px;
- min-width: 400px;
- }
- 
- .styled-table thead tr {
- background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
- color: white;
- text-align: center;
- font-weight: 700;
- font-family: 'Montserrat', sans-serif;
- }
- 
- .styled-table th, .styled-table td {
- padding: 15px 20px;
- border-bottom: 1px solid var(--border);
- }
- 
- .styled-table th {
- font-size: 14px;
- letter-spacing: 0.5px;
- text-transform: uppercase;
- position: relative;
- }
- 
- .styled-table tbody tr {
- transition: all 0.3s ease;
- }
- 
- .styled-table tbody tr:nth-child(even) {
- background: rgba(10, 37, 64, 0.02);
- }
- 
- .styled-table tbody tr:hover {
- background: rgba(243, 114, 83, 0.05);
- transform: scale(1.01);
- box-shadow: 0 2px 10px rgba(10, 37, 64, 0.1);
- cursor: pointer;
- }
- 
- .styled-table td {
- font-weight: 500;
- }
- 
- .styled-table .amount {
- color: var(--success);
- font-weight: 700;
- font-size: 16px;
- text-align: left;
- }
- 
- /* מחזיק הגרף */
- .chart-container {
- position: relative;
- width: 100%;
- max-width: 100%;
- margin: 0 auto;
- background: var(--card);
- border-radius: 14px;
- padding: 20px;
- box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
- box-sizing: border-box;
- }
- 
- .chart-wrapper {
- position: relative;
- height: 350px;
- }
- 
- /* סך הכל מעוצב */
- .total-summary {
- background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
- color: white;
- text-align: center;
- padding: 15px 20px;
- border-radius: 12px;
- margin: 20px 0;
- box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
- }
- 
- .total-amount {
- font-size: 28px;
- font-weight: 700;
- font-family: 'Montserrat', sans-serif;
- margin: 5px 0;
- }
- 
- /* מקרא */
- .legend-grid {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
- gap: 12px;
- margin-top: 20px;
- padding: 15px;
- background: rgba(10, 37, 64, 0.02);
+ margin-bottom: 15px;
  border-radius: 10px;
- }
- 
- .legend-item {
- display: flex;
- align-items: center;
- gap: 10px;
- padding: 8px 12px;
- background: var(--card);
- border-radius: 8px;
- box-shadow: 0 2px 8px rgba(10, 37, 64, 0.05);
- transition: transform 0.2s ease;
- }
- 
- .legend-item:hover {
- transform: translateY(-2px);
- }
- 
- .legend-color {
- width: 16px;
- height: 16px;
- border-radius: 50%;
- flex-shrink: 0;
- }
- 
- .legend-text {
- font-size: 13px;
- font-weight: 500;
- line-height: 1.3;
- }
- 
- .legend-amount {
- color: var(--success);
- font-weight: 700;
- margin-right: auto;
- font-size: 14px;
- }
- 
- /* גרידת תוצאות */
- .results-grid {
- display: grid;
- grid-template-columns: 1fr 1fr;
- gap: 20px;
- margin-top: 20px;
- }
- #backButton {
- background: #6b7280;
- box-shadow: none;
- font-size: 14px;
- padding: 8px 16px;
- }
-
- #backButton:hover {
- background: #4b5563;
- }
-
-    .details-selector {
-        padding: 24px;
-        background: var(--card);
-        border-radius: 14px;
-        box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
-        margin-bottom: 20px;
-    }
- 
- /* רספונסיביות משופרת */
- @media (max-width: 1024px) {
- .results-grid {
-  grid-template-columns: 1fr;
- }
- }
- 
- @media (max-width: 768px) {
- .container {
-  padding: 0 8px;
-  width: 100%;
-  margin: 12px auto;
- }
- .card {
-  padding: 16px;
-  margin-bottom: 15px;
-  border-radius: 10px;
- }
- .chart-container {
-  max-width: 100%;
-  padding: 15px;
-  margin: 0;
- }
- .chart-wrapper {
-  height: 280px;
- }
- .legend-grid {
-  grid-template-columns: 1fr;
-  padding: 10px;
-  gap: 8px;
- }
- .legend-item {
-  padding: 6px 10px;
-  font-size: 12px;
- }
- .legend-text {
-  font-size: 12px;
- }
- .legend-amount {
-  font-size: 13px;
- }
- .row {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
- }
- input[type="text"] {
-  flex: 1;
-  padding: 10px 12px;
-  font-size: 16px;
- }
- button {
-  padding: 10px 16px;
-  width: 100%;
- }
- .styled-table th, .styled-table td {
-  padding: 8px 10px;
-  font-size: 14px;
- }
- .styled-table .amount {
-  font-size: 14px;
- }
- h1 {
-  font-size: 18px;
- }
- h2 {
-  font-size: 16px;
-  margin: 15px 0 10px;
- }
- .total-amount {
-  font-size: 24px;
- }
- .total-summary {
-  padding: 12px 16px;
- }
- }
- 
- @media (max-width: 480px) {
- .container {
-  padding: 0 4px;
- }
- .card {
-  padding: 12px;
- }
- .chart-wrapper {
-  height: 250px;
- }
- .styled-table th, .styled-table td {
-  padding: 6px 8px;
-  font-size: 13px;
- }
- .total-amount {
-  font-size: 20px;
- }
- .legend-text {
-  font-size: 11px;
- }
- .legend-amount {
-  font-size: 12px;
- }
- }
- 
- /* מניעת גלילה אופקית */
- body {
- overflow-x: hidden;
- }
- 
- .container {
- width: 100%;
- box-sizing: border-box;
- }
- 
- .table-container {
- margin: 15px 0;
+}
+.chart-container {
  max-width: 100%;
- }
- 
- .styled-table {
- min-width: 300px;
+ padding: 15px;
+ margin: 0;
+}
+.chart-wrapper {
+ height: 280px;
+}
+.legend-grid {
+ grid-template-columns: 1fr;
+ padding: 10px;
+ gap: 8px;
+}
+.legend-item {
+ padding: 6px 10px;
+ font-size: 12px;
+}
+.legend-text {
+ font-size: 12px;
+}
+.legend-amount {
+ font-size: 13px;
+}
+.row {
+ flex-direction: column;
+ align-items: stretch;
+ gap: 8px;
+}
+input[type="text"] {
+ flex: 1;
+ padding: 10px 12px;
+ font-size: 16px;
+}
+button {
+ padding: 10px 16px;
+ width: 100%;
+}
+.styled-table th, .styled-table td {
+ padding: 8px 10px;
  font-size: 14px;
- }
- 
+}
+.styled-table .amount {
+ font-size: 14px;
+}
+h1 {
+ font-size: 18px;
+}
+h2 {
+ font-size: 16px;
+ margin: 15px 0 10px;
+}
+.total-amount {
+ font-size: 24px;
+}
+.total-summary {
+ padding: 12px 16px;
+}
+}
+
+@media (max-width: 480px) {
+.container {
+ padding: 0 4px;
+}
+.card {
+ padding: 12px;
+}
+.chart-wrapper {
+ height: 250px;
+}
+.styled-table th, .styled-table td {
+ padding: 6px 8px;
+ font-size: 13px;
+}
+.total-amount {
+ font-size: 20px;
+}
+.legend-text {
+ font-size: 11px;
+}
+.legend-amount {
+ font-size: 12px;
+}
+}
+
+/* מניעת גלילה אופקית */
+body {
+overflow-x: hidden;
+}
+
+.container {
+width: 100%;
+box-sizing: border-box;
+}
+
+.table-container {
+margin: 15px 0;
+max-width: 100%;
+}
+
+.styled-table {
+min-width: 300px;
+font-size: 14px;
+}
+
+.detail-card h4 {
+ font-size: 15px;
+ margin: 10px 0 5px;
+ color: var(--primary);
+}
+
+.detail-card ul {
+ margin: 0;
+ padding-right: 20px;
+}
+
+.detail-card li {
+ margin-bottom: 5px;
+ font-size: 14px;
+}
+
+.detail-card li strong {
+ font-weight: 700;
+}
+
 </style>
 </head>
 <body>
@@ -558,27 +584,27 @@
 </div>
 
 <div id="detailsContainer" class="hidden">
- <div class="card details-selector-card">
-  <div class="row" style="align-items: center; justify-content: space-between;">
-   <h2 id="detailsTitle">פירוט חשבונות - [שם המוצר]</h2>
-   <button id="backButton">חזרה</button>
-  </div>
-
-  <div class="details-selector">
-   <h3>בחר מוצר לצפייה בפרטים:</h3>
-   <div class="product-select-container">
-    <select id="productSelector">
-     <option value="">בחר סוג מוצר...</option>
-    </select>
-    <button id="showProductDetailsBtn">הצג פרטים</button>
-   </div>
-  </div>
-  
-  <div id="accountDetails">
-     </div>
+<div class="card details-selector-card">
+ <div class="row" style="align-items: center; justify-content: space-between;">
+ <h2 id="detailsTitle">פירוט חשבונות - [שם המוצר]</h2>
+ <button id="backButton">חזרה</button>
  </div>
+
+ <div class="details-selector">
+ <h3>בחר מוצר לצפייה בפרטים:</h3>
+ <div class="product-select-container">
+  <select id="productSelector">
+  <option value="">בחר סוג מוצר...</option>
+  </select>
+  <button id="showProductDetailsBtn">הצג פרטים</button>
+ </div>
+ </div>
+
+ <div id="accountDetails">
+  </div>
 </div>
- 
+</div>
+
 </div>
 
 <script>
@@ -603,20 +629,20 @@ let rawData = null;
 
 // צבעים יפים לגרף
 const chartColors = [
-'#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
+'#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
 '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
 ];
 
 // מיפוי קוד → שם סוג המוצר
 const sugTochnitOHeshbon = {
 1: "פוליסת ביטוח חיים משולב חיסכון",
-2: "קרן פנסיה", 
+2: "קרן פנסיה",
 3: "קופת גמל",
 4: "קרן השתלמות",
 5: "פוליסת חיסכון טהור",
 6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ״ע SA)",
 7: "ביטוח חיים משכנתא",
-8: "פוליסת סיכון טהור קולקטיב", 
+8: "פוליסת סיכון טהור קולקטיב",
 9: "קופת גמל להשקעה",
 10: "חיסכון לכל ילד"
 };
@@ -626,6 +652,9 @@ statusEl.innerHTML = loading ? `${msg} <span class="spinner"></span>` : msg;
 }
 
 function formatNumber(num) {
+if (num === null || num === undefined) {
+return 'אין נתון';
+}
 return new Intl.NumberFormat('he-IL').format(Math.round(num));
 }
 
@@ -712,98 +741,81 @@ legendContainer.appendChild(legendItem);
 }
 
 function show(data) {
- rawData = data; // שמירת הנתונים הגולמיים
- // הצגת התוצאה המלאה בבלוק ה-JSON
- out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+rawData = data;
+out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
 
- // בדיקה אם יש נתונים תקינים לפני שממשיכים
- if (!data?.matches || !Array.isArray(data.matches) || data.matches.length === 0) {
-  setStatus('אין נתונים זמינים עבור תעודת הזהות שהוזנה.');
-  resultsContainer.classList.add('hidden');
-  return;
- }
+if (!data?.matches || !Array.isArray(data.matches) || data.matches.length === 0) {
+ setStatus('אין נתונים זמינים עבור תעודת הזהות שהוזנה.');
+ resultsContainer.classList.add('hidden');
+ return;
+}
 
- const tbody = document.getElementById("productTable");
- tbody.innerHTML = '';
+const tbody = document.getElementById("productTable");
+tbody.innerHTML = '';
 
- // אובייקט לאגירת סכומים לפי סוג מוצר
- const totalsByType = {};
- let totalSum = 0;
+const totalsByType = {};
+let totalSum = 0;
 
- // נכנסים לתוך המבנה המקונן כדי לחלץ את הנתונים
- data.matches.forEach(level1 => {
-  level1.forEach(product => {
-   if (product.heshbon && Array.isArray(product.heshbon)) {
-    product.heshbon.forEach(heshbonItem => {
-     // כאן השינוי - נתוני הסוג נשלפים מ-sugMutzar
-     const type = heshbonItem.sugMutzar;
-     if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
-      heshbonItem.taktziv.forEach(taktzivItem => {
-       if (taktzivItem.yitrot && Array.isArray(taktzivItem.yitrot)) {
-        taktzivItem.yitrot.forEach(yitraItem => {
-         const amount = parseFloat(yitraItem?.yitrot?.totalErkeyPidion) || 0;
-         if (type) {
-          totalsByType[type] = (totalsByType[type] || 0) + amount;
-          totalSum += amount;
-         }
-        });
-       }
-      });
-     }
+data.matches.forEach(level1 => {
+ level1.forEach(yatzran => {
+ if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+  yatzran.heshbonColl.forEach(heshbonItem => {
+  const type = heshbonItem.sugMutzar;
+  if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+   heshbonItem.taktziv.forEach(taktzivItem => {
+   if (taktzivItem.yitrot && Array.isArray(taktzivItem.yitrot)) {
+    taktzivItem.yitrot.forEach(yitraItem => {
+    // מבנה חדש, צריך לגשת דרך yitrot
+    const amount = parseFloat(yitraItem?.yitrot?.totalErkeyPidion) || 0;
+    if (type) {
+     totalsByType[type] = (totalsByType[type] || 0) + amount;
+     totalSum += amount;
+    }
     });
    }
-  });
- });
-
- // הכנסת השורות לטבלה
- Object.entries(totalsByType).forEach(([type, total]) => {
-  
-  if (total > 0) {
-   const row = document.createElement("tr");
-   // כאן השינוי - התאמה של המיפוי לסוג החדש
-   row.innerHTML = `
-   <td>${sugTochnitOHeshbon[type] || `סוג ${type}`}</td>
-   <td class="amount">${formatNumber(total)} ש״ח</td>
-   `;
-   row.addEventListener('click', () => {
-   showDetails(type);
    });
-   tbody.appendChild(row);
   }
+  });
+ }
  });
+});
 
-    // עדכון הרשימה הנפתחת בפרטי המוצרים
-    updateProductSelector(totalsByType);
+Object.entries(totalsByType).forEach(([type, total]) => {
+ if (total > 0) {
+ const row = document.createElement("tr");
+ row.innerHTML = `
+ <td>${sugTochnitOHeshbon[type] || `סוג ${type}`}</td>
+ <td class="amount">${formatNumber(total)} ש״ח</td>
+ `;
+ row.addEventListener('click', () => {
+ showDetails(type);
+ });
+ tbody.appendChild(row);
+ }
+});
 
-
- // עדכון סכום כולל
- document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
-
- // יצירת גרף ומקרא
- createPieChart(totalsByType);
- createLegend(totalsByType);
-
- // הצגת התוצאות
- resultsContainer.classList.remove('hidden');
+updateProductSelector(totalsByType);
+document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
+createPieChart(totalsByType);
+createLegend(totalsByType);
+resultsContainer.classList.remove('hidden');
 }
 
-// פונקציה חדשה לעדכון הרשימה הנפתחת
 function updateProductSelector(totals) {
-    productSelector.innerHTML = '<option value="">בחר סוג מוצר...</option>';
-    Object.keys(totals).forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = sugTochnitOHeshbon[type] || `סוג ${type}`;
-        productSelector.appendChild(option);
-    });
+ productSelector.innerHTML = '<option value="">בחר סוג מוצר...</option>';
+ Object.keys(totals).forEach(type => {
+  const option = document.createElement('option');
+  option.value = type;
+  option.textContent = sugTochnitOHeshbon[type] || `סוג ${type}`;
+  productSelector.appendChild(option);
+ });
 }
 
-// פונקציה חדשה להצגת פרטים מהרשימה הנפתחת
 function showDetailsFromSelector() {
-    const selectedType = productSelector.value;
-    if (selectedType) {
-        showDetails(selectedType);
-    }
+ const selectedType = productSelector.value;
+ if (selectedType) {
+  showDetails(selectedType);
+ }
 }
 
 
@@ -838,7 +850,6 @@ resultsContainer.classList.remove('hidden');
 }
 });
 
-// הפעלה אוטומטית עם Enter
 misparInput.addEventListener('keypress', (e) => {
 if (e.key === 'Enter') {
 btn.click();
@@ -846,56 +857,99 @@ btn.click();
 });
 
 function showDetails(productType) {
- const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
- detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
- accountDetails.innerHTML = '';
+const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
+detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
+accountDetails.innerHTML = '';
 
- rawData.matches.forEach(level1 => {
-  level1.forEach(yatzran => {
-   if (yatzran.heshbon && Array.isArray(yatzran.heshbon)) {
-    yatzran.heshbon.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
-     // יצירת אלמנט לכל חשבון
-     const heshbonCard = document.createElement('div');
-     heshbonCard.className = 'card';
-     heshbonCard.innerHTML = `
-      <h3>${heshbonItem.shemTochnit} - חשבון מספר ${heshbonItem.misparHeshbon}</h3>
-      <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto || 'אין נתון'}%</p>
-      <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
-      <h4>מסלולי השקעה:</h4>
-      <ul>
-       ${heshbonItem.taktziv?.flatMap(t => t.maslulim || [])
-        .map(m => {
-         const maslul = m.maslul;
-         if (maslul?.shemMaslulHashkaa) {
-          return `<li>
-           ${maslul.shemMaslulHashkaa}
-           <br>
-           <span>דמי ניהול מחיסכון: ${maslul.sheurDmeiNihulHisachon || 'אין נתון'}% | 
-           דמי ניהול מהפקדה: ${maslul.sheurDmeiNihulHafkada || 'אין נתון'}%</span>
-           <br>
-           <span>סכום צבור: ${formatNumber(maslul.schumZviraBeMaslul || 0)} ש״ח</span>
-          </li>`;
-         }
-         return '';
-        }).join('') || '<li>אין מסלולים זמינים</li>'}
-      </ul>
+rawData.matches.forEach(level1 => {
+ level1.forEach(yatzran => {
+ // פונקציית עזר למציאת שם מעסיק לפי מספר
+ const getMaasikName = (mispar) => {
+  if (!yatzran.maasikimColl) return 'לא ידוע';
+  const maasik = yatzran.maasikimColl.find(m => m.misparMaasikBeYatzranR === mispar);
+  return maasik?.shemMaasik || 'לא ידוע';
+ };
+
+ if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+  yatzran.heshbonColl.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
+  const heshbonCard = document.createElement('div');
+  heshbonCard.className = 'card detail-card';
+  
+  let taktzivHtml = '';
+  if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+   taktzivHtml = heshbonItem.taktziv.flatMap(t => {
+   const maasikMispar = t.maasikimM?.[0]?.misparMaasikBeYatzranM;
+   const maasikName = getMaasikName(maasikMispar);
+   
+   const maslulimHtml = (t.maslulim || [])
+    .map(m => {
+    const maslul = m.maslul;
+    if (maslul?.shemMaslulHashkaa) {
+     const schumZvira = maslul.schumZviraBeMaslul != null ? formatNumber(maslul.schumZviraBeMaslul) : 'אין נתון';
+     const dmeiNihulHisachon = maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : 'אין נתון';
+     const dmeiNihulHafkada = maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : 'אין נתון';
+     return `
+      <li>
+       <strong>${maslul.shemMaslulHashkaa}</strong><br>
+       סכום צבור: ${schumZvira} ש״ח<br>
+       דמי ניהול מחיסכון: ${dmeiNihulHisachon} | מהפקדה: ${dmeiNihulHafkada}
+      </li>
      `;
-     accountDetails.appendChild(heshbonCard);
-    });
-   }
-  });
- });
+    }
+    return '';
+    }).join('');
 
- resultsContainer.classList.add('hidden');
- detailsContainer.classList.remove('hidden');
+   if (maslulimHtml) {
+    return `
+    <h4>מסלולי השקעה (מעסיק: ${maasikName})</h4>
+    <ul>${maslulimHtml}</ul>
+    `;
+   }
+   return '';
+   }).join('');
+  }
+  
+  let prishaHtml = '';
+  if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0) {
+   prishaHtml = heshbonItem.prisha.map(p => {
+   const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
+   const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
+   const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
+
+   return `
+    <h4>יתרות לפרישה (גיל ${gilPrisha}):</h4>
+    <ul>
+     <li>חיסכון מצטבר צפוי: ${hisachonTzafoi} ש״ח</li>
+     <li>חיסכון מצטבר צפוי (ללא תוספות): ${hisachonTzafoiLelo} ש״ח</li>
+    </ul>
+   `;
+   }).join('');
+  }
+
+  heshbonCard.innerHTML = `
+  <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+  <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+  <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+  <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+  <p><strong>מסלול ביטוח:</strong> ${heshbonItem.shemMaslulHabituah || 'אין נתון'}</p>
+  ${taktzivHtml}
+  ${prishaHtml}
+  `;
+  accountDetails.appendChild(heshbonCard);
+  });
+ }
+ });
+});
+
+resultsContainer.classList.add('hidden');
+detailsContainer.classList.remove('hidden');
 }
 
 backButton.addEventListener('click', () => {
- detailsContainer.classList.add('hidden');
- resultsContainer.classList.remove('hidden');
+detailsContainer.classList.add('hidden');
+resultsContainer.classList.remove('hidden');
 });
 
-// מאזין לאירוע לחיצה על כפתור הפירוט מהרשימה הנפתחת
 showProductDetailsBtn.addEventListener('click', showDetailsFromSelector);
 </script>
 </body>
