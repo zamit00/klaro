@@ -873,11 +873,14 @@ rawData.matches.forEach(level1 => {
  };
 
  if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
-  yatzran.heshbonColl.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
-  const sachir=heshbonItem.sugTochnitOHeshbon;
-  const heshbonCard = document.createElement('div');
-  heshbonCard.className = 'card detail-card';
-  
+    yatzran.heshbonColl.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
+    const sachir=heshbonItem.sugTochnitOHeshbon;
+    const heshbonCard = document.createElement('div');
+    heshbonCard.className = 'card detail-card';
+    heshbonCard.style.boxShadow = '5px 10px 10px  rgba(0, 0, 0, 0.2)';
+    heshbonCard.style.maxWidth = '600px';
+    heshbonCard.style.marginLeft = 'auto';
+    heshbonCard.style.marginRight = 'auto';
   let taktzivHtml = '';
   if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
    taktzivHtml = heshbonItem.taktziv.flatMap(t => {
