@@ -863,21 +863,25 @@ accountDetails.innerHTML = '';
 
 rawData.matches.forEach(level1 => {
  level1.forEach(yatzran => {
+   
  // פונקציית עזר למציאת שם מעסיק לפי מספר
  const getMaasikName = (mispar) => {
-  if (!yatzran.maasikimColl) return 'לא ידוע';
-  const maasik = yatzran.maasikimColl.find(m => m.misparMaasikBeYatzranR === mispar);
-  return maasik?.shemMaasik || 'לא ידוע';
+    //if (!yatzran.maasikimColl) return 'לא ידוע';
+    const maasik = yatzran.maasikimColl.filter(m =>
+     Number(m.misparMaasikBeYatzranR) === Number( mispar));
+        return  maasik[0].shemMaasik;
  };
 
  if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
   yatzran.heshbonColl.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
+  const sachir=heshbonItem.sugTochnitOHeshbon;
   const heshbonCard = document.createElement('div');
   heshbonCard.className = 'card detail-card';
   
   let taktzivHtml = '';
   if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
    taktzivHtml = heshbonItem.taktziv.flatMap(t => {
+
    const maasikMispar = t.maasikimM?.[0]?.misparMaasikBeYatzranM;
    const maasikName = getMaasikName(maasikMispar);
    const dmeiNihulAchid=(t.dmeinihul.length || []);
@@ -922,10 +926,20 @@ rawData.matches.forEach(level1 => {
     }).join('');
 
    if (maslulimHtml) {
-    return `
-    <h4>מסלולי השקעה (מעסיק: ${maasikName})</h4>
-    <ul>${maslulimHtml}</ul>
-    `;
+    if(sachir === '1' || sachir === '3' || sachir === '6' ){
+      return `
+      <p><strong>מעסיק:</strong> ${maasikName}</p>
+      <h4>מסלולי השקעה :</h4>
+      <ul>${maslulimHtml}</ul>
+      `;
+    }
+    else{
+      return `
+      <h4>מסלולי השקעה </h4>
+      <ul>${maslulimHtml}</ul>
+      `;
+    }
+    
    }
    return '';
    }).join('');
@@ -949,7 +963,9 @@ rawData.matches.forEach(level1 => {
   }
 
   if (heshbonItem.shemMaslulHabituah &&   heshbonItem.shemMaslulHabituah.$ &&
-  heshbonItem.shemMaslulHabituah.$["xsi:nil"] === "true"){
+(heshbonItem.shemMaslulHabituah.$["xsi:nil"] === "true" || 
+    heshbonItem.shemMaslulHabituah.$["p5:nil"] === "true"
+)){
     heshbonCard.innerHTML = `
   <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
   <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
@@ -962,7 +978,7 @@ rawData.matches.forEach(level1 => {
   else{
   heshbonCard.innerHTML = `
   <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
-  <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+  <p><strong>שם תוכנית:</strong> ${heshbonItem.shemTochnit}</p>
   <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
   <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
   <p><strong>מסלול ביטוח:</strong> ${heshbonItem.shemMaslulHabituah || 'אין נתון'}</p>
