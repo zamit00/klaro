@@ -530,7 +530,7 @@ font-size: 14px;
 <p class="muted">הזן תעודת זהות ולחץ "שלח בקשה"</p>
 
 <div class="row">
-<label for="mispar" class="chip">הקלד ת"ז</label>
+<label for="mispar" class="chip">mispar (ת״ז)</label>
 <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" />
 <button id="btn">שלח בקשה</button>
 </div>
@@ -575,7 +575,7 @@ font-size: 14px;
 <h2>מקרא</h2>
 <div id="legend" class="legend-grid"></div>
 </div>
-<div class="card" style="display:none">
+<div class="card">
 <h2>תוצאה מלאה (JSON)</h2>
 <pre id="output">// התוצאה תופיע כאן</pre>
 </div>
@@ -938,6 +938,7 @@ rawData.matches.forEach(level1 => {
     }
     else{
       return `
+      <p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>
       <h4>מסלולי השקעה </h4>
       <ul>${maslulimHtml}</ul>
       `;
