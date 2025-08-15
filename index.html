@@ -880,22 +880,44 @@ rawData.matches.forEach(level1 => {
    taktzivHtml = heshbonItem.taktziv.flatMap(t => {
    const maasikMispar = t.maasikimM?.[0]?.misparMaasikBeYatzranM;
    const maasikName = getMaasikName(maasikMispar);
-   
+   const dmeiNihulAchid=(t.dmeinihul.length || []);
+    for(let i=0; i<t.dmeinihul.length; i++) {
+      if(t.dmeinihul[i].sugHotzaa === '1' && t.dmeinihul[i].dmeiNihulAchidim === '1') {    
+        var dmeiNihulAchidH=1;
+        var dmeiNihulHisachon=Math.round(t.dmeinihul[i].sheurDmeiNihul,2) != null ? `${t.dmeinihul[i].sheurDmeiNihul}%` : 'אין נתון';
+        break;
+      }
+    }
+    for(let i=0; i<t.dmeinihul.length; i++) {
+      if(t.dmeinihul[i].sugHotzaa === '2' && t.dmeinihul[i].dmeiNihulAchidim === '1') {
+        var dmeiNihulAchidz=1;
+        var dmeiNihulHafkada=Math.round(t.dmeinihul[i].sheurDmeiNihul,2) != null ? `${t.dmeinihul[i].sheurDmeiNihul}%` : 'אין נתון';
+        break;
+      }
+    }
+    
    const maslulimHtml = (t.maslulim || [])
     .map(m => {
     const maslul = m.maslul;
     if (maslul?.shemMaslulHashkaa) {
      const schumZvira = maslul.schumZviraBeMaslul != null ? formatNumber(maslul.schumZviraBeMaslul) : 'אין נתון';
-     const dmeiNihulHisachon = maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : 'אין נתון';
-     const dmeiNihulHafkada = maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : 'אין נתון';
-     return `
-      <li>
-       <strong>${maslul.shemMaslulHashkaa}</strong><br>
-       סכום צבור: ${schumZvira} ש״ח<br>
-       דמי ניהול מחיסכון: ${dmeiNihulHisachon} | מהפקדה: ${dmeiNihulHafkada}
-      </li>
-     `;
+    if (dmeiNihulAchidH!==1){
+      dmeiNihulHisachon = maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : 'אין נתון';
     }
+    if (dmeiNihulAchidz!==1){
+      dmeiNihulHafkada = maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : 'אין נתון';
+    }
+     
+  return `
+          <li>
+          <strong>${maslul.shemMaslulHashkaa}</strong><br>
+          סכום צבור: ${schumZvira} ש״ח<br>
+          דמי ניהול מחיסכון: ${dmeiNihulHisachon} | מהפקדה: ${dmeiNihulHafkada}
+          </li>
+        `;   
+
+    
+  }
     return '';
     }).join('');
 
