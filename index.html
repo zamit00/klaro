@@ -948,6 +948,18 @@ rawData.matches.forEach(level1 => {
    }).join('');
   }
 
+  if (heshbonItem.shemMaslulHabituah &&   heshbonItem.shemMaslulHabituah.$ &&
+  heshbonItem.shemMaslulHabituah.$["xsi:nil"] === "true"){
+    heshbonCard.innerHTML = `
+  <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+  <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+  <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+  <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+  ${taktzivHtml}
+  ${prishaHtml}
+  `;
+  }
+  else{
   heshbonCard.innerHTML = `
   <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
   <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
@@ -957,6 +969,9 @@ rawData.matches.forEach(level1 => {
   ${taktzivHtml}
   ${prishaHtml}
   `;
+}
+
+
   accountDetails.appendChild(heshbonCard);
   });
  }
