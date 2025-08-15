@@ -821,7 +821,7 @@ function showDetailsFromSelector() {
 
 btn.addEventListener('click', async () => {
 const mispar = misparInput.value.trim();
-if(!mispar){
+if(!mispar || mispar.length < 8 ){
 setStatus('❗ יש להזין מספר ת״ז תקין');
 return;
 }
