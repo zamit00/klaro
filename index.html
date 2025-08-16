@@ -909,7 +909,7 @@ function showDetails(productType) {
                                 }
                             }
 
-                            if (t.maslulim && Array.isArray(t.maslulim)) {
+                            if (t.maslulim) {
                                 t.maslulim.forEach(m => {
                                     const maslul = m.maslul;
                                     const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
