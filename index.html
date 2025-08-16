@@ -861,19 +861,16 @@ function showDetails(productType) {
     accountDetails.innerHTML = '';
 
     const getMaasikName = (yatzran, mispar) => {
-        const maasik = yatzran.maasikimColl?.find(m =>
-            String(m.misparMaasikBeYatzranR) === String(mispar));
-
-        if (maasik?.shemMaasik && typeof maasik.shemMaasik === 'object' && maasik.shemMaasik['$'] ) {
+        const maasik = yatzran.maasikimColl?.find(m => String(m.misparMaasikBeYatzranR) === String(mispar));
+        if (maasik?.shemMaasik && typeof maasik.shemMaasik === 'object' && maasik.shemMaasik['$']) {
             return '';
         }
-
         return maasik?.shemMaasik || 'לא ידוע';
     };
 
     rawData.matches.forEach(level1 => {
         level1.forEach(yatzran => {
-            const sugKvetz=yatzran.sugKvetz || '';
+            const sugKvetz = yatzran.sugKvetz || '';
             if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
                 heshbonItem: for (const heshbonItem of yatzran.heshbonColl) {
                     if (String(heshbonItem.sugMutzar) !== String(productType)) {
@@ -889,6 +886,7 @@ function showDetails(productType) {
 
                     if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
                         heshbonItem.taktziv.forEach(t => {
+                            
                             const activeMaasik = t.maasikimM?.find(m => m.statusMaasik === '1');
                             const maasikMispar = activeMaasik?.misparMaasikBeYatzranM;
                             
@@ -896,7 +894,6 @@ function showDetails(productType) {
                                 maasikName = getMaasikName(yatzran, maasikMispar);
                             }
 
-                            // בדיקה לדמי ניהול אחידים
                             if (t.dmeinihul && Array.isArray(t.dmeinihul)) {
                                 const hisachonFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '1');
                                 const hafkadaFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '2');
@@ -917,7 +914,6 @@ function showDetails(productType) {
                                     if (maslul?.kodMaslul && amount > 0) {
                                         const kod = maslul.kodMaslul;
                                         
-                                        // שימוש בדמי ניהול אחידים אם נמצאו
                                         const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
                                         const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
                                         
@@ -967,7 +963,7 @@ function showDetails(productType) {
                             const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
                             const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
                             const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
-
+                            
                             return `
                                 <h4>יתרות לפרישה (גיל ${Math.round(gilPrisha)}):</h4>
                                 <ul>
@@ -978,42 +974,38 @@ function showDetails(productType) {
                         }).join('');
                     }
                     
-                        
-                    const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
-                        ? 'אין נתון'
-                        : heshbonItem.shemMaslulHabituah || 'אין נתון';
-                        console.log(sugKvetz);
+                    const taarich = heshbonItem.taarichHitztarfutMutzar;
+                    const formattedDate = (taarich && typeof taarich === 'string' && taarich.length === 8) ? `${taarich.slice(6)}/${taarich.slice(4,6)}/${taarich.slice(0,4)}` : 'אין נתון';
+
+                    // תיקון: הוספת "קרנות פנסיה חדשות" לתנאי ה-if
                     if(sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
-                        sugKvetz === 'קרנות פנסיה ותיקות'){
-                            heshbonCard.innerHTML = `
-                        <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
-                        <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
-                        <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-                        <p><strong>תאריך הצטרפות:</strong> ${
-                            heshbonItem.taarichHitztarfutMutzar.slice(6)+"/"+
-                        heshbonItem.taarichHitztarfutMutzar.slice(4,6)+"/"+
-                        heshbonItem.taarichHitztarfutMutzar.slice(0,4)}</p>
-                        ${maasikSection}
-                        ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
-                        ${prishaHtml}
-                    `;
-                        }
-                    else{
+                        sugKvetz === 'קרנות פנסיה ותיקות' || sugKvetz === 'קרנות פנסיה חדשות') {
                         heshbonCard.innerHTML = `
-                        <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
-                        <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
-                        <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar.slice(6)+"/"+
-                        heshbonItem.taarichHitztarfutMutzar.slice(4,6)+"/"+
-                        heshbonItem.taarichHitztarfutMutzar.slice(0,4)}</p>
-                        <p><strong>מסלול ביטוח:</strong> ${shemMaslulHabituah}</p>
-                        ${maasikSection}
-                        ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
-                        ${prishaHtml}
-                    `;
+                            <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                            <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                            <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                            <p><strong>תאריך הצטרפות:</strong> ${formattedDate}</p>
+                            ${maasikSection}
+                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
+                            ${prishaHtml}
+                        `;
+                    } else {
+                        const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
+                            ? 'אין נתון'
+                            : heshbonItem.shemMaslulHabituah || 'אין נתון';
+                        
+                        heshbonCard.innerHTML = `
+                            <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                            <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                            <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                            <p><strong>תאריך הצטרפות:</strong> ${formattedDate}</p>
+                            <p><strong>מסלול ביטוח:</strong> ${shemMaslulHabituah}</p>
+                            ${maasikSection}
+                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
+                            ${prishaHtml}
+                        `;
                     }
-                   
-                   
+                    
                     accountDetails.appendChild(heshbonCard);
                 }
             }
@@ -1023,6 +1015,7 @@ function showDetails(productType) {
     resultsContainer.classList.add('hidden');
     detailsContainer.classList.remove('hidden');
 }
+
 backButton.addEventListener('click', () => {
 detailsContainer.classList.add('hidden');
 resultsContainer.classList.remove('hidden');
