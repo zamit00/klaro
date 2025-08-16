@@ -530,7 +530,7 @@ font-size: 14px;
 <p class="muted">הזן תעודת זהות ולחץ "שלח בקשה"</p>
 
 <div class="row">
-<label for="mispar" class="chip">mispar (ת״ז)</label>
+<label for="mispar" class="chip">מספר ת"ז</label>
 <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" />
 <button id="btn">שלח בקשה</button>
 </div>
@@ -621,10 +621,10 @@ const accountDetails = document.getElementById('accountDetails');
 const detailsTitle = document.getElementById('detailsTitle');
 const productSelector = document.getElementById('productSelector');
 const showProductDetailsBtn = document.getElementById('showProductDetailsBtn');
-
+let dataJason;
 
 // שמירת הנתונים הגולמיים במשתנה גלובלי
-let rawData = null;
+let rawData = null; 
 
 
 // צבעים יפים לגרף
@@ -842,6 +842,7 @@ return;
 }
 const json = await res.json();
 setStatus('הצלחה ✅');
+dataJason=json;
 show(json);
 }catch(err){
 setStatus('שגיאה בביצוע הבקשה מהדפדפן');
@@ -856,11 +857,13 @@ btn.click();
 }
 });
 function showDetails(productType) {
+  
     const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
     detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
     accountDetails.innerHTML = '';
 
     const getMaasikName = (yatzran, mispar) => {
+        shemYatzranA=yatzran.shemYatzran;
         const maasik = yatzran.maasikimColl?.find(m => String(m.misparMaasikBeYatzranR) === String(mispar));
         if (maasik?.shemMaasik && typeof maasik.shemMaasik === 'object' && maasik.shemMaasik['$']) {
             return '';
@@ -943,8 +946,11 @@ function showDetails(productType) {
                     heshbonCard.style.maxWidth = '600px';
                     heshbonCard.style.marginLeft = 'auto';
                     heshbonCard.style.marginRight = 'auto';
+
+                if(sugKvetz !== 'קרנות פנסיה ותיקות') {
+                        
                     
-                    let taktzivHtml = Object.keys(aggregatedMaslulimInHeshbon).map(kod => {
+                    var taktzivHtml = Object.keys(aggregatedMaslulimInHeshbon).map(kod => {
                         const maslulData = aggregatedMaslulimInHeshbon[kod];
                         return `
                             <li>
@@ -954,11 +960,67 @@ function showDetails(productType) {
                             </li>
                         `;
                     }).join('');
+                  }
+                    else {
+                      
+                     
+
+                      // פונקציית סינון שמחזירה רק את האובייקטים הרצויים
+                      const filteredData = dataJason.matches.filter(item => {
+                          // מכיוון שהמבנה הוא מערך בתוך מערך, נבדוק את האובייקט הראשון במערך הפנימי
+                          return item[0] && item[0].sugKvetz === 'קרנות פנסיה ותיקות'
+                          ;
+                      });
+                    
+                   
+                    let amountsum = 0;
+
+                    // נתחיל בלולאה על הנתונים במשתנה amount
+                    filteredData.forEach(level1 => {
+                      level1.forEach(yatzran => {
+                        // בודקים אם קיים מערך של חשבונות
+                        if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+                          yatzran.heshbonColl.forEach(heshbon => {
+                            // בודקים אם קיים מערך של תקציבים
+                            if (heshbon.taktziv && Array.isArray(heshbon.taktziv)) {
+                              heshbon.taktziv.forEach(taktzivItem => {
+                                // בודקים אם קיים מערך של מסלולים
+                                if (taktzivItem.maslulim && Array.isArray(taktzivItem.maslulim)) {
+                                  taktzivItem.maslulim.forEach(maslulItem => {
+                                    const maslulAmount = parseFloat(maslulItem?.maslul?.schumZviraBeMaslul);
+                                    // מוסיפים את הסכום אם הוא מספר חוקי
+                                    if (!isNaN(maslulAmount)) {
+                                      amountsum += maslulAmount;
+                                    }
+                                  });
+                                }
+                              });
+                            }
+                          });
+                        }
+                      });
+                    });
+
+                  console.log(amountsum); // התוצאה: 1106.15
+                    
+                    
+                  
+                
+                    var taktzivHtml=`
+                           <li>
+                                <strong>${"כללי"}</strong><br>
+                               סכום צבור: ${formatNumber(amountsum)} ש״ח<br>
+                              דמי ניהול מחיסכון: ${0} | מהפקדה: ${0}
+                          </li>                        `;
+                  }
+                     
+                  totalSum = 0;
+                  
                     
                     const maasikSection = maasikName ? `<p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>` : '';
 
                     let prishaHtml = '';
-                    if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0) {
+                    if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0 && sugKvetz !=='קרנות פנסיה ותיקות') {
                         prishaHtml = heshbonItem.prisha.map(p => {
                             const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
                             const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
@@ -979,7 +1041,7 @@ function showDetails(productType) {
 
                     // תיקון: הוספת "קרנות פנסיה חדשות" לתנאי ה-if
                     if(sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
-                        sugKvetz === 'קרנות פנסיה ותיקות' || sugKvetz === 'קרנות פנסיה חדשות') {
+                         sugKvetz === 'קרנות פנסיה חדשות' || sugKvetz === 'קרנות פנסיה ותיקות') {
                         heshbonCard.innerHTML = `
                             <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
                             <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
@@ -989,7 +1051,9 @@ function showDetails(productType) {
                             ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
                             ${prishaHtml}
                         `;
-                    } else {
+                        taktzivHtml='';
+                    } 
+                    else {
                         const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
                             ? 'אין נתון'
                             : heshbonItem.shemMaslulHabituah || 'אין נתון';
@@ -1004,6 +1068,7 @@ function showDetails(productType) {
                             ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
                             ${prishaHtml}
                         `;
+                        taktzivHtml='';
                     }
                     
                     accountDetails.appendChild(heshbonCard);
