@@ -874,7 +874,7 @@ function showDetails(productType) {
     rawData.matches.forEach(level1 => {
         level1.forEach(yatzran => {
             const sugKvetz=yatzran.sugKvetz || '';
-            if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+            if (yatzran.heshbonColl) {
                 heshbonItem: for (const heshbonItem of yatzran.heshbonColl) {
                     if (String(heshbonItem.sugMutzar) !== String(productType)) {
                         continue heshbonItem;
