@@ -855,153 +855,168 @@ if (e.key === 'Enter') {
 btn.click();
 }
 });
-
 function showDetails(productType) {
-const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
-detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
-accountDetails.innerHTML = '';
+    const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
+    detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
+    accountDetails.innerHTML = '';
 
-rawData.matches.forEach(level1 => {
- level1.forEach(yatzran => {
-   
- // פונקציית עזר למציאת שם מעסיק לפי מספר
- const getMaasikName = (mispar) => {
-    //if (!yatzran.maasikimColl) return 'לא ידוע';
-    const maasik = yatzran.maasikimColl.filter(m =>
-     Number(m.misparMaasikBeYatzranR) === Number( mispar));
-        return  maasik[0].shemMaasik;
- };
+    const getMaasikName = (yatzran, mispar) => {
+        const maasik = yatzran.maasikimColl?.find(m =>
+            String(m.misparMaasikBeYatzranR) === String(mispar));
 
- if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
-    yatzran.heshbonColl.filter(h => String(h.sugMutzar) === String(productType)).forEach(heshbonItem => {
-    const sachir=heshbonItem.sugTochnitOHeshbon;
-    const heshbonCard = document.createElement('div');
-    heshbonCard.className = 'card detail-card';
-    heshbonCard.style.boxShadow = '5px 10px 10px  rgba(0, 0, 0, 0.2)';
-    heshbonCard.style.maxWidth = '600px';
-    heshbonCard.style.marginLeft = 'auto';
-    heshbonCard.style.marginRight = 'auto';
-  let taktzivHtml = '';
-  if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
-   taktzivHtml = heshbonItem.taktziv.flatMap(t => {
+        if (maasik?.shemMaasik && typeof maasik.shemMaasik === 'object' && maasik.shemMaasik['$'] ) {
+            return '';
+        }
 
-   const maasikMispar = t.maasikimM?.[0]?.misparMaasikBeYatzranM;
-   const maasikName = getMaasikName(maasikMispar);
-   const dmeiNihulAchid=(t.dmeinihul.length || []);
-    for(let i=0; i<t.dmeinihul.length; i++) {
-      if(t.dmeinihul[i].sugHotzaa === '1' && t.dmeinihul[i].dmeiNihulAchidim === '1') {    
-        var dmeiNihulAchidH=1;
-        var dmeiNihulHisachon=Math.round(t.dmeinihul[i].sheurDmeiNihul,2) != null ? `${t.dmeinihul[i].sheurDmeiNihul}%` : 'אין נתון';
-        break;
-      }
-    }
-    for(let i=0; i<t.dmeinihul.length; i++) {
-      if(t.dmeinihul[i].sugHotzaa === '2' && t.dmeinihul[i].dmeiNihulAchidim === '1') {
-        var dmeiNihulAchidz=1;
-        var dmeiNihulHafkada=Math.round(t.dmeinihul[i].sheurDmeiNihul,2) != null ? `${t.dmeinihul[i].sheurDmeiNihul}%` : 'אין נתון';
-        break;
-      }
-    }
-    
-   const maslulimHtml = (t.maslulim || [])
-    .map(m => {
-    const maslul = m.maslul;
-    if (maslul?.shemMaslulHashkaa) {
-     const schumZvira = maslul.schumZviraBeMaslul != null ? formatNumber(maslul.schumZviraBeMaslul) : 'אין נתון';
-    if (dmeiNihulAchidH!==1){
-      dmeiNihulHisachon = maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : 'אין נתון';
-    }
-    if (dmeiNihulAchidz!==1){
-      dmeiNihulHafkada = maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : 'אין נתון';
-    }
-     
-  return `
-          <li>
-          <strong>${maslul.shemMaslulHashkaa}</strong><br>
-          סכום צבור: ${schumZvira} ש״ח<br>
-          דמי ניהול מחיסכון: ${dmeiNihulHisachon} | מהפקדה: ${dmeiNihulHafkada}
-          </li>
-        `;   
+        return maasik?.shemMaasik || 'לא ידוע';
+    };
 
-    
-  }
-    return '';
-    }).join('');
+    rawData.matches.forEach(level1 => {
+        level1.forEach(yatzran => {
+            const sugKvetz=yatzran.sugKvetz || '';
+            if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+                heshbonItem: for (const heshbonItem of yatzran.heshbonColl) {
+                    if (String(heshbonItem.sugMutzar) !== String(productType)) {
+                        continue heshbonItem;
+                    }
 
-   if (maslulimHtml) {
-    if(sachir === '1' || sachir === '3' || sachir === '6' ){
-      return `
-      <p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>
-      <h4>מסלולי השקעה :</h4>
-      <ul>${maslulimHtml}</ul>
-      `;
-    }
-    else{
-      return `
-      <p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>
-      <h4>מסלולי השקעה </h4>
-      <ul>${maslulimHtml}</ul>
-      `;
-    }
-    
-   }
-   return '';
-   }).join('');
-  }
-  
-  let prishaHtml = '';
-  if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0) {
-   prishaHtml = heshbonItem.prisha.map(p => {
-   const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
-   const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
-   const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
+                    const aggregatedMaslulimInHeshbon = {};
+                    let maasikName = '';
+                    let hasMaslulim = false;
+                    
+                    let unifiedFeeHisachon = null;
+                    let unifiedFeeHafkada = null;
 
-   return `
-    <h4>יתרות לפרישה (גיל ${gilPrisha}):</h4>
-    <ul>
-     <li>חיסכון מצטבר צפוי: ${hisachonTzafoi} ש״ח</li>
-     <li>חיסכון מצטבר צפוי (ללא תוספות): ${hisachonTzafoiLelo} ש״ח</li>
-    </ul>
-   `;
-   }).join('');
-  }
+                    if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+                        heshbonItem.taktziv.forEach(t => {
+                            const activeMaasik = t.maasikimM?.find(m => m.statusMaasik === '1');
+                            const maasikMispar = activeMaasik?.misparMaasikBeYatzranM;
+                            
+                            if (maasikMispar) {
+                                maasikName = getMaasikName(yatzran, maasikMispar);
+                            }
 
-  if (heshbonItem.shemMaslulHabituah &&   heshbonItem.shemMaslulHabituah.$ &&
-(heshbonItem.shemMaslulHabituah.$["xsi:nil"] === "true" || 
-    heshbonItem.shemMaslulHabituah.$["p5:nil"] === "true"
-)){
-    heshbonCard.innerHTML = `
-  <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
-  <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
-  <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-  <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
-  ${taktzivHtml}
-  ${prishaHtml}
-  `;
-  }
-  else{
-  heshbonCard.innerHTML = `
-  <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
-  <p><strong>שם תוכנית:</strong> ${heshbonItem.shemTochnit}</p>
-  <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-  <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
-  <p><strong>מסלול ביטוח:</strong> ${heshbonItem.shemMaslulHabituah || 'אין נתון'}</p>
-  ${taktzivHtml}
-  ${prishaHtml}
-  `;
+                            // בדיקה לדמי ניהול אחידים
+                            if (t.dmeinihul && Array.isArray(t.dmeinihul)) {
+                                const hisachonFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '1');
+                                const hafkadaFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '2');
+                                
+                                if (hisachonFee) {
+                                    unifiedFeeHisachon = hisachonFee.sheurDmeiNihul;
+                                }
+                                if (hafkadaFee) {
+                                    unifiedFeeHafkada = hafkadaFee.sheurDmeiNihul;
+                                }
+                            }
+
+                            if (t.maslulim && Array.isArray(t.maslulim)) {
+                                t.maslulim.forEach(m => {
+                                    const maslul = m.maslul;
+                                    const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
+                                    
+                                    if (maslul?.kodMaslul && amount > 0) {
+                                        const kod = maslul.kodMaslul;
+                                        
+                                        // שימוש בדמי ניהול אחידים אם נמצאו
+                                        const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
+                                        const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
+                                        
+                                        if (!aggregatedMaslulimInHeshbon[kod]) {
+                                            aggregatedMaslulimInHeshbon[kod] = {
+                                                shem: maslul.shemMaslulHashkaa,
+                                                schumZvira: 0,
+                                                dmeiNihulHisachon,
+                                                dmeiNihulHafkada
+                                            };
+                                        }
+                                        aggregatedMaslulimInHeshbon[kod].schumZvira += amount;
+                                        hasMaslulim = true;
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    if (!hasMaslulim && (!heshbonItem.prisha || heshbonItem.prisha.length === 0)) {
+                        continue;
+                    }
+
+                    const heshbonCard = document.createElement('div');
+                    heshbonCard.className = 'card detail-card';
+                    heshbonCard.style.boxShadow = '5px 10px 10px  rgba(0, 0, 0, 0.2)';
+                    heshbonCard.style.maxWidth = '600px';
+                    heshbonCard.style.marginLeft = 'auto';
+                    heshbonCard.style.marginRight = 'auto';
+                    
+                    let taktzivHtml = Object.keys(aggregatedMaslulimInHeshbon).map(kod => {
+                        const maslulData = aggregatedMaslulimInHeshbon[kod];
+                        return `
+                            <li>
+                                <strong>${maslulData.shem}</strong><br>
+                                סכום צבור: ${formatNumber(maslulData.schumZvira)} ש״ח<br>
+                                דמי ניהול מחיסכון: ${maslulData.dmeiNihulHisachon} | מהפקדה: ${maslulData.dmeiNihulHafkada}
+                            </li>
+                        `;
+                    }).join('');
+                    
+                    const maasikSection = maasikName ? `<p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>` : '';
+
+                    let prishaHtml = '';
+                    if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0) {
+                        prishaHtml = heshbonItem.prisha.map(p => {
+                            const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
+                            const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
+                            const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
+
+                            return `
+                                <h4>יתרות לפרישה (גיל ${gilPrisha}):</h4>
+                                <ul>
+                                    <li>חיסכון מצטבר צפוי: ${hisachonTzafoi} ש״ח</li>
+                                    <li>חיסכון מצטבר צפוי (ללא תוספות): ${hisachonTzafoiLelo} ש״ח</li>
+                                </ul>
+                            `;
+                        }).join('');
+                    }
+
+                    const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
+                        ? 'אין נתון'
+                        : heshbonItem.shemMaslulHabituah || 'אין נתון';
+                        console.log(sugKvetz);
+                    if(sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
+                        sugKvetz === 'קרנות פנסיה ותיקות'){
+                            heshbonCard.innerHTML = `
+                        <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                        <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                        <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+                        ${maasikSection}
+                        ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
+                        ${prishaHtml}
+                    `;
+                        }
+                    else{
+                        heshbonCard.innerHTML = `
+                        <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                        <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                        <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+                        <p><strong>מסלול ביטוח:</strong> ${shemMaslulHabituah}</p>
+                        ${maasikSection}
+                        ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
+                        ${prishaHtml}
+                    `;
+                    }
+                   
+                   
+                    accountDetails.appendChild(heshbonCard);
+                }
+            }
+        });
+    });
+
+    resultsContainer.classList.add('hidden');
+    detailsContainer.classList.remove('hidden');
 }
-
-
-  accountDetails.appendChild(heshbonCard);
-  });
- }
- });
-});
-
-resultsContainer.classList.add('hidden');
-detailsContainer.classList.remove('hidden');
-}
-
 backButton.addEventListener('click', () => {
 detailsContainer.classList.add('hidden');
 resultsContainer.classList.remove('hidden');
