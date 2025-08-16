@@ -969,7 +969,7 @@ function showDetails(productType) {
                             const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
 
                             return `
-                                <h4>יתרות לפרישה (גיל ${gilPrisha}):</h4>
+                                <h4>יתרות לפרישה (גיל ${Math.round(gilPrisha)}):</h4>
                                 <ul>
                                     <li>חיסכון מצטבר צפוי: ${hisachonTzafoi} ש״ח</li>
                                     <li>חיסכון מצטבר צפוי (ללא תוספות): ${hisachonTzafoiLelo} ש״ח</li>
@@ -977,7 +977,8 @@ function showDetails(productType) {
                             `;
                         }).join('');
                     }
-
+                    
+                        
                     const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
                         ? 'אין נתון'
                         : heshbonItem.shemMaslulHabituah || 'אין נתון';
@@ -988,7 +989,10 @@ function showDetails(productType) {
                         <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
                         <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
                         <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+                        <p><strong>תאריך הצטרפות:</strong> ${
+                            heshbonItem.taarichHitztarfutMutzar.slice(6)+"/"+
+                        heshbonItem.taarichHitztarfutMutzar.slice(4,6)+"/"+
+                        heshbonItem.taarichHitztarfutMutzar.slice(0,4)}</p>
                         ${maasikSection}
                         ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
                         ${prishaHtml}
@@ -999,7 +1003,9 @@ function showDetails(productType) {
                         <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
                         <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
                         <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
-                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar}</p>
+                        <p><strong>תאריך הצטרפות:</strong> ${heshbonItem.taarichHitztarfutMutzar.slice(6)+"/"+
+                        heshbonItem.taarichHitztarfutMutzar.slice(4,6)+"/"+
+                        heshbonItem.taarichHitztarfutMutzar.slice(0,4)}</p>
                         <p><strong>מסלול ביטוח:</strong> ${shemMaslulHabituah}</p>
                         ${maasikSection}
                         ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
