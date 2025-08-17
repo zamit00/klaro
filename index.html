@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
 
 <style>
 :root {
@@ -519,7 +521,43 @@ font-size: 14px;
 .detail-card li strong {
  font-weight: 700;
 }
+.tblMas {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+   .tblMas thead {
+      background-color:orangered;
+      color: #fff;
+    }
 
+   .tblMas th, .tblMas td {
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+   .tblMas tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+   .tblMas tbody tr:hover {
+      background-color: #eef6ff;
+    }
+
+    .tblMas td.positive {
+      color: #4caf50;
+      font-weight: bold;
+    }
+
+    .tblMas td.zero {
+      color: #999;
+      font-style: italic;
+    }
 </style>
 </head>
 <body>
@@ -925,7 +963,9 @@ function showDetails(productType) {
                                                 shem: maslul.shemMaslulHashkaa,
                                                 schumZvira: 0,
                                                 dmeiNihulHisachon,
-                                                dmeiNihulHafkada
+                                                dmeiNihulHafkada,
+                                                kodMaslul:maslul.kodMaslul
+
                                             };
                                         }
                                         aggregatedMaslulimInHeshbon[kod].schumZvira += amount;
@@ -949,14 +989,67 @@ function showDetails(productType) {
 
                 if(sugKvetz !== 'קרנות פנסיה ותיקות') {
                         
-                    
+                   
                     var taktzivHtml = Object.keys(aggregatedMaslulimInHeshbon).map(kod => {
                         const maslulData = aggregatedMaslulimInHeshbon[kod];
                         return `
                             <li>
-                                <strong>${maslulData.shem}</strong><br>
-                                סכום צבור: ${formatNumber(maslulData.schumZvira)} ש״ח<br>
-                                דמי ניהול מחיסכון: ${maslulData.dmeiNihulHisachon} | מהפקדה: ${maslulData.dmeiNihulHafkada}
+                              <div class="msllContainer" style="display:flex;flex-direction:
+                              column;">
+                                <div style="min-width:50%;margin-right:5px;">
+                                  <p>מספר באוצר: ${parseInt(maslulData.kodMaslul.slice(23))}</p> 
+                                  <strong>${maslulData.shem}</strong><br>
+                                  סכום צבור: ${formatNumber(maslulData.schumZvira)} ש״ח<br>
+                                  דמי ניהול מחיסכון: ${maslulData.dmeiNihulHisachon} | מהפקדה: ${maslulData.dmeiNihulHafkada}
+                                </div>
+                                <div class="msllTable" style="width:80%;height:auto;
+                                text-Align:center;font-size:12px;background-color:azura;
+                                margin-top:30px;"> 
+    <table class="tblMas" style="max-width:90%; font-size:12px">
+    <thead>
+      <tr>
+        <th>שם המסלול</th>
+        <th>תשואה שנה</th>
+        <th>תשואה 3 שנים</th>
+        <th>תשואה 5 שנים</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width:40%">אנליסט השתלמות אשראי ואגח</td>
+        <td class="positive">17.03%</td>
+        <td class="positive">35.44%</td>
+        <td class="positive">64.08%</td>
+      </tr>
+      <tr>
+        <td style="width:40%">הפניקס השתלמות אשראי ואגח</td>
+        <td class="positive">15.25%</td>
+        <td class="positive">31.49%</td>
+        <td class="positive">56.93%</td>
+      </tr>
+      <tr>
+        <td style="width:40%">אינפיניטי השתלמות אשראי ואגח</td>
+        <td class="positive">14.28%</td>
+        <td class="positive">34.86%</td>
+        <td class="zero">0.00%</td>
+      </tr>
+      <tr>
+        <td style="width:40%">אלטשולר שחם השתלמות אשראי ואגח</td>
+        <td class="positive">12.94%</td>
+        <td class="positive">33.76%</td>
+        <td class="positive">47.03%</td>
+      </tr>
+      <tr>
+        <td style="width:40%">הראל השתלמות אשראי ואגח</td>
+        <td class="positive">12.82%</td>
+        <td class="positive">26.15%</td>
+        <td class="positive">48.48%</td>
+      </tr>
+      
+    </tbody>
+  </table>
+                                </div>
+                             </div>
                             </li>
                         `;
                     }).join('');
@@ -1001,7 +1094,7 @@ function showDetails(productType) {
                       });
                     });
 
-                  console.log(amountsum); // התוצאה: 1106.15
+                  
                     
                     
                   
@@ -1040,16 +1133,18 @@ function showDetails(productType) {
                     const formattedDate = (taarich && typeof taarich === 'string' && taarich.length === 8) ? `${taarich.slice(6)}/${taarich.slice(4,6)}/${taarich.slice(0,4)}` : 'אין נתון';
 
                     // תיקון: הוספת "קרנות פנסיה חדשות" לתנאי ה-if
-                    if(sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
-                         sugKvetz === 'קרנות פנסיה חדשות' || sugKvetz === 'קרנות פנסיה ותיקות') {
+                    if((sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
+                         sugKvetz === 'קרנות פנסיה חדשות' || sugKvetz === 'קרנות פנסיה ותיקות') 
+                        && taktzivHtml) {
+                          console.log(taktzivHtml)
                         heshbonCard.innerHTML = `
                             <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
                             <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
                             <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
                             <p><strong>תאריך הצטרפות:</strong> ${formattedDate}</p>
-                            ${maasikSection}
-                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
-                            ${prishaHtml}
+                            ${maasikSection}  
+                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}                            
+                             ${prishaHtml}
                         `;
                         taktzivHtml='';
                     } 
@@ -1057,7 +1152,7 @@ function showDetails(productType) {
                         const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
                             ? 'אין נתון'
                             : heshbonItem.shemMaslulHabituah || 'אין נתון';
-                        
+                        if(taktzivHtml){
                         heshbonCard.innerHTML = `
                             <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
                             <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
@@ -1069,6 +1164,7 @@ function showDetails(productType) {
                             ${prishaHtml}
                         `;
                         taktzivHtml='';
+                        }
                     }
                     
                     accountDetails.appendChild(heshbonCard);
