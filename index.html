@@ -931,6 +931,9 @@ function showDetails(productType) {
                                         aggregatedMaslulimInHeshbon[kod].schumZvira += amount;
                                         hasMaslulim = true;
                                     }
+                                  if(aggregatedMaslulimInHeshbon[kod].schumZvira===0){
+                                    hasMaslulim = false;
+                                  }
                                 });
                             }
                         });
