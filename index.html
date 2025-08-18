@@ -957,14 +957,22 @@ function showDetails(productType) {
 
                             if (t.maslulim && Array.isArray(t.maslulim)) {
                                 t.maslulim.forEach(m => {
-                                    const maslul = m.maslul;
+                                    const maslul = m.maslul;var sugmoz;
                                     const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
                                     
                                     if (maslul?.kodMaslul && amount > 0) {
                                         
                                         const kod = maslul.kodMaslul;
                                         const msl= maslulim(kod);
-                                        const msla=detectMaslulFromShemKupa(msl.shemkupa);
+                                        if(msl.mozar==="קופת גמל להשקעה" || msl.mozar==="פוליסות חסכון" ||
+                                          msl.mozar==="קרנות השתלמות"
+                                        ){sugmoz="hishtalmot"}
+                                        else if(msl.mozar==="תגמולים ואישית לפיצויים" || msl.mozar==="קרנות חדשות" 
+                                        ){sugmoz="gemel"}
+                                        else if(msl.mozar==="קופת גמל להשקעה - חסכון לילד"){sugmoz="layeled"}
+                                        
+
+                                        const msla=detectMaslulByProduct(sugmoz,msl.shemkupa);
                                         console.log(msla);return;
                                         const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
                                         const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
