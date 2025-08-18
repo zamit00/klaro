@@ -9,6 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="mainscript.js"></script>
+<script src="kochavimscript.js"></script>
+<script src="data.js"></script>
 
 
 <style>
@@ -958,8 +961,11 @@ function showDetails(productType) {
                                     const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
                                     
                                     if (maslul?.kodMaslul && amount > 0) {
-                                        const kod = maslul.kodMaslul;
                                         
+                                        const kod = maslul.kodMaslul;
+                                        const msl= maslulim(kod);
+                                        const msla=detectMaslulFromShemKupa(msl.shemkupa);
+                                        console.log(msla);return;
                                         const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
                                         const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
                                         
