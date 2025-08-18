@@ -1,5 +1,4 @@
 var datanetunimKlaliXM;var datanetunimKlaliXB;var datanetunimKlaliXP;
-console.log(null || 'string')
 const gufmosdixA = [
     'הראל פנסיה וגמל', 'כלל פנסיה וגמל',
     'מגדל מקפת קרנות פנסיה וקופות גמל', 'מנורה מבטחים פנסיה וגמל',
