@@ -53,18 +53,18 @@ const bateyhashkaot=['אינפיניטי השתלמות, גמל ופנסיה','�
 ]
 
 function maslulim(kodmas){ 
- 
+
 var filtered;
-filtered =datanetunimKlaliXM.filter(item=>Number(item.mh)===kodmas)
+filtered =datanetunimKlaliXM.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
 
 if(filtered.length>0){}
 
-else { filtered =datanetunimKlaliXP.filter(item=>Number(item.mh)===kodmas)
+else { filtered =datanetunimKlaliXP.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
       if(filtered.length>0){}
-      else{filtered =datanetunimKlaliXB.filter(item=>Number(item.mh)===kodmas)
+      else{filtered =datanetunimKlaliXB.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
     }
 }
-console.log(filtered[0].mozar,filtered[0].shemkupa)
+
 
  return {
     mozar: filtered[0].mozar,
