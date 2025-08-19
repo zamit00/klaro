@@ -620,7 +620,7 @@ font-size: 14px;
 <h2>מקרא</h2>
 <div id="legend" class="legend-grid"></div>
 </div>
-<div class="card" style="display:none;">
+<div class="card">
 <h2>תוצאה מלאה (JSON)</h2>
 <pre id="output">// התוצאה תופיע כאן</pre>
 </div>
@@ -968,11 +968,11 @@ function showDetails(productType) {
                                         if(dataNetunimforfilter===datanetunimKlaliXM){
                                         filteredData= dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
                                        item.mozar===maslulim(kod).muz && !item.ochlosiyayaad.includes("עובדי סקטור") &&
-                                        !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuam - a.tesuam) ;
+                                        !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana) ;
                                         }
                                         else{
                                           filteredData=dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
-                                       item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuam - a.tesuam);
+                                       item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana);
                                         }
                                          tableHTML = `
 <div style="overflow-x:auto; direction:rtl; margin:20px 0;">
@@ -981,24 +981,24 @@ function showDetails(productType) {
       <tr>
         <th style="padding:12px; border:1px solid #ddd;">מספר מסלול</th>
         <th style="padding:12px; border:1px solid #ddd;">שם המסלול</th>
-        <th style="padding:12px; border:1px solid #ddd;">תשואה 12 חודשים אחרונים</th>
+        <th style="padding:12px; border:1px solid #ddd;">תשואה מתחילת השנה</th>
       </tr>
     </thead>
     <tbody>
       <tr style="background:#f9f9f9;">
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].mh}</td>
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuam}%</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuaMitchilatshana}%</td>
       </tr>
       <tr>
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].mh}</td>
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuam}%</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuaMitchilatshana}%</td>
       </tr>
       <tr style="background:#f9f9f9;">
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].mh}</td>
         <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuam}%</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuaMitchilatshana}%</td>
       </tr>
     </tbody>
   </table>
