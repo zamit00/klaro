@@ -24,12 +24,15 @@ window.onload = async function() {
             fetchdataJasonB(),
             fetchdataJasonP(),
              fetchdataJasonM(),
+             
             
         ]);
+        
        
   } catch (error) {
         console.error("שגיאה בטעינת הנתונים:", error);
   }
+   
 }
 
 
