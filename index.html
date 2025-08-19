@@ -10,7 +10,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <script src="mainscript.js"></script>
-<script src="kochavimscript.js"></script>
 <script src="data.js"></script>
 
 
@@ -906,7 +905,7 @@ function showDetails(productType) {
   
     const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
     detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
-    accountDetails.innerHTML = '';
+    accountDetails.innerHTML = '';let tableHTML;
 
     const getMaasikName = (yatzran, mispar) => {
         shemYatzranA=yatzran.shemYatzran;
@@ -959,19 +958,53 @@ function showDetails(productType) {
                                 t.maslulim.forEach(m => {
                                     const maslul = m.maslul;var sugmoz;
                                     const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
-                                    
+                                    let filteredData;
                                     if (maslul?.kodMaslul && amount > 0) {
-                                        
                                         const kod = maslul.kodMaslul;
-                                        //const msl= maslulim(kod);
-                                        //if(msl.mozar==="קופת גמל להשקעה" || msl.mozar==="פוליסות חסכון" ||
-                                        //  msl.mozar==="קרנות השתלמות"
-                                       // ){sugmoz="hishtalmot"}
-                                       // else if(msl.mozar==="תגמולים ואישית לפיצויים" || msl.mozar==="קרנות חדשות" 
-                                       // ){sugmoz="gemel"}
-                                       // else if(msl.mozar==="קופת גמל להשקעה - חסכון לילד"){sugmoz="layeled"}                                   
-                                        const msla=detectMaslulByProduct(maslulim(kod).shemkupa);
-                                        console.log(msla);
+                                        
+                                        let dataNetunimforfilter =  maslulim(kod).muz === "פוליסות חסכון" ?
+                                         datanetunimKlaliXB :maslulim(kod).muz === "קרנות חדשות" ?
+                                          datanetunimKlaliXP : datanetunimKlaliXM;                      
+                                        if(dataNetunimforfilter===datanetunimKlaliXM){
+                                        filteredData= dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+                                       item.mozar===maslulim(kod).muz && !item.ochlosiyayaad.includes("עובדי סקטור") &&
+                                        !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuam - a.tesuam) ;
+                                        }
+                                        else{
+                                          filteredData=dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+                                       item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuam - a.tesuam);
+                                        }
+                                         tableHTML = `
+<div style="overflow-x:auto; direction:rtl; margin:20px 0;">
+  <table style="border-radius: 10%;width:100%; border-collapse:collapse; font-family:Arial, sans-serif; text-align:center;">
+    <thead style="background:orangered; color:white;">
+      <tr>
+        <th style="padding:12px; border:1px solid #ddd;">מספר מסלול</th>
+        <th style="padding:12px; border:1px solid #ddd;">שם המסלול</th>
+        <th style="padding:12px; border:1px solid #ddd;">תשואה 12 חודשים אחרונים</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f9f9f9;">
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].mh}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].shemkupa}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuam}%</td>
+      </tr>
+      <tr>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].mh}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].shemkupa}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuam}%</td>
+      </tr>
+      <tr style="background:#f9f9f9;">
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].mh}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].shemkupa}</td>
+        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuam}%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+filteredData='';
                                         const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
                                         const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
                                         
@@ -1017,8 +1050,11 @@ function showDetails(productType) {
                                   סכום צבור: ${formatNumber(maslulData.schumZvira)} ש״ח<br>
                                   דמי ניהול מחיסכון: ${maslulData.dmeiNihulHisachon} | מהפקדה: ${maslulData.dmeiNihulHafkada}
                             </li>
+                            ${tableHTML}
+
                         `;
                     }).join('');
+                    tableHTML='';
                   }
                     else {
                       
@@ -1110,6 +1146,7 @@ function showDetails(productType) {
                             ${maasikSection}  
                             ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}                            
                              ${prishaHtml}
+                             
                         `;
                         taktzivHtml='';
                     } 
