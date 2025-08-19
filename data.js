@@ -91,30 +91,71 @@ else { filtered =datanetunimKlaliXP.filter(item=>Number(item.mh)===Number(parseI
     }
 }
  return {   
-    shemkupa: filtered[0].shemkupa
+    shemkupa: filtered[0].shemkupa,
+    muz:filtered[0].mozar,
+    mas:filtered[0].mas
   };
   };
 
 // פונקציה למציאת מסלול לפי שם מוצר
-function detectMaslulByProduct(productName) {
-
-  //if(productName.includes("כללי"))return "כללי";
-  for (const maslulList of Object.values(maslulimByProduct)) {
+function detectMaslulByProduct() {
+  datanetunimKlaliXP.forEach(item=>{
+    for (const maslulList of Object.values(maslulimByProduct)) {
   for (const maslul of maslulList || []) {
     const rule = maslulRules[maslul];
     if (!rule) continue;
 
-    const hasAll = rule.includeAll.every(word => productName.includes(word));
-    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => productName.includes(word));
-    const hasExcluded = rule.exclude.some(word => productName.includes(word));
+    const hasAll = rule.includeAll.every(word => item.shemkupa.includes(word));
+    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => item.shemkupa.includes(word));
+    const hasExcluded = rule.exclude.some(word => item.shemkupa.includes(word));
 
     if (hasAll && hasAny && !hasExcluded) {
-      return maslul.trim();
-      break;
+     //item.pus(
+      //  `mas: ${maslul.trim()}`
+    // )
+    item.mas=maslul.trim();     
     }
   }
   }
-  return "כללי";
+  
+  })
+  //if(productName.includes("כללי"))return "כללי";
+  datanetunimKlaliXB.forEach(item=>{
+    for (const maslulList of Object.values(maslulimByProduct)) {
+  for (const maslul of maslulList || []) {
+    const rule = maslulRules[maslul];
+    if (!rule) continue;
+
+    const hasAll = rule.includeAll.every(word => item.shemkupa.includes(word));
+    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => item.shemkupa.includes(word));
+    const hasExcluded = rule.exclude.some(word => item.shemkupa.includes(word));
+
+    if (hasAll && hasAny && !hasExcluded) {
+     //item.pus(
+      //  `mas: ${maslul.trim()}`
+    // )
+    item.mas=maslul.trim();     
+    }
+    else{
+      item.mas="כללי"
+    }
+  }
+  }
+  
+  })
 }
+function filterByMaslul(sugmozar, maslulName) {
+  const rule = maslulRules[maslulName];
+  if (!rule) return [];
+  return datanetunimKlaliXM.filter(moz=>moz.mozar===sugmozar).filter(item => {
+    const name = item.shemkupa || ""; // או item.mas / item.masmishni לפי מה שמתאים לך
+
+    const hasAll = rule.includeAll.every(word => name.includes(word));
+    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => name.includes(word));
+    const hasExcluded = rule.exclude.some(word => name.includes(word));
+    return hasAll && hasAny && !hasExcluded;
+  });
+}
+
 
 
