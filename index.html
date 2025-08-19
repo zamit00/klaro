@@ -564,10 +564,35 @@ font-size: 14px;
       color: #999;
       font-style: italic;
     }
+  .loader {
+  border: 15px solid #f3f3f3; /* רקע אפור בהיר */
+  border-top: 15px solid #3498db; /* פס כחול מסתובב */
+  border-right: 15px solid #3498db;
+  border-bottom:15px solid #3eb570;
+  border-left:15px solid #3eb570;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1.5s linear infinite;
+  margin: 20px auto;
+  display: none;
+}
+.loaderText{display: none;}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}
+
 
 </style>
 </head>
 <body>
+
 <header style="font-size: 1.8rem;text-align: center;">פיננסינט – מידע פנסיוני ללקוח</header>
 <div class="container">
 <div class="card">
@@ -583,6 +608,9 @@ font-size: 14px;
 <div id="status" class="status"></div>
 </div>
 
+
+  <div class="loader" id="loader"> </div>
+<div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;">טעינת נתונים</div>
 <div id="resultsContainer" class="hidden">
 
 <div class="total-summary">
@@ -653,6 +681,7 @@ font-size: 14px;
 </div>
 
 <script>
+  
 const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
 const btn = document.getElementById('btn');
 const misparInput = document.getElementById('mispar');
@@ -667,6 +696,9 @@ const detailsTitle = document.getElementById('detailsTitle');
 const productSelector = document.getElementById('productSelector');
 const showProductDetailsBtn = document.getElementById('showProductDetailsBtn');
 let dataJason;
+
+
+
 
 // שמירת הנתונים הגולמיים במשתנה גלובלי
 let rawData = null; 
@@ -865,12 +897,17 @@ function showDetailsFromSelector() {
 
 
 btn.addEventListener('click', async () => {
+
 const mispar = misparInput.value.trim();
 if(!mispar || mispar.length < 8 ){
 setStatus('❗ יש להזין מספר ת״ז תקין');
 return;
 }
+const loader = document.getElementById("loader");
+const loaderText = document.getElementById("loaderText");
 
+loader.style.display = "block";
+loaderText.style.display = "block";
 const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
 setStatus('מבצע קריאה לשירות…', true);
 resultsContainer.classList.add('hidden');
@@ -887,6 +924,9 @@ return;
 }
 const json = await res.json();
 setStatus('הצלחה ✅');
+loaderText.style.display = "none";
+loader.style.display = "none";
+
 dataJason=json;
 show(json);
 }catch(err){
@@ -894,6 +934,7 @@ setStatus('שגיאה בביצוע הבקשה מהדפדפן');
 out.textContent = String(err);
 resultsContainer.classList.remove('hidden');
 }
+      // סימולציה של טעינת נתונים (לדוגמה: 3 שניות)
 });
 
 misparInput.addEventListener('keypress', (e) => {
@@ -1185,6 +1226,12 @@ resultsContainer.classList.remove('hidden');
 });
 
 showProductDetailsBtn.addEventListener('click', showDetailsFromSelector);
+
+
+
+    
+
+    
 </script>
 </body>
 </html>
