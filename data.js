@@ -5,9 +5,9 @@ const maslulRules = {
   "עוקב מדדי אג\"ח עם מניות": { includeAll: ["עוקב","אג\"ח","מניות"], includeAny: [], exclude: [] },
   "מניות סחיר": { includeAll: ["מניות","סחיר"], includeAny: [], exclude: ["אג\"ח"] },
   "עוקב מדד s&p 500": { includeAll: ["500"], includeAny: [], exclude: [] },
-  "60 ומעלה": { includeAll: ["60"], includeAny: [], exclude: ["50"] },
+  "60 ומעלה": { includeAll: ["60"], includeAny: [], exclude: ["50","20"] },
   "50-60": { includeAll: ["50","60"], includeAny: [], exclude: [] },
-  "עד 50": { includeAll: ["50"], includeAny: [], exclude: ["60"] },
+  "עד 50": { includeAll: ["50"], includeAny: [], exclude: ["60","20"] },
   "אשראי ואג\"ח": { includeAll: ["אשראי","אג\"ח"], includeAny: [], exclude: ["מניות"] },
   "כספי (שקלי)": { includeAll: [], includeAny: ["שקלי","כספי"], exclude: [] },
   "משולב סחיר": { includeAll: ["משולב","סחיר"], includeAny: [], exclude: [] },
@@ -16,12 +16,14 @@ const maslulRules = {
   "הלכה יהודית": { includeAll: [], includeAny: ["הלכה","הלכתי"], exclude: [] },
   "עוקב מדדי אג\"ח": { includeAll: ["עוקב","אג\"ח"], includeAny: [], exclude: ["מניות"] },
   "עוקב מדדי מניות": { includeAll: ["עוקב","מניות"], includeAny: [], exclude: ["אג\"ח"] },
-  "אג\"ח סחיר": { includeAll: ["אג\"ח","סחיר"], includeAny: [], exclude: ["מניות"] },
+  "אג\"ח סחיר": { includeAll: ["אג\"ח","סחיר"], includeAny: [], exclude: ["מניות","ממשלתי"] },
   "מניות": { includeAll: [], includeAny: ["מניות","מנייתי"], exclude: ["אשראי","סחיר","עוקב"] },
-  "כללי": { includeAll: ["כללי"], includeAny: [], exclude: [] },
   "סיכון מוגבר": { includeAll: [], includeAny: ["מוגבר"], exclude: [] },
   "סיכון בינוני": { includeAll: [], includeAny: ["בינוני"], exclude: [] },
-  "סיכון מועט": { includeAll: [], includeAny: ["מועט"], exclude: [] }
+  "סיכון מועט": { includeAll: [], includeAny: ["מועט"], exclude: [] },
+  "אג\"ח ממשלתי סחיר": { includeAll: ["אג\"ח","סחיר","ממשלתי"], includeAny: [], exclude: [] },
+  "כללי": { includeAll: ["כללי"], includeAny: [], exclude: [] }
+
  
 };
 
@@ -46,7 +48,8 @@ const maslulimByProduct = {
     "עוקב מדדי אג\"ח",
     "עוקב מדדי מניות",
     "אג\"ח סחיר",
-    "מניות"
+    "מניות",
+    "אג\"ח ממשלתי סחיר"
   ],
   hishtalmot: [
     "אשראי ואג\"ח עם מניות",
@@ -64,7 +67,8 @@ const maslulimByProduct = {
     "הלכה יהודית",
     "עוקב מדדי אג\"ח",
     "עוקב מדדי מניות",
-    "אג\"ח סחיר"
+    "אג\"ח סחיר",
+    "אג\"ח ממשלתי סחיר"
   ],
   layeled: [
     "סיכון מוגבר",
@@ -74,24 +78,43 @@ const maslulimByProduct = {
   ]
 };
 
+function maslulim(kodmas){ 
+
+var filtered;
+filtered =datanetunimKlaliXM.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
+
+if(filtered.length>0){}
+
+else { filtered =datanetunimKlaliXP.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
+      if(filtered.length>0){}
+      else{filtered =datanetunimKlaliXB.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
+    }
+}
+ return {   
+    shemkupa: filtered[0].shemkupa
+  };
+  };
+
 // פונקציה למציאת מסלול לפי שם מוצר
-function detectMaslulByProduct(productType, productName) {
-  console.log(productType, productName);
-  const input = productName.replace(/\s+/g, " ").replace(/[\u200E\u200F]/g, "").trim();
-  if(input.includes("כללי"))return "כללי";
-  for (const maslul of maslulimByProduct[productType] || []) {
+function detectMaslulByProduct(productName) {
+
+  //if(productName.includes("כללי"))return "כללי";
+  for (const maslulList of Object.values(maslulimByProduct)) {
+  for (const maslul of maslulList || []) {
     const rule = maslulRules[maslul];
     if (!rule) continue;
 
-    const hasAll = rule.includeAll.every(word => input.includes(word));
-    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => input.includes(word));
-    const hasExcluded = rule.exclude.some(word => input.includes(word));
+    const hasAll = rule.includeAll.every(word => productName.includes(word));
+    const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => productName.includes(word));
+    const hasExcluded = rule.exclude.some(word => productName.includes(word));
 
     if (hasAll && hasAny && !hasExcluded) {
-      return maslul;
+      return maslul.trim();
+      break;
     }
   }
-  return "לא נמצא כלל מתאים";
+  }
+  return "כללי";
 }
 
 
