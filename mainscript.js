@@ -24,14 +24,14 @@ window.onload = async function() {
             fetchdataJasonB(),
             fetchdataJasonP(),
              fetchdataJasonM(),
-             
-            
+               
         ]);
         
        
   } catch (error) {
         console.error("שגיאה בטעינת הנתונים:", error);
   }
+  detectMaslulByProduct();
    
 }
 
@@ -80,7 +80,6 @@ async function fetchdataJasonP() {
         throw error;  // זורק את השגיאה כדי ש-Promise.all יוכל לטפל בה
     }
 }
-
 
 
 
