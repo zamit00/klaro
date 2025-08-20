@@ -620,38 +620,46 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
   
   <div class="card main-card" style="margin-right: auto;margin-left: auto;">
     <h1>התחברות לאיזור האישי</h1>
-    <p class="muted">הזן תעודת זהות ולחץ "שלח בקשה"</p>
+    <p class="muted" id="muted">הזן תעודת זהות ולחץ "שלח בקשה"</p>
 
     <div class="row">
-    <label for="mispar" class="chip" style="font-weight: 800;">מספר ת"ז</label>
-    <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" 
-    style="max-width: 60%;"/>
-    <button id="btn">שלח בקשה</button>
+    <div style="display: flex;flex-direction: row;width: 100%;">
+      <label for="mispar" class="chip" style="font-weight: 800;
+      width: 25%;text-align: center;align-content: center;
+      margin-left: 5%;">מספר ת"ז</label>
+      <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" 
+      style="max-width: 30%;"/>
+      <button id="btn" style="margin-right: 5%;">שלח בקשה</button>
     </div>
-    <div class="code" id="code" style="margin-top: 20px;">
-    <label for="mispar" class="chip" style="font-weight: 800;">הכנס קוד</label>
+    
+    </div>
+    <div class="code" id="code" style="margin-top: 20px;
+    ;flex-direction: row;width: 100%;">
+    <label for="mispar" class="chip" style="font-weight: 800;
+    width: 25%;text-align: center;align-content: center;
+      margin-left: 5%;">הכנס קוד</label>
     <input id="codenumber" type="text" value="" inputmode="numeric" autocomplete="off"
-    style="max-width: 60%;" />
+    style="max-width: 30%;" />
     </div>
     
   </div>
 
 <div id="status" class="status"></div>
 </div>
-
-
   <div class="loader" id="loader"> </div>
 <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;">טעינת נתונים</div>
 <div id="resultsContainer" class="hidden">
 
 <div class="total-summary">
-<div>סכום כולל צבור</div>
+<div>סכום כולל צבור לחודש<span style="margin: 0 10px;" id="tarNechonot"></span></div>
+
 <div id="totals" class="total-amount">0 ש״ח</div>
 </div>
 
 <div class="results-grid">
 <div class="card">
 <h2>פירוט לפי סוג מוצר</h2>
+
 <div class="table-container">
 <table class="styled-table">
 <thead>
@@ -904,6 +912,7 @@ Object.entries(totalsByType).forEach(([type, total]) => {
 
 updateProductSelector(totalsByType);
 document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
+document.getElementById("tarNechonot").textContent=updatedTo;
 createPieChart(totalsByType);
 createLegend(totalsByType);
 resultsContainer.classList.remove('hidden');
@@ -934,13 +943,17 @@ if(!mispar || mispar.length < 8 ){
 setStatus('❗ יש להזין מספר ת״ז תקין');
 return;
 }
-document.getElementById("code").style.display="block";
+document.getElementById("code").style.display="flex";
+btn.innerText="אשר קוד";
+document.getElementById("muted").textContent="בדוק קבלת קוד במכשיר הסלולרי"
 const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
-
-
-if (document.getElementById("codenumber").value===''){return}
-
+const codenumber=document.getElementById("codenumber");
+if (codenumber.value===''){return}
+btn.innerText="שלח בקשה";
+document.getElementById("muted").textContent='הזן תעודת זהות ולחץ "שלח בקשה"'
+document.getElementById("code").style.display="none";
+codenumber.value='';
 loader.style.display = "block";
 loaderText.style.display = "block";
 const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
@@ -1283,4 +1296,3 @@ resultsContainer.classList.remove('hidden');
 </script>
 </body>
 </html>
-
