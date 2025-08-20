@@ -44,7 +44,12 @@ async function fetchdataJasonM() {
         }
         const data = await response.json(); 
         datanetunimKlaliXM = data;
-	    datanetunimKlaliXM= datanetunimKlaliXM.filter(item=>!item.menahelet.includes('סלייס'));    
+	    datanetunimKlaliXM= datanetunimKlaliXM.filter(item=>!item.menahelet.includes('סלייס')
+    && !item.mozar.includes('מרכזית לפיצויים') && !item.shemkupa.includes('מחלה') &&
+        !item.shemkupa.includes('ניהול אישי') && !item.mozar.includes('יעד לפרישה')
+        && !item.shemkupa.includes('שריעה') &&  !item.shemkupa.includes('קיימות')
+        &&   !item.shemkupa.includes('ניהול אישי')
+    );    
         return data;  // חובה להחזיר נתונים כדי שהפונקציה תחכה באמת
     } catch (error) {
         console.error('שגיאה בשליפת הנתונים:', error);
@@ -60,6 +65,10 @@ async function fetchdataJasonB() {
         }
         const data = await response.json(); 
         datanetunimKlaliXB = data; 
+        datanetunimKlaliXB= datanetunimKlaliXB.filter(item=>!item.shemkupa.includes('קצבה')
+    && !item.shemkupa.includes('יעד לפרישה') && !item.shemkupa.includes('שריעה') &&
+    !item.shemkupa.includes('קיימות') &&   !item.shemkupa.includes('ניהול אישי')
+    );    
         return data;  // החזרת הנתונים כדי ש-`await` יעבוד נכון
     } catch (error) {
         console.error('שגיאה בשליפת הנתונים:', error);
@@ -73,7 +82,11 @@ async function fetchdataJasonP() {
             throw new Error(`שגיאה: ${response.status} ${response.statusText}`);
         }
         const data = await response.json(); 
-        datanetunimKlaliXP = data; 
+        datanetunimKlaliXP = data;
+        datanetunimKlaliXP= datanetunimKlaliXP.filter(item=>!item.shemkupa.includes('קצבה')
+    && !item.shemkupa.includes('יעד לפרישה') && !item.shemkupa.includes('שריעה') &&
+    !item.shemkupa.includes('קיימות') &&   !item.shemkupa.includes('ניהול אישי')
+    );   
         return data;  // מחזיר את הנתונים כדי שהפונקציה תהיה באמת אסינכרונית
     } catch (error) {
         console.error('שגיאה בשליפת הנתונים:', error);
