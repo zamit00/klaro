@@ -1,4 +1,5 @@
 var datanetunimKlaliXM;var datanetunimKlaliXB;var datanetunimKlaliXP;
+var updatedTo;
 const gufmosdixA = [
     'הראל פנסיה וגמל', 'כלל פנסיה וגמל',
     'מגדל מקפת קרנות פנסיה וקופות גמל', 'מנורה מבטחים פנסיה וגמל',
@@ -44,6 +45,8 @@ async function fetchdataJasonM() {
         }
         const data = await response.json(); 
         datanetunimKlaliXM = data;
+        updatedTo=(datanetunimKlaliXM[0].tesua12).split('=')[1];
+        updatedTo = updatedTo.slice(4,6)+"/"+updatedTo.slice(0,4)
 	    datanetunimKlaliXM= datanetunimKlaliXM.filter(item=>!item.menahelet.includes('סלייס')
     && !item.mozar.includes('מרכזית לפיצויים') && !item.shemkupa.includes('מחלה') &&
         !item.shemkupa.includes('ניהול אישי') && !item.mozar.includes('יעד לפרישה')
