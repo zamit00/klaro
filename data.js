@@ -168,4 +168,23 @@ function filterByMaslul(sugmozar, maslulName) {
 }
 
 
+let speechEnabled = false;
+let speakLaterLast='';
+const dummy = new SpeechSynthesisUtterance("");
+dummy.lang = "heb-IL";
 
+function speakClick (){
+  speechEnabled = true;
+  speechSynthesis.speak(dummy);
+};
+function speakLater(text) {
+ //if(text===speakLaterLast){return}
+ //speakLaterLast=text;
+ // if (!speechEnabled) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  
+  utter.lang = "he-IL";
+  utter.rate=0.85;
+  utter.pitch=2;
+  speechSynthesis.speak(utter);
+}
