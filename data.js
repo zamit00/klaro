@@ -9,7 +9,7 @@ const maslulRules = {
   "50-60": { includeAll: ["50","60"], includeAny: [], exclude: [] },
   "עד 50": { includeAll: ["50"], includeAny: [], exclude: ["60","20"] },
   "אשראי ואג\"ח": { includeAll: ["אשראי","אג\"ח"], includeAny: [], exclude: ["מניות"] },
-  "כספי (שקלי)": { includeAll: [], includeAny: ["שקלי","כספי"], exclude: [] },
+  "כספי (שקלי)": { includeAll: [], includeAny: ["שקלי","כספי","שיקלי"], exclude: [] },
   "משולב סחיר": { includeAll: ["משולב","סחיר"], includeAny: [], exclude: [] },
   "עוקב מדדים - גמיש": { includeAll: ["עוקב","גמיש"], includeAny: [], exclude: [] },
   "אג\"ח ממשלות": { includeAll: ["אג\"ח","ממשלות"], includeAny: [], exclude: [] },
@@ -22,7 +22,7 @@ const maslulRules = {
   "סיכון בינוני": { includeAll: [], includeAny: ["בינוני"], exclude: [] },
   "סיכון מועט": { includeAll: [], includeAny: ["מועט"], exclude: [] },
   "אג\"ח ממשלתי סחיר": { includeAll: ["אג\"ח","סחיר","ממשלתי"], includeAny: [], exclude: [] },
-  "כללי": { includeAll: ["כללי"], includeAny: [], exclude: [] }
+  "כללי": { includeAll: [], includeAny: ["כללי","קרן י"], exclude: ["פנסיה כללית"] }
 
  
 };
@@ -79,7 +79,6 @@ const maslulimByProduct = {
 };
 
 function maslulim(kodmas){ 
-
 var filtered;
 filtered =datanetunimKlaliXM.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
 
@@ -90,11 +89,16 @@ else { filtered =datanetunimKlaliXP.filter(item=>Number(item.mh)===Number(parseI
       else{filtered =datanetunimKlaliXB.filter(item=>Number(item.mh)===Number(parseInt(kodmas.slice(23))))
     }
 }
+if(filtered.length>0){
  return {   
     shemkupa: filtered[0].shemkupa,
     muz:filtered[0].mozar,
-    mas:filtered[0].mas
-  };
+    mas:filtered[0].mas,
+    ochlosia:filtered[0].ochlosiyayaad
+  }}
+  else{
+    return "not find"
+  }
   };
 
 // פונקציה למציאת מסלול לפי שם מוצר
@@ -117,14 +121,20 @@ function detectMaslulByProduct() {
     }
   }
   }
+  if(!item.mas){
+      
+      item.mas="כללי"}
+  
   
   })
   //if(productName.includes("כללי"))return "כללי";
   datanetunimKlaliXB.forEach(item=>{
+
     for (const maslulList of Object.values(maslulimByProduct)) {
   for (const maslul of maslulList || []) {
     const rule = maslulRules[maslul];
     if (!rule) continue;
+    
 
     const hasAll = rule.includeAll.every(word => item.shemkupa.includes(word));
     const hasAny = rule.includeAny.length === 0 || rule.includeAny.some(word => item.shemkupa.includes(word));
@@ -134,15 +144,15 @@ function detectMaslulByProduct() {
      //item.pus(
       //  `mas: ${maslul.trim()}`
     // )
-    item.mas=maslul.trim();     
-    }
-    else{
-      item.mas="כללי"
+    item.mas=maslul.trim();  
     }
   }
   }
-  
+  if(!item.mas){
+      
+      item.mas="כללי"}
   })
+  
 }
 function filterByMaslul(sugmozar, maslulName) {
   const rule = maslulRules[maslulName];
