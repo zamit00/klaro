@@ -602,7 +602,7 @@ margin-right: auto;margin-left: auto;">פיננסינט – מידע פנסיו�
 
 <div class="row">
 <label for="mispar" class="chip">מספר ת"ז</label>
-<input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" />
+<input id="mispar" type="text" value="34414060" inputmode="numeric" autocomplete="off" />
 <button id="btn">שלח בקשה</button>
 </div>
 
@@ -1001,52 +1001,65 @@ function showDetails(productType) {
                                     const maslul = m.maslul;var sugmoz;
                                     const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
                                     let filteredData;
-                                    if (maslul?.kodMaslul && amount > 0) {
-                                        const kod = maslul.kodMaslul;
-                                        
-                                        let dataNetunimforfilter =  maslulim(kod).muz === "פוליסות חסכון" ?
-                                         datanetunimKlaliXB :maslulim(kod).muz === "קרנות חדשות" ?
-                                          datanetunimKlaliXP : datanetunimKlaliXM;                      
-                                        if(dataNetunimforfilter===datanetunimKlaliXM){
-                                        filteredData= dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
-                                       item.mozar===maslulim(kod).muz && !item.ochlosiyayaad.includes("עובדי סקטור") &&
-                                        !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana) ;
-                                        }
-                                        else{
-                                          filteredData=dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
-                                       item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana);
-                                        }
-                                         tableHTML = `
-<div style="overflow-x:auto; direction:rtl; margin:20px 0;">
-  <table style="border-radius: 10%;width:100%; border-collapse:collapse; font-family:Arial, sans-serif; text-align:center;">
-    <thead style="background:orangered; color:white;">
-      <tr>
-        <th style="padding:12px; border:1px solid #ddd;">מספר מסלול</th>
-        <th style="padding:12px; border:1px solid #ddd;">שם המסלול</th>
-        <th style="padding:12px; border:1px solid #ddd;">תשואה מתחילת השנה</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background:#f9f9f9;">
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].mh}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuaMitchilatshana}%</td>
-      </tr>
-      <tr>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].mh}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuaMitchilatshana}%</td>
-      </tr>
-      <tr style="background:#f9f9f9;">
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].mh}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].shemkupa}</td>
-        <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuaMitchilatshana}%</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-`;
+    if (parseInt(maslul?.kodMaslul)>0 && amount > 0) {
+          const kod = maslul.kodMaslul;
+
+          
+  //    if(!maslulim(kod)==="not find"){
+           
+           
+          
+          let dataNetunimforfilter =  maslulim(kod).muz === "פוליסות חסכון" ?
+            datanetunimKlaliXB :maslulim(kod).muz === "קרנות חדשות" ?
+            datanetunimKlaliXP : maslulim(kod).muz === "קרנות כלליות" ? 
+            datanetunimKlaliXP :datanetunimKlaliXM;                      
+          if(dataNetunimforfilter===datanetunimKlaliXM){
+          filteredData= dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+          item.mozar===maslulim(kod).muz && !item.ochlosiyayaad.includes("עובדי סקטור") &&
+          !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana) ;
+          }
+          else{
+            filteredData=dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+          item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana);
+          }
+
+          if(maslulim(kod).ochlosia==="עובדי מפעל/גוף מסויים"){
+            
+          }
+          else{
+            if(filteredData[0]===undefined){}else{
+         
+            tableHTML = `
+        <div style="overflow-x:auto; direction:rtl; margin:20px 0;">
+        <table style="border-radius: 10%;width:100%; border-collapse:collapse; font-family:Arial, sans-serif; text-align:center;">
+        <thead style="background:orangered; color:white;">
+        <tr>
+          <th style="padding:12px; border:1px solid #ddd;">מספר מסלול</th>
+          <th style="padding:12px; border:1px solid #ddd;">שם המסלול</th>
+          <th style="padding:12px; border:1px solid #ddd;">תשואה מתחילת השנה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f9f9f9;">
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuaMitchilatshana}%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuaMitchilatshana}%</td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuaMitchilatshana}%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>  `;
 filteredData='';
+             } }
                                         const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
                                         const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
                                         
