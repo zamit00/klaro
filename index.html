@@ -904,6 +904,9 @@ if(!mispar || mispar.length < 8 ){
 setStatus('❗ יש להזין מספר ת״ז תקין');
 return;
 }
+const txt="מאבצע קריאה לשירות - טעינת נתונים החלה"
+speakClick();
+window.speakLater(txt);
 const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
 
@@ -1057,6 +1060,8 @@ function showDetails(productType) {
         </tr>
       </tbody>
     </table>
+    <p style="font-size:0.8rem;">*התשואה המוצגת בטבלה מייצגת תשואה המסלול ברוטו 
+      מתחילת שנה וזאת בהתאם לנתוני רשות שוק ההון</>
     </div>  `;
 filteredData='';
              } }
@@ -1240,12 +1245,7 @@ resultsContainer.classList.remove('hidden');
 });
 
 showProductDetailsBtn.addEventListener('click', showDetailsFromSelector);
-
-
-
-    
-
-    
+  
 </script>
 </body>
 </html>
