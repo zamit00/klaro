@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Klaro-איזור אישי</title>
+<title>בדיקת שירות mislaka-service</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
@@ -651,9 +651,9 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 <div id="resultsContainer" class="hidden">
 
 <div class="total-summary">
-<div>סכום כולל צבור לחודש<span style="margin: 0 10px;" id="tarNechonot"></span></div>
-
+<div style="font-size: 2rem;">סכום כולל צבור</div>
 <div id="totals" class="total-amount">0 ש״ח</div>
+<p  id="tarNechonot"></p>
 </div>
 
 <div class="results-grid">
@@ -687,7 +687,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 <h2>מקרא</h2>
 <div id="legend" class="legend-grid"></div>
 </div>
-<div class="card" style="display: none;">
+<div class="card" >
 <h2>תוצאה מלאה (JSON)</h2>
 <pre id="output">// התוצאה תופיע כאן</pre>
 </div>
@@ -870,8 +870,9 @@ const tbody = document.getElementById("productTable");
 tbody.innerHTML = '';
 
 const totalsByType = {};
-let totalSum = 0;
-
+let totalSum = 0;var updatedDate;
+updatedDate= data?.matches[0][0].taarichBitzoa || "no";
+updatedDate = updatedDate.slice(6,8)+"/"+updatedDate.slice(4,6)+"/"+updatedDate.slice(0,4)
 data.matches.forEach(level1 => {
  level1.forEach(yatzran => {
  if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
@@ -912,7 +913,8 @@ Object.entries(totalsByType).forEach(([type, total]) => {
 
 updateProductSelector(totalsByType);
 document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
-document.getElementById("tarNechonot").textContent=updatedTo;
+document.getElementById("tarNechonot").textContent=`תאריך מסלקה:
+ ${updatedDate}`;
 createPieChart(totalsByType);
 createLegend(totalsByType);
 resultsContainer.classList.remove('hidden');
@@ -953,34 +955,43 @@ if (codenumber.value===''){return}
 btn.innerText="שלח בקשה";
 document.getElementById("muted").textContent='הזן תעודת זהות ולחץ "שלח בקשה"'
 document.getElementById("code").style.display="none";
-codenumber.value='';
+
 loader.style.display = "block";
 loaderText.style.display = "block";
-const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}`;
+const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}&code=${encodeURIComponent(codenumber.value)}`;
 setStatus('מבצע קריאה לשירות…', true);
 resultsContainer.classList.add('hidden');
 detailsContainer.classList.add('hidden');
+try {
+  const res = await fetch(url, { method: 'GET' });
 
-try{
-const res = await fetch(url, { method:'GET' });
-if(!res.ok){
-const text = await res.text();
-setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
-out.textContent = text;
-resultsContainer.classList.remove('hidden');
-return;
-}
-const json = await res.json();
-setStatus('הצלחה ✅');
-loaderText.style.display = "none";
-loader.style.display = "none";
+  if (!res.ok) {
+    const text = await res.text();
+    setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
+    out.textContent = text;
+    loader.style.display = "none";
+    loaderText.style.display = "none";
+    document.getElementById("code").style.display="flex";
+    //
+    return; // עוצר את הפונקציה כאן
+  }
 
-dataJason=json;
-show(json);
-}catch(err){
-setStatus('שגיאה בביצוע הבקשה מהדפדפן');
-out.textContent = String(err);
-resultsContainer.classList.remove('hidden');
+  // אם הכל תקין – ממשיכים
+  resultsContainer.classList.remove('hidden');
+  const json = await res.json();
+  setStatus('הצלחה ✅');
+  loader.style.display = "none";
+  loaderText.style.display = "none";
+  dataJason = json;
+  show(json)
+
+}catch (error) {
+  // אם יש שגיאה ב־fetch עצמו (בעיית אינטרנט, נפילת שרת וכו')
+  console.error("שגיאה בתקשורת:", error);
+  setStatus("שגיאת תקשורת מול השרת");
+  out.textContent = error.message;
+  resultsContainer.classList.remove('hidden');
+  return; // עוצר גם במקרה של שגיאה ב־catch
 }
       // סימולציה של טעינת נתונים (לדוגמה: 3 שניות)
 });
@@ -995,7 +1006,6 @@ function showDetails(productType) {
     const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
     detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
     accountDetails.innerHTML = '';let tableHTML;
-
     const getMaasikName = (yatzran, mispar) => {
         shemYatzranA=yatzran.shemYatzran;
         const maasik = yatzran.maasikimColl?.find(m => String(m.misparMaasikBeYatzranR) === String(mispar));
@@ -1075,7 +1085,7 @@ function showDetails(productType) {
           }
           else{
             if(filteredData[0]===undefined){}else{
-         
+              
             tableHTML = `
         <p>הנתונים נכונים ל - ${updatedTo}</p>
         <div style="overflow-x:auto; direction:rtl; margin:20px 0;">
