@@ -29,8 +29,8 @@
         html { scroll-behavior: smooth; }
         body { font-family: var(--font-main); background-color: var(--white); 
               color: var(--text-primary); line-height: 1.6; font-size: 17px; -webkit-font-smoothing:
-                  antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;width:100%;max-width:100%;box-sizing:border-box;
-             margin-right:auto;margin-left:auto;padding:0;} /* מניעת גלילה אופקית */
+                  antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;max-width:100%;box-sizing:border-box;
+             margin:0;padding:0;} /* מניעת גלילה אופקית */
         main{max-width:100%;box-sizing:border-box;margin-right:auto;margin-left:auto;}
         .container { width: 90%; max-width: 1100px; margin: 0 auto; }
         .main-header { background-color: transparent; padding: 20px 0; position: absolute; top: 0; left: 0; right: 0; z-index: 1000; transition: background-color 0.3s ease; }
@@ -295,9 +295,7 @@
         }
 
         @media (max-width: 768px) {
-   .step-number-icon{
-     display:none;
-   }         
+            
             .nav-links{display:none;}
             
             
@@ -441,7 +439,7 @@
                 <h2 class="section-title">האם הכסף שלך עובד מספיק קשה?</h2>
                 <p class="section-subtitle">הבינה המלאכותית שלנו סורקת למעלה מ-500 מסלולי השקעה מתוך מאגר גמל-נט הרשמי. אלו רק חלק מהמסלולים המצטיינים שמצאנו עבור החוסכים שלנו בשנה האחרונה. המסלול שלכם יכול להיות הבא בתור.</p>
                 <div class="performers-grid">
-<div class="performer-card" style="min-width:80%">
+                        <div class="performer-card">
                             <div class="category">קרן השתלמות מנייתית</div>
                             <div class="company">
                                 <img src="https://upload.wikimedia.org/wikipedia/he/thumb/b/be/%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png/250px-%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png" alt="אלטשולר שחם">
@@ -453,20 +451,19 @@
                                 <div class="value">+14.2%</div>
                             </div>
                         </div>
-<div class="performer-card" style="min-width:80%">
-<div class="category">קופת גמל להשקעה</div>
+                        <div class="performer-card">
+                            <div class="category">קופת גמל להשקעה</div>
                             <div class="company">
                                 <img src="https://www.yl-invest.co.il/content/images/logohq.png" alt="ילין לפידות">
                                 <span class="name">ילין לפידות</span>
                             </div>
-  <p class="fund">גמל להשקעה כללי</p>
+                            <p class="fund">גמל להשקעה כללי</p>
                             <div class="return">
                                 <div class="label">תשואה שנתית</div>
                                 <div class="value">+11.8%</div>
                             </div>
                         </div>
-<div class="performer-card"
-  style="width:80%">
+                        <div class="performer-card">
                             <div class="category">קרן פנסיה מקיפה (עד 50)</div>
                             <div class="company">
                                 <img src="https://www.fnx.co.il/_nuxt/img/header-logo.564c209.png" alt="הפניקס">
@@ -492,8 +489,7 @@
                     <div class="process-flow">
                         <div class="process-line"></div>
                         <div class="process-step">
-<div class="step-content"
- style="width:80%;">
+                            <div class="step-content">
                                 <h3>1. תמונה מלאה ומאוחדת</h3>
                                 <p>בחיבור מאובטח וחד-פעמי, אנו מתממשקים למקורות המידע הרשמיים שלך - המסלקה הפנסיונית, הר הביטוח והר הכסף - כדי לאחד את כל הנתונים הפיננסיים שלך לדאשבורד אחד חכם.</p>
                             </div>
