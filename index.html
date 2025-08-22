@@ -29,8 +29,8 @@
         html { scroll-behavior: smooth; }
         body { font-family: var(--font-main); background-color: var(--white); 
               color: var(--text-primary); line-height: 1.6; font-size: 17px; -webkit-font-smoothing:
-                  antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;max-width:100%;box-sizing:border-box;
-             margin:0;padding:0;} /* מניעת גלילה אופקית */
+                  antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;width:100%;max-width:100%;box-sizing:border-box;
+             margin-right:auto;margin-left:auto;padding:0;} /* מניעת גלילה אופקית */
         main{max-width:100%;box-sizing:border-box;margin-right:auto;margin-left:auto;}
         .container { width: 90%; max-width: 1100px; margin: 0 auto; }
         .main-header { background-color: transparent; padding: 20px 0; position: absolute; top: 0; left: 0; right: 0; z-index: 1000; transition: background-color 0.3s ease; }
@@ -295,7 +295,7 @@
         }
 
         @media (max-width: 768px) {
-            
+            .step-number-icon{ display:none;}         
             .nav-links{display:none;}
             
             
@@ -320,7 +320,7 @@
             .performers-grid { grid-template-columns: 1fr; }
             .how-it-works-v2 { padding: 60px 0; }
             .process-flow { padding-right: 0; }
-            .process-step { grid-template-columns: 1fr; gap: 20px; }
+            .process-step { grid-template-columns: 1fr; gap: 20px;width: 300px; }
             .process-step .step-content { grid-column: 1 / -1; }
             .process-step:nth-child(odd) .step-content { text-align: right; }
             .process-step .step-number-icon { grid-column: 1 / -1; justify-self: right; margin-right: 20px; order: -1; }
@@ -336,6 +336,13 @@
             .footer-bottom { text-align: right; }
             .savings-calculator-v2 { padding: 20px; }
             .chart-bar { width: 80px; }
+            .yalin,.company{max-width: 320px;}
+            .yalin span{display: none;}
+            .hafenix,.altshuler{min-width: 300px;}
+            .yalin,.altshuler,.hafenix{margin-right: auto;margin-left: auto;}
+            .process-step{display: flex;justify-content: center;}
+            .step-content h3{font-size: 1.2rem;}
+            .process-flow{display: flex;flex-direction: column;align-items: center;}
         }
         @media (max-width: 480px) {
              .hero-text h1 { font-size: 32px; }
@@ -439,7 +446,7 @@
                 <h2 class="section-title">האם הכסף שלך עובד מספיק קשה?</h2>
                 <p class="section-subtitle">הבינה המלאכותית שלנו סורקת למעלה מ-500 מסלולי השקעה מתוך מאגר גמל-נט הרשמי. אלו רק חלק מהמסלולים המצטיינים שמצאנו עבור החוסכים שלנו בשנה האחרונה. המסלול שלכם יכול להיות הבא בתור.</p>
                 <div class="performers-grid">
-                        <div class="performer-card">
+                <div class="performer-card altshuler">
                             <div class="category">קרן השתלמות מנייתית</div>
                             <div class="company">
                                 <img src="https://upload.wikimedia.org/wikipedia/he/thumb/b/be/%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png/250px-%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png" alt="אלטשולר שחם">
@@ -451,8 +458,8 @@
                                 <div class="value">+14.2%</div>
                             </div>
                         </div>
-                        <div class="performer-card">
-                            <div class="category">קופת גמל להשקעה</div>
+                        <div class="performer-card yalin" >
+                        <div class="category">קופת גמל להשקעה</div>
                             <div class="company">
                                 <img src="https://www.yl-invest.co.il/content/images/logohq.png" alt="ילין לפידות">
                                 <span class="name">ילין לפידות</span>
@@ -463,7 +470,7 @@
                                 <div class="value">+11.8%</div>
                             </div>
                         </div>
-                        <div class="performer-card">
+                    <div class="performer-card hafenix" style="width:80%">
                             <div class="category">קרן פנסיה מקיפה (עד 50)</div>
                             <div class="company">
                                 <img src="https://www.fnx.co.il/_nuxt/img/header-logo.564c209.png" alt="הפניקס">
@@ -489,7 +496,7 @@
                     <div class="process-flow">
                         <div class="process-line"></div>
                         <div class="process-step">
-                            <div class="step-content">
+                    <div class="step-content" style="min-width: 300px;";>
                                 <h3>1. תמונה מלאה ומאוחדת</h3>
                                 <p>בחיבור מאובטח וחד-פעמי, אנו מתממשקים למקורות המידע הרשמיים שלך - המסלקה הפנסיונית, הר הביטוח והר הכסף - כדי לאחד את כל הנתונים הפיננסיים שלך לדאשבורד אחד חכם.</p>
                             </div>
@@ -499,17 +506,16 @@
                             <div></div>
                         </div>
                         <div class="process-step">
-                            <div></div>
                             <div class="step-number-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path><path d="M22 10a3 3 0 0 0-3-3h-2.207a5.502 5.502 0 0 0-10.702.5"></path></svg>
                             </div>
-                            <div class="step-content">
+                            <div class="step-content" style="min-width: 300px;">
                                 <h3>2. ניתוח AI כפול: תשואות ודמי ניהול</h3>
                                 <p>"כלב השמירה" הפיננסי שלנו נכנס לפעולה, חושף את דמי הניהול האמיתיים שאתה משלם ומשווה את ביצועי התיק שלך למאות מסלולים אחרים.</p>
                             </div>
                         </div>
                         <div class="process-step">
-                            <div class="step-content">
+                            <div class="step-content" style="min-width: 300px";>
                                 <h3>3. סרטון אישי וברור</h3>
                                 <p>במקום דוחות של 50 עמודים, אתה מקבל סרטון וידאו אישי של 3 דקות. בשפה פשוטה, נסביר לך בדיוק מה מצבך, איפה הכסף שלך, וכמה תוכל לחסוך.</p>
                             </div>
