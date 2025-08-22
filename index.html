@@ -1028,6 +1028,20 @@
                 });
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // ... הקוד הקיים שלך ...
+
+    // הפעלת וידאו מחדש בלחיצה
+    const heroIframe = document.getElementById('hero-video-iframe');
+    const originalSrc = heroIframe.src;
+
+    heroIframe.addEventListener('click', function() {
+        // טעינת ה-iframe מחדש כדי להפעיל את הסרטון
+        heroIframe.src = originalSrc;
+    });
+
+});
     </script>
 </body>
 </html>
