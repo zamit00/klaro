@@ -135,6 +135,40 @@
         @media (max-width: 768px) {
           .mobile-frame{display: none;}
         }
+        #toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  direction: rtl; /* מותאם לעברית */
+}
+
+.toast {
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Heebo", sans-serif;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 0.3s forwards, fadeOut 0.5s 3.5s forwards;
+}
+
+.toast.success { background: #4caf50; } /* ירוק */
+.toast.info    { background: #2196f3; } /* כחול */
+.toast.error   { background: #f44336; } /* אדום */
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(20px); }
+}
+
   </style>
 </head>
 <body>
@@ -144,18 +178,18 @@
     </div>
     <h1 style="text-align: center;color:#289e67">Klaro - <br>שליטה מלאה, בהירות מוחלטת.</h1>
     <h2>הרשמה</h2>
-    <form>
+    <form id="signupForm">
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input style="text-align: right;" type="text" placeholder="שם מלא" required>
+        <input id="fullName" style="text-align: right;" type="text" placeholder="שם מלא" required>
       </div>
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input style="text-align: right;" type="email" placeholder="כתובת מייל" required>
+        <input id="email" style="text-align: right;" type="text" placeholder="כתובת מייל" required>
       </div>
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input style="text-align: right;" type="tel" placeholder="טלפון נייד" required>
+        <input id="phone" style="text-align: right;" type="tel" placeholder="טלפון נייד" required>
       </div>
       <button type="submit" class="signup-btn">הירשמו - זה בחינם!</button>
     </form>
@@ -165,6 +199,7 @@
       ו־<a href="#">הפרטיות</a>
     </div>
   </div>
+  <div id="toast-container" style="position: fixed;top:50%;right:40%;z-index: 10000;"></div>
   
     <div class="mobile-frame">
             <div class="mobile-frame-screen">
@@ -178,6 +213,166 @@
             </div>
         </div>
     </div>
+<script>
+   
+  const API_URL = "https://mislaka-service-742661432038.europe-west4.run.app/signup";
+
+  function showToast(message, type = "info") {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    // בדיקה: מספר סלולרי ישראלי בפורמט 05x עם 9–10 ספרות
+    return /^05\d{8,9}$/.test(phone);
+  }
+
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const phone    = document.getElementById("phone").value.replace(/\D/g, "");
+
+    // ✅ ולידציה
+    if (fullName.length < 2) {
+      return showToast("שם מלא קצר מדי", "error");
+    }
+    if (!isValidEmail(email)) {
+      return showToast("כתובת המייל אינה תקינה", "error");
+    }
+    if (!isValidPhone(phone)) {
+      return showToast("מספר הטלפון הסלולרי אינו תקין", "error");
+    }
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName, email, phone })
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        showToast("✔ " + data.message, "success");
+        e.target.reset();
+      } else {
+        showToast("ℹ " + data.message, "info");
+      }
+    } catch (err) {
+      showToast("❌ שגיאה בהרשמה: " + err.message, "error");
+    }
+  });
+
+
+  const ADD_TAZ_API = "https://mislaka-service-742661432038.europe-west4.run.app/addTaz";
+  const CHECK_TAZ_API = "https://mislaka-service-742661432038.europe-west4.run.app/checkTaz";
+
+  
+  async function addTaz(phone, taz) {
+    const phoneClean = String(phone).replace(/\D/g, ""); // ניקוי לספרות בלבד
+
+    // ולידציה קצרה בצד לקוח (אופציונלי)
+    if (!/^05\d{8,9}$/.test(phoneClean)) {
+      throw new Error("מספר טלפון לא תקין");
+    }
+    if (!/^\d{5,10}$/.test(String(taz))) {
+      throw new Error("תעודת זהות לא תקינה");
+    }
+
+    const res = await fetch(ADD_TAZ_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone: phoneClean, taz: String(taz) })
+    });
+
+    // ננסה לפרש JSON גם בשגיאה
+    let data;
+    try { data = await res.json(); } catch { data = { ok: false, message: "שגיאה בקריאת תשובת השרת" }; }
+
+    if (!res.ok || data.ok === false) {
+      throw new Error(data.message || "בקשה נכשלה");
+    }
+
+    return data; // { ok: true, message: "שדה taz עודכן בהצלחה" }
+  }
+
+  /**
+ * בדיקת תקינות ת"ז ישראלית (כולל ספרת ביקורת והשלמת אפסים)
+ */
+function isValidIsraeliID(id) {
+  if (!id) return false;
+
+  // הסרת כל תו שאינו ספרה
+  id = String(id).replace(/\D/g, "");
+
+  // השלמה ל-9 ספרות (מוסיפים אפסים משמאל אם קצר יותר)
+  id = id.padStart(9, "0");
+
+  // חייב להיות בדיוק 9 ספרות
+  if (!/^\d{9}$/.test(id)) {
+    return false;
+  }
+
+  // חישוב ספרת ביקורת (אלגוריתם משרד הפנים)
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    let num = Number(id[i]);
+    let step = num * ((i % 2) + 1);
+    if (step > 9) step -= 9;
+    sum += step;
+  }
+
+  return (sum % 10 === 0);
+}
+
+/**
+ * פונקציה שבודקת ת"ז מול השרת
+ */
+async function checktaz(taz) {
+  // בדיקת תקינות מקומית
+  if (!isValidIsraeliID(taz)) {
+    throw new Error("תעודת זהות לא תקינה");
+  }
+
+  // השלמה ל-9 ספרות לפני שליחה
+  const tazFixed = String(taz).replace(/\D/g, "").padStart(9, "0");
+
+  // שליחה לשרת
+  const res = await fetch(CHECK_TAZ_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ taz: tazFixed })
+  });
+
+  // קריאת התשובה
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = { ok: false, message: "שגיאה בקריאת תשובת השרת" };
+  }
+
+  if (!res.ok || data.ok === false) {
+    throw new Error(data.message || "בקשה נכשלה");
+  }
+
+  return data; 
+  // למשל: { ok: true, exists: false, message: "תעודת זהות לא קיימת" }
+}
+
+  
+</script>
+
+
 
 </body>
 
