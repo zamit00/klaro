@@ -593,6 +593,7 @@ font-size: 14px;
   animation: spin 1.5s linear infinite;
   margin: 20px auto;
   display: none;
+  z-index: 10000;
 }
 .loaderText{display: none;}
 
@@ -675,7 +676,9 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
     </div>
     
   </div>
-  <div style="display:flex; justify-content:center; width:100%; box-sizing:border-box;
+  <div class="loader" id="loader"> </div>
+  <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;">טעינת נתונים</div>
+  <div id="mobileContainer" style="display:flex; justify-content:center; width:100%; box-sizing:border-box;
    max-width:600px; margin:auto; overflow:hidden;background-color: white;padding: 20px;">
   <div class="mobile-frame">
     <div class="mobile-frame-screen">
@@ -693,8 +696,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 <div id="status" class="status">
 </div>
 </div>
-  <div class="loader" id="loader"> </div>
-<div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;">טעינת נתונים</div>
+
 <div id="resultsContainer" class="hidden">
 
 <div class="total-summary">
@@ -998,6 +1000,8 @@ document.getElementById("muted").textContent="בדוק קבלת קוד במכש�
 const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
 const codenumber=document.getElementById("codenumber");
+const mobileContainer=document.getElementById("mobileContainer");
+
 if (codenumber.value===''){return}
 btn.innerText="שלח בקשה";
 document.getElementById("muted").textContent='הזן תעודת זהות ולחץ "שלח בקשה"'
@@ -1027,6 +1031,7 @@ try {
   resultsContainer.classList.remove('hidden');
   const json = await res.json();
   setStatus('הצלחה ✅');
+  mobileContainer.style.display = "none";
   loader.style.display = "none";
   loaderText.style.display = "none";
   dataJason = json;
