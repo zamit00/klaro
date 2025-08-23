@@ -480,9 +480,9 @@ h2 {
 }
 
 @media (max-width: 480px) {
-.mobile-frame {
+  .mobile-frame {
             width: 100%;
-            max-width: 250px;}
+            max-width: 200px;}
 .container {
  padding: 0 4px;
 }
@@ -680,7 +680,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
     
   </div>
   <div class="loader" id="loader"> </div>
-  <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;color:white">טעינת נתונים</div>
+  <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;color: white;">טעינת נתונים</div>
   <div id="mobileContainer" style="display:flex; justify-content:center; width:100%; box-sizing:border-box;
    max-width:600px; margin:auto; overflow:hidden;background-color: white;padding: 20px;">
   <div class="mobile-frame">
@@ -739,7 +739,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 <h2>מקרא</h2>
 <div id="legend" class="legend-grid"></div>
 </div>
-<div class="card" style="display:none">
+<div class="card" style="margin-right:auto;margin-left: auto;">
 <h2>תוצאה מלאה (JSON)</h2>
 <pre id="output">// התוצאה תופיע כאן</pre>
 </div>
@@ -1207,7 +1207,8 @@ filteredData='';
                     heshbonCard.style.marginLeft = 'auto';
                     heshbonCard.style.marginRight = 'auto';
                     heshbonCard.style.marginTop = '20px';
-                    heshbonCard.style.boxSizing="border-box"
+                    heshbonCard.style.boxSizing="border-box";
+                    
 
                 if(sugKvetz !== 'קרנות פנסיה ותיקות') {
                         
@@ -1361,8 +1362,5 @@ resultsContainer.classList.remove('hidden');
 </script>
 </body>
 </html>
-
-
-
 
 
