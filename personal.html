@@ -669,9 +669,17 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
     </div>
     
     </div>
+    <div class="phone"  style="margin-top: 20px;
+        ;flex-direction: row;width: 100%;">
+    <label for="phoneNum" class="chip" style="font-weight: 800;
+    width: 25%;text-align: center;align-content: center;
+      margin-left: 5%;">הכנס מספר סלולרי</label>
+    <input id="phoneNum" type="text" value="" inputmode="numeric" autocomplete="off"
+    style="max-width: 30%;" />
+    </div>
     <div class="code" id="code" style="margin-top: 20px;
     ;flex-direction: row;width: 100%;">
-    <label for="mispar" class="chip" style="font-weight: 800;
+    <label for="codenumber" class="chip" style="font-weight: 800;
     width: 25%;text-align: center;align-content: center;
       margin-left: 5%;">הכנס קוד</label>
     <input id="codenumber" type="text" value="" inputmode="numeric" autocomplete="off"
@@ -739,7 +747,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 <h2>מקרא</h2>
 <div id="legend" class="legend-grid"></div>
 </div>
-<div class="card" style="display:none;margin-right:auto;margin-left: auto;">
+<div class="card" style="margin-right:auto;margin-left: auto;">
 <h2>תוצאה מלאה (JSON)</h2>
 <pre id="output">// התוצאה תופיע כאן</pre>
 </div>
@@ -991,17 +999,28 @@ function showDetailsFromSelector() {
 
 
 btn.addEventListener('click', async () => {
-
+  
 var mispar = misparInput.value.trim();
 mispar = mispar.padStart(9, "0");
-document.getElementById("code").style.display="flex";
 btn.innerText="אשר קוד";
 document.getElementById("muted").textContent="בדוק קבלת קוד במכשיר הסלולרי"
 const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
 const codenumber=document.getElementById("codenumber");
 const mobileContainer=document.getElementById("mobileContainer");
+const phoneNumber=document.getElementById("phoneNum").value;
+console.log("p:"+phoneNumber.value ,"m:"+mispar)
+if(!phoneNumber || !mispar){
+  alert("חסרים פרטים");return;
+} 
+if(isValidIsraeliID(mispar)===false){
+  alert("תעודת זהות אינה תקינה");return;
+}
+if (!isValidPhone(phoneNumber)) {
+      alert("מספר הטלפון הסלולרי אינו תקין");return;
+}
 
+document.getElementById("code").style.display="flex";
 if (codenumber.value===''){return}
 btn.innerText="שלח בקשה";
 document.getElementById("muted").textContent='הזן תעודת זהות ולחץ "שלח בקשה"'
@@ -1031,7 +1050,7 @@ try {
   resultsContainer.classList.remove('hidden');
   const json = await res.json();
   setStatus('הצלחה ✅');
-  //document.getElementById("maincont").style.display = "none";
+  document.getElementById("maincont").style.display = "none";
   mobileContainer.style.display = "none";
   loader.style.display = "none";
   loaderText.style.display = "none";
@@ -1356,11 +1375,37 @@ resultsContainer.classList.remove('hidden');
 });
 
 //showProductDetailsBtn.addEventListener('click', showDetailsFromSelector);
-  
+  function isValidIsraeliID(id) {
+  if (!id) return false;
+
+  // הסרת כל תו שאינו ספרה
+  id = String(id).replace(/\D/g, "");
+
+  // השלמה ל-9 ספרות (מוסיפים אפסים משמאל אם קצר יותר)
+  id = id.padStart(9, "0");
+
+  // חייב להיות בדיוק 9 ספרות
+  if (!/^\d{9}$/.test(id)) {
+    return false;
+  }
+
+  // חישוב ספרת ביקורת (אלגוריתם משרד הפנים)
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    let num = Number(id[i]);
+    let step = num * ((i % 2) + 1);
+    if (step > 9) step -= 9;
+    sum += step;
+  }
+
+  return (sum % 10 === 0);
+}
+function isValidPhone(phone) {
+    // בדיקה: מספר סלולרי ישראלי בפורמט 05x עם 9–10 ספרות
+    return /^05\d{8,9}$/.test(phone);
+  }
 </script>
 </body>
 </html>
-
-
 
 
