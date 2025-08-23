@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>טופס הרשמה</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: "Heebo", sans-serif;
@@ -126,6 +127,10 @@
             height: 100%;
             border: none;
         }
+        #chart-container {
+          width: 100%;
+          max-width: 600px;
+        }
         @media (max-width: 768px) {
           .mobile-frame{display: none;}
         }
@@ -158,6 +163,9 @@
       <a href="#">תנאי השימוש</a>
       ו־<a href="#">הפרטיות</a>
     </div>
+    <div id="chart-container">
+      <canvas id="returnsChart"></canvas>
+    </div>
   </div>
   
     <div class="mobile-frame">
@@ -174,4 +182,73 @@
     </div>
 
 </body>
+<script>
+  const ctx = document.getElementById('returnsChart').getContext('2d');
+
+    const data = {
+      labels: ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני"],
+      datasets: [
+        {
+
+          data: [0, 7, 4, 9, 11, 14],
+          borderColor: "#0077ff",
+          backgroundColor: "rgba(0,119,255,0.1)",
+          tension: 0.3,
+          fill: false
+        },
+        {
+        
+          data: [0, 3, 5, 6, 9, 7,10],
+          borderColor: "#ff5722",
+          backgroundColor: "rgba(255,87,34,0.1)",
+          tension: 0.3,
+          fill: false
+        },
+        {
+          
+          data: [0, 2, 6, 9, 10.5, 11.5],
+          borderColor: "#4caf50",
+          backgroundColor: "rgba(76,175,80,0.1)",
+          tension: 0.3,
+          fill: false
+        }
+      ]
+    };
+
+    const options = {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          
+          font: { size: 18 }
+        },
+        legend: {
+          display:false
+          
+        }
+      },
+      scales: {
+        y: {
+          title: {
+            display: true,
+            text: "תשואה (%)"
+          },
+          beginAtZero: true
+        },
+        x: {
+          title: {
+            display: true,
+            text: "חודש"
+          }
+        }
+      }
+    };
+
+    new Chart(ctx, {
+      type: "line",
+      data: data,
+      options: options
+    });
+</script>
 </html>
