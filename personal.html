@@ -652,7 +652,7 @@ margin-right: auto;margin-left: auto;position:relative">Klaro – איזור א�
 position: relative;right:10%;margin-left:10px;" ></i></a>
 </header>
 
-<div class="container">
+<div class="container" id="maincont">
   
   <div class="card main-card" style="margin-right: auto;margin-left: auto;">
     <h1 style="text-align: center;">התחברות לאיזור האישי</h1>
@@ -992,11 +992,8 @@ function showDetailsFromSelector() {
 
 btn.addEventListener('click', async () => {
 
-const mispar = misparInput.value.trim();
-if(!mispar || mispar.length < 8 ){
-setStatus('❗ יש להזין מספר ת״ז תקין');
-return;
-}
+var mispar = misparInput.value.trim();
+mispar = mispar.padStart(9, "0");
 document.getElementById("code").style.display="flex";
 btn.innerText="אשר קוד";
 document.getElementById("muted").textContent="בדוק קבלת קוד במכשיר הסלולרי"
@@ -1034,6 +1031,7 @@ try {
   resultsContainer.classList.remove('hidden');
   const json = await res.json();
   setStatus('הצלחה ✅');
+  //document.getElementById("maincont").style.display = "none";
   mobileContainer.style.display = "none";
   loader.style.display = "none";
   loaderText.style.display = "none";
