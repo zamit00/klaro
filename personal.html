@@ -394,7 +394,7 @@ background: #4b5563;
     margin-left: auto;
     box-sizing: border-box;
   }
-
+#btn{position: relative;right:80%;max-width: 120px;}
 /* רספונסיביות משופרת */
 @media (max-width: 1024px) {
 .results-grid {
@@ -404,6 +404,7 @@ background: #4b5563;
 }
 
 @media (max-width: 768px) {
+  #btn{right:70%;max-width: 100px;}
   .details-selector{width: 100%;}
   header{font-size: 1.5rem;}
   .msllTable{
@@ -447,6 +448,7 @@ background: #4b5563;
  flex-direction: column;
  align-items: stretch;
  gap: 8px;
+ position: relative;
 }
 input[type="text"] {
  flex: 1;
@@ -480,6 +482,8 @@ h2 {
 }
 
 @media (max-width: 480px) {
+#btn{right: 62%;width: 100px;font-size: 11px;}
+.chip{font-size: 11px;}
   .mobile-frame {
             width: 100%;
             max-width: 200px;}
@@ -659,33 +663,33 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
     <p  class="muted" id="muted" style="font-size:0.8rem;text-align: center;">אם עדיין לא נרשמת <a href="harshama.html">לחץ כאן</a></p>
 
     <div class="row">
-    <div style="display: flex;flex-direction: row;width: 100%;">
-      <label for="mispar" class="chip" style="font-weight: 800;
-      width: 25%;text-align: center;align-content: center;
-      margin-left: 5%;">מספר ת"ז</label>
-      <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" 
-      style="max-width: 30%;"/>
-      <button id="btn" style="margin-right: 5%;">שלח בקשה</button>
-    </div>
+        <div style="display: flex;flex-direction: row;width: 100%;">
+          <label for="mispar" class="chip" style="font-weight: 800;
+          width: 25%;text-align: center;align-content: center;
+          margin-left: 5%;height: 35px;">מספר ת"ז</label>
+          <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" 
+          style="max-width: 30%;height: 35px;"/>
+          
+        </div>
     
+        <div class="phone"  style="margin-top: 20px;
+            ;flex-direction: row;width: 100%;">
+            <label for="phoneNum" class="chip" style="font-weight: 800;
+            width: 25%;text-align: center;align-content: center;
+              margin-left: 5%;height: 35px;">סלולרי</label>
+            <input id="phoneNum" type="text" value="" inputmode="numeric" autocomplete="off"
+            style="max-width: 30%;height: 35px;" />
+        </div>
+        <div class="code" id="code" style="margin-top: 20px;
+            ;flex-direction: row;width: 100%;">
+            <label for="codenumber" class="chip" style="font-weight: 800;
+            width: 25%;text-align: center;align-content: center;
+              margin-left: 5%;">הכנס קוד</label>
+            <input id="codenumber" type="text" value="" inputmode="numeric" autocomplete="off"
+            style="max-width: 30%;" />
+        </div>
+        <button id="btn" style="margin-right: 5%;">שלח בקשה</button>
     </div>
-    <div class="phone"  style="margin-top: 20px;
-        ;flex-direction: row;width: 100%;">
-    <label for="phoneNum" class="chip" style="font-weight: 800;
-    width: 25%;text-align: center;align-content: center;
-      margin-left: 5%;">סלולרי</label>
-    <input id="phoneNum" type="text" value="" inputmode="numeric" autocomplete="off"
-    style="max-width: 30%;" />
-    </div>
-    <div class="code" id="code" style="margin-top: 20px;
-    ;flex-direction: row;width: 100%;">
-    <label for="codenumber" class="chip" style="font-weight: 800;
-    width: 25%;text-align: center;align-content: center;
-      margin-left: 5%;">הכנס קוד</label>
-    <input id="codenumber" type="text" value="" inputmode="numeric" autocomplete="off"
-    style="max-width: 30%;" />
-    </div>
-    
   </div>
   <div class="loader" id="loader"> </div>
   <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;color: white;">טעינת נתונים</div>
