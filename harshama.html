@@ -19,6 +19,7 @@
 
     .signup-container {
       background: #fff;
+      margin: 10px;
       padding: 25px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -141,20 +142,20 @@
     <div class="already">
       כבר רשומים? <a href="personal.html">להתחברות</a>
     </div>
-    <h1 style="text-align: center;color:#289e67">Klaro - <br>שליטה מלאה. בהירות מוחלטת</h1>
+    <h1 style="text-align: center;color:#289e67">Klaro - <br>שליטה מלאה, בהירות מוחלטת.</h1>
     <h2>הרשמה</h2>
     <form>
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input type="text" placeholder="שם מלא" required>
+        <input style="text-align: right;" type="text" placeholder="שם מלא" required>
       </div>
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input type="email" placeholder="כתובת מייל" required>
+        <input style="text-align: right;" type="email" placeholder="כתובת מייל" required>
       </div>
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
-        <input type="tel" placeholder="טלפון נייד" required>
+        <input style="text-align: right;" type="tel" placeholder="טלפון נייד" required>
       </div>
       <button type="submit" class="signup-btn">הירשמו - זה בחינם!</button>
     </form>
@@ -162,9 +163,6 @@
       ההרשמה מהווה הסכמה ל
       <a href="#">תנאי השימוש</a>
       ו־<a href="#">הפרטיות</a>
-    </div>
-    <div id="chart-container">
-      <canvas id="returnsChart"></canvas>
     </div>
   </div>
   
@@ -182,73 +180,5 @@
     </div>
 
 </body>
-<script>
-  const ctx = document.getElementById('returnsChart').getContext('2d');
 
-    const data = {
-      labels: ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני"],
-      datasets: [
-        {
-
-          data: [0, 7, 4, 9, 11, 14],
-          borderColor: "#0077ff",
-          backgroundColor: "rgba(0,119,255,0.1)",
-          tension: 0.3,
-          fill: false
-        },
-        {
-        
-          data: [0, 3, 5, 6, 9, 7,10],
-          borderColor: "#ff5722",
-          backgroundColor: "rgba(255,87,34,0.1)",
-          tension: 0.3,
-          fill: false
-        },
-        {
-          
-          data: [0, 2, 6, 9, 10.5, 11.5],
-          borderColor: "#4caf50",
-          backgroundColor: "rgba(76,175,80,0.1)",
-          tension: 0.3,
-          fill: false
-        }
-      ]
-    };
-
-    const options = {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          
-          font: { size: 18 }
-        },
-        legend: {
-          display:false
-          
-        }
-      },
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: "תשואה (%)"
-          },
-          beginAtZero: true
-        },
-        x: {
-          title: {
-            display: true,
-            text: "חודש"
-          }
-        }
-      }
-    };
-
-    new Chart(ctx, {
-      type: "line",
-      data: data,
-      options: options
-    });
-</script>
 </html>
