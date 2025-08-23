@@ -181,6 +181,10 @@
     <form id="signupForm">
       <div class="input-group">
         <i class="fa fa-pencil-alt"></i>
+        <input id="tazNum" style="text-align: right;" type="text" placeholder="מספר תז" required>
+      </div>
+      <div class="input-group">
+        <i class="fa fa-pencil-alt"></i>
         <input id="fullName" style="text-align: right;" type="text" placeholder="שם מלא" required>
       </div>
       <div class="input-group">
@@ -237,11 +241,14 @@
 
   document.getElementById("signupForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-
+    const taz = document.getElementById("tazNum").value.trim();
     const fullName = document.getElementById("fullName").value.trim();
     const email    = document.getElementById("email").value.trim();
     const phone    = document.getElementById("phone").value.replace(/\D/g, "");
 
+    if(isValidIsraeliID(taz)===false){
+      return showToast("תעודת זהות אינה תקינה", "error");
+    }
     // ✅ ולידציה
     if (fullName.length < 2) {
       return showToast("שם מלא קצר מדי", "error");
@@ -257,7 +264,7 @@
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, phone })
+        body: JSON.stringify({ taz,fullName, email, phone, })
       });
       const data = await res.json();
 
