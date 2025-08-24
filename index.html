@@ -1,82 +1,641 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klaro - שליטה מלאה. בהירות מוחלטת.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-    <style>
-        /* --- כל ה-CSS נשאר ללא שינוי, למעט השינויים הבאים --- */
-        :root {
-            --blue-dark: #0A2540;
-            --blue-medium: #3A7DFF;
-            --green-accent: #00D4C8;
-            --green-positive: #00C853;
-            --white: #FFFFFF;
-            --gray-light: #F6F9FC;
-            --gray-medium: #E6EBF1;
-            --gray-dark: #8898AA;
-            --text-primary: #333;
-            --font-main: 'Heebo', sans-serif;
-            --shadow-soft: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-            --shadow-hard: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3);
-            --border-radius: 12px;
-        }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-main); background-color: var(--white); 
-              color: var(--text-primary); line-height: 1.6; font-size: 17px; -webkit-font-smoothing:
-                  antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;width:100%;max-width:100%;box-sizing:border-box;
-             margin-right:auto;margin-left:auto;padding:0;} /* מניעת גלילה אופקית */
-        main{max-width:100%;box-sizing:border-box;margin-right:auto;margin-left:auto;}
-        #harshama{color:white}
-        .menuX{display: none;}
-        .container { width: 90%; max-width: 1100px; margin: 0 auto; }
-        .main-header { background-color: transparent; padding: 20px 0; position: absolute; top: 0; left: 0; right: 0; z-index: 1000; transition: background-color 0.3s ease; }
-        .main-header.scrolled { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; border-bottom: 1px solid var(--gray-medium); box-shadow: var(--shadow-soft);
-        color:var(--blue-dark) }
-        
-        .hamburger-menu { display: none;color:white; } /* מוסתר כברירת מחדל */
-        .hamburger-menu.scrolled,#harshama.scrolled, #menuX.scrolled{color:var(--blue-dark)}
-        .main-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 10px;}
-        .logo { font-size: 28px; font-weight: 800; color: var(--white); text-decoration: none; transition: color 0.3s ease; }
-        .main-header.scrolled .logo, .main-header.scrolled .nav-links a, .main-header.scrolled .header-secondary-cta { color: var(--blue-dark); }
-        .main-header.scrolled .nav-links a:hover, .main-header.scrolled .header-secondary-cta:hover { color: var(--blue-medium); }
-        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--white); font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--green-accent); }
-        .header-actions { display: flex; align-items: center; gap: 20px; }
-        .header-secondary-cta { background: transparent; color: var(--white); font-weight: 700; text-decoration: none; transition: color 0.3s ease; }
-        .header-cta { background: var(--green-accent); color: var(--blue-dark); padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; box-shadow: var(--shadow-soft); }
-        .header-cta:hover { background: #00e6d8; transform: translateY(-2px); box-shadow: var(--shadow-medium); }
-        .hero-section-v3 { padding: 200px 0 150px; background-color: var(--blue-dark); background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 25px 25px; overflow: hidden; position: relative; }
-        .hero-content { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; position: relative; z-index: 2; }
-        .hero-text h1 { font-size: 56px; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 20px; }
-        .hero-text .subtitle { font-size: 20px; color: var(--gray-dark); max-width: 450px; margin-bottom: 40px; }
-        .hero-cta-button { display: inline-block; background: var(--green-accent); color: var(--blue-dark); padding: 18px 40px; border-radius: var(--border-radius); text-decoration: none; font-weight: 700; font-size: 20px; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-hard); }
-        .hero-cta-button:hover { transform: translateY(-3px) scale(1.05); background: #00e6d8; }
-         
-        /* START: CSS for Hero Video */
-        .hero-video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1500px;
-        }
-        .mobile-frame {
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Klaro-איזור אישי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Varela+Round&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="mainscript.js"></script>
+<script src="data.js"></script>
+
+
+<style>
+:root {
+--primary: #0A2540;
+--accent: #F37253;
+--bg: #F4F6F8;
+--card: #ffffff;
+--muted: #6b7280;
+--success: #10b981;
+--border: #e5e7eb;
+}
+
+* {
+box-sizing: border-box;
+}
+#accountDetails{background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);}
+body {
+margin: 0;
+background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+color: var(--primary);
+font-family: 'Varela Round', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+line-height: 1.6;
+}
+
+header {
+background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+color: #fff;
+padding: 16px 20px;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+letter-spacing: .3px;
+box-shadow: 0 4px 20px rgba(10, 37, 64, .15);
+font-size: 1.8rem;
+}
+
+.container {
+max-width: 1200px;
+margin: 24px auto;
+padding: 0 16px;
+width: 100%;
+box-sizing: border-box;
+}
+.code{display: none;}
+.card {
+background: var(--card);
+border-radius: 14px;
+box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+padding: 24px;
+margin-bottom: 20px;
+transition: box-shadow 0.3s ease;
+box-sizing: border-box;
+max-width: 95%;
+margin-right: auto;
+margin-left: auto;
+}
+
+.card:hover {
+box-shadow: 0 8px 25px rgba(10, 37, 64, .1);
+}
+
+h1 {
+font-family: 'Montserrat', sans-serif;
+font-size: 22px;
+margin: 0 0 8px;
+background: linear-gradient(135deg, rgb(110, 110, 239), rgb(46, 46, 163));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+h2 {
+font-family: 'Montserrat', sans-serif;
+font-size: 18px;
+margin: 20px 0 15px;
+color: var(--primary);
+}
+
+.muted {
+color: black;
+margin: 0 0 20px;
+}
+
+.row {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+align-items: center;
+}
+
+  .product-select-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+ 
+  select {
+    flex: 1 1 260px;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--card);
+    color: var(--primary);
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    padding-left: 40px;
+    direction: rtl;
+  }
+
+input[type="text"] {
+flex: 1 1 260px;
+padding: 12px 14px;
+border: 2px solid var(--border);
+border-radius: 10px;
+font-size: 16px;
+outline: none;
+transition: border-color 0.3s ease, box-shadow 0.3s ease;
+background: var(--card);
+}
+
+input[type="text"]:focus, select:focus {
+border-color: var(--accent);
+box-shadow: 0 0 0 3px rgba(243, 114, 83, 0.1);
+}
+a:visited{color:blue;}
+button {
+background:  #005fd4;
+color: #fff;
+border: none;
+border-radius: 10px;
+padding: 12px 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 2px 10px rgba(243, 114, 83, 0.3);
+}
+
+button:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 15px rgba(243, 114, 83, 0.4);
+}
+
+.status {
+margin-top: 12px;
+font-size: 14px;
+color: var(--muted);
+}
+
+pre {
+background: #0f172a;
+color: #e5e7eb;
+padding: 16px;
+border-radius: 12px;
+overflow: auto;
+font-size: 13px;
+line-height: 1.5;
+direction: ltr;
+text-align: left;
+border: 1px solid rgba(255, 255, 255, .06);
+}
+
+.hidden {
+display: none;
+}
+
+.spinner {
+width: 18px;
+height: 18px;
+border: 3px solid #ffffff70;
+border-top-color: #fff;
+border-radius: 50%;
+display: inline-block;
+vertical-align: middle;
+animation: spin 1s linear infinite;
+margin-inline-start: 8px;
+}
+
+@keyframes spin {
+to {
+ transform: rotate(360deg);
+}
+}
+
+.chip {
+display: inline-block;
+background: #eef2f7;
+color: #334155;
+padding: 6px 10px;
+border-radius: 999px;
+font-size: 12px;
+margin-inline-start: 6px;
+font-weight: 500;
+width:20%;
+}
+
+/* עיצוב טבלה מעוצבת */
+.table-container {
+overflow-x: auto;
+margin: 20px 0;
+border-radius: 12px;
+box-shadow: 0 4px 15px rgba(10, 37, 64, 0.08);
+background: var(--card);
+}
+
+.styled-table {
+table-layout: fixed;
+max-width: 100%;
+border-collapse: collapse;
+font-size: 15px;
+min-width: 400px;
+}
+
+.styled-table thead tr {
+background: linear-gradient(135deg, var(--primary) 0%, #1a365d 100%);
+color: white;
+text-align: center;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+}
+
+.styled-table th, .styled-table td {
+padding: 15px 20px;
+border-bottom: 1px solid var(--border);
+}
+
+.styled-table th {
+font-size: 14px;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+position: relative;
+}
+
+.styled-table tbody tr {
+transition: all 0.3s ease;
+}
+
+.styled-table tbody tr:nth-child(even) {
+background: rgba(10, 37, 64, 0.02);
+}
+
+.styled-table tbody tr:hover {
+background: rgba(243, 114, 83, 0.05);
+transform: scale(1.01);
+box-shadow: 0 2px 10px rgba(10, 37, 64, 0.1);
+cursor: pointer;
+}
+
+.styled-table td {
+font-weight: 500;
+}
+
+.styled-table .amount {
+color: var(--success);
+font-weight: 700;
+font-size: 16px;
+text-align: left;
+}
+
+/* מחזיק הגרף */
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 100%;
+margin: 0 auto;
+background: var(--card);
+border-radius: 14px;
+padding: 20px;
+box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+box-sizing: border-box;
+}
+
+.chart-wrapper {
+position: relative;
+height: 350px;
+}
+
+/* סך הכל מעוצב */
+.total-summary {
+background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+color: white;
+text-align: center;
+padding: 15px 20px;
+border-radius: 12px;
+margin: 20px 0;
+box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+max-width: 80%;
+margin-right: auto;
+margin-left: auto;
+}
+
+.total-amount {
+font-size: 28px;
+font-weight: 700;
+font-family: 'Montserrat', sans-serif;
+margin: 5px 0;
+}
+
+.total-summary p {
+margin: 0;
+font-size: 16px;
+font-weight: 500;
+}
+
+/* מקרא */
+.legend-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 12px;
+margin-top: 20px;
+padding: 15px;
+background: rgba(10, 37, 64, 0.02);
+border-radius: 10px;
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 12px;
+background: var(--card);
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(10, 37, 64, 0.05);
+transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+transform: translateY(-2px);
+}
+
+.legend-color {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.legend-text {
+font-size: 13px;
+font-weight: 500;
+line-height: 1.3;
+}
+
+.legend-amount {
+color: var(--success);
+font-weight: 700;
+margin-right: auto;
+font-size: 14px;
+}
+
+/* גרידת תוצאות */
+.results-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+margin-top: 20px;
+max-width: 80%;
+margin-left: auto;
+margin-right: auto;
+}
+#backButton {
+background: #6b7280;
+box-shadow: none;
+font-size: 14px;
+padding: 8px 16px;
+}
+
+#backButton:hover {
+background: #4b5563;
+}
+
+  .details-selector {
+    padding: 24px;
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(10, 37, 64, .06);
+    margin-bottom: 20px;
+    width: 60% ;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+  }
+#btn{position: relative;right:80%;max-width: 120px;}
+/* רספונסיביות משופרת */
+@media (max-width: 1024px) {
+.results-grid {
+ grid-template-columns: 1fr;
+ max-width: 100%;
+}
+}
+
+@media (max-width: 768px) {
+  #btn{right:70%;max-width: 100px;}
+  .details-selector{width: 100%;}
+  header{font-size: 1.5rem;}
+  .msllTable{
+    margin-right: 10%;margin-left: 10%;width: 80%;
+  }
+ #mispar,#phoneNum,#codenumber{font-size: 11px;} 
+.container {
+ padding: 0 8px;
+ width: 100%;
+ margin: 12px auto;
+}
+.card {
+ padding: 16px;
+ margin-bottom: 15px;
+ border-radius: 10px;
+}
+.chart-container {
+ max-width: 100%;
+ padding: 15px;
+ margin: 0;
+}
+.chart-wrapper {
+ height: 280px;
+}
+.legend-grid {
+ grid-template-columns: 1fr;
+ padding: 10px;
+ gap: 8px;
+}
+.legend-item {
+ padding: 6px 10px;
+ font-size: 12px;
+}
+.legend-text {
+ font-size: 12px;
+}
+.legend-amount {
+ font-size: 13px;
+}
+.row {
+ flex-direction: column;
+ align-items: stretch;
+ gap: 8px;
+ position: relative;
+}
+input[type="text"] {
+ flex: 1;
+ padding: 10px 12px;
+ font-size: 16px;
+ width:25%;
+}
+button {
+ padding: 10px 16px;
+ width: 100%;
+}
+.styled-table th, .styled-table td {
+ padding: 8px 10px;
+ font-size: 14px;
+}
+.styled-table .amount {
+ font-size: 14px;
+}
+h1 {
+ font-size: 18px;
+}
+h2 {
+ font-size: 16px;
+ margin: 15px 0 10px;
+}
+.total-amount {
+ font-size: 24px;
+}
+.total-summary {
+ padding: 12px 16px;
+}
+}
+
+@media (max-width: 480px) {
+#productTable tr :nth-child(1){width: 60%;padding:5px;margin: 0%;font-size: 12px;} 
+#productTable tr :nth-child(2){width: 40%;padding:5px;margin: 0%;font-size: 12px;
+padding-left: 20px;}
+#tblTesuot tr{font-size: 11px;}
+#btn{right: 62%;width: 100px;font-size: 11px;}
+.chip{font-size: 11px;}
+  .mobile-frame {
             width: 100%;
-            max-width: 280px;
-            aspect-ratio: 9 / 19.5;
+            max-width: 200px;}
+.container {
+ padding: 0 4px;
+}
+.card {
+ padding: 12px;
+}
+.chart-wrapper {
+ height: 250px;
+}
+.styled-table th, .styled-table td {
+ padding: 6px 8px;
+ font-size: 13px;
+}
+.total-amount {
+ font-size: 20px;
+}
+.legend-text {
+ font-size: 11px;
+}
+.legend-amount {
+ font-size: 11px;
+}
+}
+
+/* מניעת גלילה אופקית */
+body {
+overflow-x: hidden;
+}
+
+.container {
+width: 100%;
+box-sizing: border-box;
+}
+
+.table-container {
+margin: 15px 0;
+max-width: 100%;
+}
+
+.styled-table {
+min-width: 300px;
+font-size: 14px;
+}
+
+.detail-card{min-width: 60% !important;}
+.detail-card h4 {
+ font-size: 15px;
+ margin: 10px 0 5px;
+ color: var(--primary);
+}
+
+.detail-card ul {
+ margin: 0;
+ padding-right: 20px;
+}
+
+.detail-card li {
+ margin-bottom: 5px;
+ font-size: 14px;
+}
+
+.detail-card li strong {
+ font-weight: 700;
+}
+.tblMas {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+   .tblMas thead {
+      background-color:#005fd4;
+      color: #fff;
+    }
+
+   .tblMas th, .tblMas td {
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+   .tblMas tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+   .tblMas tbody tr:hover {
+      background-color: #eef6ff;
+    }
+
+    .tblMas td.positive {
+      color: #4caf50;
+      font-weight: bold;
+    }
+
+    .tblMas td.zero {
+      color: #999;
+      font-style: italic;
+    }
+  .loader {
+  border: 15px solid #f3f3f3; /* רקע אפור בהיר */
+  border-top: 15px solid #3498db; /* פס כחול מסתובב */
+  border-right: 15px solid #3498db;
+  border-bottom:15px solid #3eb570;
+  border-left:15px solid #3eb570;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1.5s linear infinite;
+  margin: 20px auto;
+  display: none;
+  z-index: 10000;
+}
+.loaderText{display: none;}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}
+
+.main-card{max-width: 600px;}
+.mobile-frame {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 9 / 16;
             background-color: #1a1a1a;
             border-radius: 40px;
             padding: 12px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 2px #333;
             transform: rotateY(-15deg) rotateX(5deg);
             transition: transform 0.5s ease;
+            overflow-y: hidden;
+            margin-right: auto;
+            margin-left: auto;
         }
         .mobile-frame:hover {
              transform: rotateY(0deg) rotateX(0deg) scale(1.05);
@@ -96,1035 +655,816 @@
             height: 100%;
             border: none;
         }
-        /* END: CSS for Hero Video */
-
-        .partners-section { padding: 80px 0; background-color: var(--white); }
-        .partners-container h3 { color: var(--gray-dark); font-weight: 500; margin-bottom: 40px; font-size: 18px; text-align: center; }
-        
-        @keyframes scroll {
-            to {
-                transform: translate(calc(-100% - 4rem));
-            }
-        }
-        .logos-scroller {
-            max-width: 1100px;
-            margin: auto;
-            overflow: hidden;
-            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-        }
-        .logos-scroller .logos-slide {
-            display: flex;
-            gap: 4rem;
-            padding-block: 1rem;
-            animation: scroll 40s linear infinite;
-        }
-        @media (prefers-reduced-motion) {
-            .logos-slide {
-                animation-play-state: paused;
-            }
-        }
-        .logos-slide img {
-            height: 45px;
-            max-width: 150px;
-            object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        .logos-slide img:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-
-        .top-performers-section { padding: 100px 0; background-color: var(--gray-light); }
-        .section-title { text-align: center; font-size: 42px; color: var(--blue-dark); margin-bottom: 20px; }
-        .section-subtitle { text-align: center; font-size: 20px; color: var(--gray-dark); max-width: 600px; margin: 0 auto 70px; }
-        .performers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .performer-card { background-color: var(--white); border-radius: var(--border-radius);
-                         padding: 25px; box-shadow: var(--shadow-medium); transition: transform 0.3s ease,
-                        box-shadow 0.3s ease;margin-right:auto;margin-left:auto; }
-        .performer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hard); }
-        .performer-card .category { font-weight: 700; color: var(--blue-medium); margin-bottom: 15px; }
-        .performer-card .company { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .performer-card .company img { height: 30px; }
-        .performer-card .company .name { font-weight: 500; color: var(--text-primary); }
-        .performer-card .fund { font-size: 16px; color: var(--gray-dark); margin-bottom: 20px; min-height: 50px; }
-        .performer-card .return { text-align: left; }
-        .performer-card .return .label { font-size: 14px; color: var(--gray-dark); }
-        .performer-card .return .value { font-size: 36px; font-weight: 800; color: var(--green-positive); }
-        .performers-cta { text-align: center; margin-top: 50px; }
-        .performers-cta a { font-size: 18px; font-weight: 700; color: var(--blue-medium); text-decoration: none; transition: color 0.3s ease; }
-        .performers-cta a:hover { color: var(--blue-dark); }
-        .how-it-works-v2 { padding: 100px 0; background-color: var(--white); position: relative; }
-        .process-flow { position: relative; }
-        .process-line { position: absolute; left: 50%; top: 50px; bottom: 50px; width: 3px; background-image: linear-gradient(to bottom, var(--gray-medium) 40%, transparent 80%); background-size: 1px 15px; transform: translateX(-50%); z-index: 1; }
-        .process-step { display: grid; grid-template-columns: 1fr 100px 1fr; gap: 30px; align-items: center; margin-bottom: 50px; }
-        .step-content { padding: 30px; background-color: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-medium); text-align: right; grid-column: 1 / 2; position: relative; }
-        .process-step:nth-child(odd) .step-content { grid-column: 3 / 4; text-align: left; }
-        .step-number-icon { grid-column: 2 / 3; grid-row: 1 / 2; width: 80px; height: 80px; border-radius: 50%; background-color: var(--white); border: 3px solid var(--gray-medium); display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: var(--shadow-soft); margin: 0 auto; }
-        .step-number-icon svg { width: 40px; height: 40px; color: var(--blue-medium); }
-        .step-content h3 { font-size: 24px; color: var(--blue-dark); margin-bottom: 10px; }
-        .step-content p { color: var(--gray-dark); font-size: 16px; }
-        
-        .video-section { padding: 100px 0; background-color: var(--gray-light); }
-        .video-container { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            border-radius: var(--border-radius); 
-            overflow: hidden; 
-            box-shadow: var(--shadow-hard); 
-            position: relative; 
-            aspect-ratio: 16 / 9; 
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .returns-comparison-section { padding: 100px 0; background-color: var(--white); }
-        .comparison-container { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: center; }
-        .comparison-controls h3 { font-size: 36px; color: var(--blue-dark); margin-bottom: 15px; }
-        .comparison-controls p { color: var(--gray-dark); margin-bottom: 30px; }
-        .slider-group { margin-bottom: 25px; }
-        .slider-group label { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 10px; }
-        .slider-group .value { color: var(--blue-medium); }
-        input[type="range"] { -webkit-appearance: none; width: 100%; height: 8px; background: var(--gray-medium); border-radius: 5px; outline: none; opacity: 0.7; transition: opacity .2s; }
-        input[type="range"]:hover { opacity: 1; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; background: var(--blue-medium); cursor: pointer; border-radius: 50%; box-shadow: var(--shadow-soft); }
-        input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; background: var(--blue-medium); cursor: pointer; border-radius: 50%; }
-        .comparison-chart { position: relative; height: 400px; border-left: 2px solid var(--gray-medium); border-bottom: 2px solid var(--gray-medium); }
-        .chart-line { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; }
-        .line-path { fill: none; stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
-        .line-path.avg { stroke: var(--gray-dark); }
-        .line-path.opt { stroke: var(--green-accent); }
-        .chart-legend { position: absolute; top: -50px; right: 0; display: flex; gap: 20px; }
-        .legend-item { display: flex; align-items: center; gap: 8px; font-weight: 700; }
-        .legend-item .color-box { width: 15px; height: 15px; border-radius: 3px; }
-        .final-amount-label { position: absolute; right: 5px; transform: translateY(-50%); background-color: var(--white); padding: 5px 10px; border-radius: 6px; box-shadow: var(--shadow-soft); font-weight: 700; font-size: 16px; opacity: 0; transition: opacity 0.3s; }
-        .comparison-chart:hover .final-amount-label { opacity: 1; }
-        .calculators-hub-section { padding: 80px 0; background-color: var(--white); }
-        .calculators-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .calculator-card { display: block; background-color: var(--gray-light); padding: 30px; border-radius: var(--border-radius); text-decoration: none; transition: all 0.3s ease; }
-        .calculator-card:hover { transform: translateY(-5px); background-color: #eaf2ff; }
-        .calculator-card svg { width: 40px; height: 40px; color: var(--blue-medium); margin-bottom: 15px; }
-        .calculator-card h3 { font-size: 20px; color: var(--blue-dark); margin-bottom: 10px; }
-        .calculator-card p { color: var(--gray-dark); font-size: 15px; }
-        .blog-section { padding: 100px 0; }
-        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .blog-post-card { background-color: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow-medium); overflow: hidden; text-decoration: none; color: var(--text-primary); transition: all 0.3s ease; }
-        .blog-post-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hard); }
-        .blog-post-card img { width: 100%; height: 200px; object-fit: cover; }
-        .blog-post-content { padding: 25px; }
-        .blog-post-content .category { font-size: 14px; font-weight: 700; color: var(--blue-medium); margin-bottom: 10px; }
-        .blog-post-content h3 { font-size: 20px; line-height: 1.4; margin-bottom: 15px; }
-        .blog-post-content .read-more { font-weight: 700; color: var(--blue-dark); }
-        .contact-section { padding: 100px 0; background-color: var(--gray-light); }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; background-color: var(--white); padding: 50px; border-radius: var(--border-radius); box-shadow: var(--shadow-medium); }
-        .contact-details h3 { font-size: 28px; color: var(--blue-dark); margin-bottom: 20px; }
-        .contact-details p { margin-bottom: 30px; color: var(--gray-dark); }
-        .contact-info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; color: var(--text-primary); }
-        .contact-info-item svg { width: 24px; height: 24px; color: var(--blue-medium); }
-        .contact-form .form-group { margin-bottom: 20px; }
-        .contact-form textarea { min-height: 120px; resize: vertical; }
-        .contact-form button { width: 100%; padding: 15px; font-size: 18px; }
-        .calculator-section { padding: 100px 0; background-color: var(--gray-light); }
-        .calculator-section h2 { text-align: center; font-size: 42px; color: var(--blue-dark); }
-        .calculator-section .section-subtitle { text-align: center; font-size: 20px; color: var(--gray-dark); max-width: 600px; margin: 0 auto 50px; }
-        .savings-calculator-v2 { background: var(--white); padding: 40px; border-radius: var(--border-radius); box-shadow: var(--shadow-hard); max-width: 850px; margin: 40px auto; text-align: right; overflow: hidden; }
-        .calculator-step { display: none; }
-        .calculator-step.active { display: block; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .calculator-step h3 { font-size: 28px; color: var(--blue-dark); margin-bottom: 30px; text-align: center; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-weight: 500; color: var(--gray-dark); margin-bottom: 8px; }
-        .form-group input, .contact-form textarea { font-family: var(--font-main); width: 100%; padding: 15px; font-size: 18px; border: 2px solid var(--gray-medium); border-radius: 8px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-        .form-group input:focus, .contact-form textarea:focus { outline: none; border-color: var(--blue-medium); box-shadow: 0 0 0 3px rgba(58, 125, 255, 0.25); }
-        .risk-profile-group { grid-column: 1 / -1; }
-        .risk-options { display: flex; justify-content: space-between; border: 2px solid var(--gray-medium); border-radius: 8px; overflow: hidden; }
-        .risk-options label { flex: 1; padding: 15px; text-align: center; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; font-weight: 700; }
-        .risk-options input[type="radio"] { display: none; }
-        .risk-options input[type="radio"]:checked + label { background-color: var(--blue-medium); color: var(--white); }
-        .calculator-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-        .calc-btn { font-family: var(--font-main); padding: 15px 35px; font-size: 18px; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-        .calc-btn.primary { background: var(--blue-medium); color: var(--white); }
-        .calc-btn.primary:hover { background: #2f6bde; transform: translateY(-2px); }
-        .calc-btn.secondary { background: var(--gray-medium); color: var(--blue-dark); }
-        .calc-btn.secondary:hover { background: #d8dde4; }
-        #results-container { text-align: center; }
-        .results-summary { font-size: 20px; color: var(--text-primary); margin-bottom: 30px; }
-        .results-summary .amount { font-size: 36px; font-weight: 800; color: #00C853; }
-        .chart-container { display: flex; justify-content: center; gap: 50px; align-items: flex-end; margin-bottom: 30px; height: 250px; }
-        .chart-bar { width: 100px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .bar { width: 100%; background-color: var(--gray-medium); border-radius: 8px 8px 0 0; transition: height 1s ease-out; }
-        .bar.optimized { background: linear-gradient(to top, #00C853, #4caf50); }
-        .bar-label { font-weight: 700; margin-top: 10px; color: var(--blue-dark); }
-        .bar-value { font-weight: 500; color: var(--gray-dark); }
-        .final-cta-from-calc { margin-top: 20px; }
-        .final-cta-from-calc p { font-size: 18px; margin-bottom: 20px; }
-        .testimonials-section { padding: 100px 0; background-color: var(--gray-light); }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .testimonial-card { background: var(--white); padding: 30px; border-radius: var(--border-radius); box-shadow: var(--shadow-medium); display: flex; flex-direction: column; }
-        .testimonial-card .quote { font-size: 18px; flex-grow: 1; margin-bottom: 20px; font-style: italic; }
-        .testimonial-author { display: flex; align-items: center; gap: 15px; border-top: 1px solid var(--gray-medium); padding-top: 20px; }
-        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-        .author-details .name { font-weight: 700; color: var(--blue-dark); }
-        .author-details .savings { color: #00C853; font-weight: 500; }
-        .final-cta-section { padding: 120px 0; background: linear-gradient(135deg, var(--blue-dark) 0%, #153a67 100%); text-align: center; }
-        .final-cta-section h2 { color: var(--white); font-size: 48px; margin-bottom: 20px; }
-        .final-cta-section p { color: var(--gray-medium); font-size: 20px; max-width: 600px; margin: 0 auto 40px; }
-        .final-cta-button { display: inline-block; background: var(--green-accent); color: var(--blue-dark); padding: 20px 45px; border-radius: var(--border-radius); text-decoration: none; font-weight: 700; font-size: 20px; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-hard); }
-        .final-cta-button:hover { transform: translateY(-3px) scale(1.05); background: #00e6d8; }
-        .final-cta-button .microcopy { display: block; font-size: 14px; font-weight: 400; opacity: 0.8; margin-top: 5px; }
-        .main-footer { padding: 80px 0; background-color: #05182b; color: var(--gray-medium); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
-        .footer-column h4 { color: var(--white); font-size: 18px; margin-bottom: 20px; }
-        .footer-column ul { list-style: none; }
-        .footer-column li { margin-bottom: 12px; }
-        .footer-column a { text-decoration: none; color: var(--gray-dark); transition: color 0.3s ease; }
-        .footer-column a:hover { color: var(--white); }
-        .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid #1c3d61; text-align: center; font-size: 14px; color: var(--gray-dark); }
-        .menu-container{background: #0A2540;width: 100%;height: 100vh;z-index: 1000;
-            padding-top: 10%;display: none;}
-        .menu-container ul{padding: 5%;list-style: none;}
-        .menu-container li{margin-bottom: 5%;text-align: center;line-height: 30px;
-        border-bottom:1px solid snow;padding-bottom: 3%; }
-        .menu-container li a{color: white;}
-        /* --- Mobile-First & Media Queries for Responsiveness --- */
-        
-
-
-        @media (max-width: 1024px) {
-            .nav-links, .header-actions { gap: 20px; }
-            .hero-content { grid-template-columns: 1fr; text-align: center; }
-            .hero-video-container { margin-top: 40px; }
-            .performer-card .fund { min-height: auto; }
-            .comparison-container { grid-template-columns: 1fr; }
-            .hamburger-menu { display: none;}
-        }
-
-        @media (max-width: 768px) {
-            .step-number-icon{ display:none;}         
-            .nav-links{display:none;}
-            .menu-btn{float:left;}
-            .final-cta-section { padding: 20px 0;scroll-margin-top:15px;}
-            
-            
-            
-            .main-header.scrolled .nav-links.active { background-color: var(--white); }
-            .nav-links.active a { color: var(--white); padding: 15px 0; width: 100%; text-align: center; }
-            .main-header.scrolled .nav-links.active a { color: var(--blue-dark); }
-            .nav-links li { width: 100%; }
-            .header-actions.active {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            .hero-section-v3 { padding: 100px 0; }
-            .hero-text h1 { font-size: 40px; }
-            .section-title { font-size: 32px; }
-            .section-subtitle { font-size: 16px; margin-bottom: 40px; }
-            .performers-grid { grid-template-columns: 1fr; }
-            .how-it-works-v2 { padding: 60px 0; }
-            .process-flow { padding-right: 0; }
-            .process-step { grid-template-columns: 1fr; gap: 20px;width: 300px; }
-            .process-step .step-content { grid-column: 1 / -1; }
-            .process-step:nth-child(odd) .step-content { text-align: right; }
-            .process-step .step-number-icon { grid-column: 1 / -1; justify-self: right; margin-right: 20px; order: -1; }
-            .process-step:nth-child(odd) .step-number-icon { justify-self: left; margin-left: 20px; }
-            .process-line { display: none; } /* הסתרת הקו במובייל */
-            .comparison-controls h3 { font-size: 28px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .calculators-grid { grid-template-columns: 1fr; }
-            .blog-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-column { margin-bottom: 30px; text-align: right; }
-            .footer-bottom { text-align: right; }
-            .savings-calculator-v2 { padding: 20px; }
-            .chart-bar { width: 80px; }
-            .yalin,.company{max-width: 320px;}
-            .yalin span{display: none;}
-            .hafenix,.altshuler{min-width: 300px;}
-            .yalin,.altshuler,.hafenix{margin-right: auto;margin-left: auto;}
-            .process-step{display: flex;justify-content: center;}
-            .step-content h3{font-size: 1.2rem;}
-            .process-flow{display: flex;flex-direction: column;align-items: center;}
-            .hamburger-menu { display: none;}
-        }
-        @media (max-width: 480px) {
-            .shlita h2{font-size: 1.6rem;}
-            .hamburger-menu { display: block;}
-             .hero-text h1 { font-size: 32px; }
-             .hero-text .subtitle { font-size: 16px; }
-             .hero-cta-button { padding: 15px 30px; font-size: 18px; }
-             .video-container { height: auto; }
-             .chart-container { flex-direction: column; align-items: center; height: auto; }
-             .chart-bar { width: 100%; max-width: 120px; margin-bottom: 20px; }
-       .header-actions{display:none;}
-            }
-    </style>
+</style>
 </head>
 <body>
 
-    <header class="main-header" id="main-header">
-        <nav class="main-nav container" style="color: white;">
-            <a href="#" class="logo">Klaro</a>
-            
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#how-it-works">איך זה עובד</a></li>
-                <li><a href="#blog">מאמרים</a></li>
-                <li><a href="#contact">צור קשר</a></li>
-            </ul>
-            <div class="header-actions" id="header-actions">
-                
-                <a href="#final-cta" class="header-cta">קבלו וידאו אישי בחינם</a>
-            </div>
-            <a href="personal.html" class="header-secondary-cta"><i id="ezorIshi" class="fa fa-user"
-                style="font-size: 1.5rem;"></i></a>
-            <a id="harshama" href="harshama.html" >הרשמה חינם</a>
-            <div class="hamburger-menu" id="hamburger-menu" onclick="hamb()">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </div>
-            <div class="menuX" id="menuX" style="font-size: 1.5rem;"  onclick="hamb()">X</div>
-        </nav>
-        <div id="menu-container" class="menu-container" style="color: white;">
-            <ul>
-                <li onclick="hideMenu()"><a href="#final-cta" style="text-decoration: none;">וידאו אישי</a></li>
-                <li>בלוג</li>
-                <li>מאמרים</li>
-                <li>מי אנחנו</li>
-                <li>צור קשר</li>
-            </ul>
+<header style="text-align: center;
+margin-right: auto;margin-left: auto;position:relative">Klaro – איזור אישי
+<a href="index.html"><i class="fa fa-home" style="font-size:1.6rem;color:white;
+position: relative;right:10%;margin-left:10px;" ></i></a>
+</header>
+
+<div class="container" id="maincont">
+  
+  <div class="card main-card" style="margin-right: auto;margin-left: auto;">
+    <h1 style="text-align: center;">התחברות לאיזור האישי</h1>
+    <p  class="muted" id="muted" style="font-size:0.8rem;text-align: center;">אם עדיין לא נרשמת <a href="harshama.html">לחץ כאן</a></p>
+
+    <div class="row">
+        <div style="display: flex;flex-direction: row;width: 100%;">
+          <label for="mispar" class="chip" style="font-weight: 800;
+          width: 25%;text-align: center;align-content: center;
+          margin-left: 5%;height: 35px;">מספר ת"ז</label>
+          <input id="mispar" type="text" value="" inputmode="numeric" autocomplete="off" 
+          style="max-width: 35%;height: 35px;text-align: center;"/>
         </div>
-    </header>
-
-    <main>
-        <section class="hero-section-v3">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1>יועץ הפנסיה שלך הוא איש מכירות. שלנו הוא AI אובייקטיבי.</h1>
-                        <p class="subtitle">ברוכים הבאים למהפכת הפינטק. קבלו לראשונה ניתוח פיננסי ופנסיוני נטול אינטרסים, מבוסס בינה מלאכותית (AI), ומוסבר בווידאו אישי של 3 דקות.</p>
-                        <a href="#final-cta" class="hero-cta-button">הפיקו את הווידאו שלי (בחינם)</a>
-                    </div>
-                    <div class="hero-video-container">
-                        <div class="mobile-frame">
-                                <div class="mobile-frame-screen">
-                                    <iframe 
-                                        id="hero-video-iframe"
-                                        src="https://www.youtube.com/embed/11auOv3bbJM?controls=1" 
-                                        title="YouTube video player" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-        </section>
-        <section class="partners-section">
-            <div class="partners-container container">
-                <h3>אנחנו מנתחים את כל השוק, באופן אובייקטיבי לחלוטין</h3>
-                <p class="section-subtitle" style="margin-bottom: 40px; font-size: 18px;">הטכנולוגיה שלנו סורקת את הנתונים מכל הגופים הגדולים כדי למצוא את האמת שעובדת בשבילך, בלי אינטרסים נסתרים, אנחנו עובדים רק עבורך</p>
-                <div class="logos-scroller">
-                    <div class="logos-slide">
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/05/Group-5.png" alt="לוגו של מגדל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Migdal';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/5/5a/Harel_Insurance_ltd.png/250px-Harel_Insurance_ltd.png" alt="לוגו של הראל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Harel';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2023/01/Property-1Klal-Property-2blackwhite.svg" alt="לוגו של כלל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Clal';">
-                        <img src="https://www.fnx.co.il/_nuxt/img/header-logo.564c209.png" alt="לוגו של הפניקס" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Phoenix';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/05/Group-3.png" alt="לוגו של מנורה מבטחים" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Menora';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2023/09/Property-1Ayalon-Property-2blackwhite.svg" alt="לוגו של איילון" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Ayalon';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/b/be/%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png/250px-%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png" alt="לוגו של אלטשולר שחם" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Altshuler';">
-                        <img src="https://www.yl-invest.co.il/content/images/logohq.png" alt="לוגו של ילין לפידות" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Yelin+Lapidot';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/3/31/%D7%9C%D7%95%D7%92%D7%95_%D7%9E%D7%99%D7%98%D7%91_%D7%91%D7%99%D7%AA_%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA.svg/250px-%D7%9C%D7%95%D7%92%D7%95_%D7%9E%D7%99%D7%98%D7%91_%D7%91%D7%99%D7%AA_%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA.svg.png" alt="לוגו של מיטב" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Meitav';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/f/f6/Psagot_logo.svg" alt="לוגו של פסגות" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Psagot';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/c/c9/IBI_Investment_House_logo.svg" alt="לוגו של IBI" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=IBI';">
-                        <img src="https://www.analyst.co.il/wp-content/uploads/2024/06/Analyst-logo-hatufim-01.svg" alt="לוגו של אנליסט" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Analyst';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/04/large-Ahshara.png" alt="לוגו של הכשרה" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Hachshara';">
-                        <img src="https://www.rami-levy-ins.co.il/wp-content/uploads/2023/12/logo1.png" alt="לוגו של רמי לוי ביטוח" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Rami+Levy';">
-                        
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/05/Group-5.png" alt="לוגו של מגדל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Migdal';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/5/5a/Harel_Insurance_ltd.png/250px-Harel_Insurance_ltd.png" alt="לוגו של הראל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Harel';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2023/01/Property-1Klal-Property-2blackwhite.svg" alt="לוגו של כלל" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Clal';">
-                        <img src="https://www.fnx.co.il/_nuxt/img/header-logo.564c209.png" alt="לוגו של הפניקס" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Phoenix';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/05/Group-3.png" alt="לוגו של מנורה מבטחים" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Menora';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2023/09/Property-1Ayalon-Property-2blackwhite.svg" alt="לוגו של איילון" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Ayalon';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/b/be/%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png/250px-%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png" alt="לוגו של אלטשולר שחם" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Altshuler';">
-                        <img src="https://www.yl-invest.co.il/content/images/logohq.png" alt="לוגו של ילין לפידות" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Yelin+Lapidot';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/thumb/3/31/%D7%9C%D7%95%D7%92%D7%95_%D7%9E%D7%99%D7%98%D7%91_%D7%91%D7%99%D7%AA_%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA.svg/250px-%D7%9C%D7%95%D7%92%D7%95_%D7%9E%D7%99%D7%98%D7%91_%D7%91%D7%99%D7%AA_%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA.svg.png" alt="לוגו של מיטב" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Meitav';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/f/f6/Psagot_logo.svg" alt="לוגו של פסגות" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Psagot';">
-                        <img src="https://upload.wikimedia.org/wikipedia/he/c/c9/IBI_Investment_House_logo.svg" alt="לוגו של IBI" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=IBI';">
-                        <img src="https://www.analyst.co.il/wp-content/uploads/2024/06/Analyst-logo-hatufim-01.svg" alt="לוגו של אנליסט" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Analyst';">
-                        <img src="https://bestie.co.il/wp-content/uploads/2025/04/large-Ahshara.png" alt="לוגו של הכשרה" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Hachshara';">
-                        <img src="https://www.rami-levy-ins.co.il/wp-content/uploads/2023/12/logo1.png" alt="לוגו של רמי לוי ביטוח" onerror="this.onerror=null;this.src='https://placehold.co/140x45/fafafa/cccccc?text=Rami+Levy';">
-                    </div>
-                </div>
-                </div>
-        </section>
-
-        <section class="top-performers-section">
-            <div class="container">
-                <h2 class="section-title">האם הכסף שלך עובד מספיק קשה?</h2>
-                <p class="section-subtitle">הבינה המלאכותית שלנו סורקת למעלה מ-500 מסלולי השקעה מתוך מאגר גמל-נט הרשמי. אלו רק חלק מהמסלולים המצטיינים שמצאנו עבור החוסכים שלנו בשנה האחרונה. המסלול שלכם יכול להיות הבא בתור.</p>
-                <div class="performers-grid">
-                <div class="performer-card altshuler">
-                            <div class="category">קרן השתלמות מנייתית</div>
-                            <div class="company">
-                                <img src="https://upload.wikimedia.org/wikipedia/he/thumb/b/be/%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png/250px-%D7%90%D7%9C%D7%98%D7%A9%D7%95%D7%9C%D7%A8_%D7%A9%D7%97%D7%9D.png" alt="אלטשולר שחם">
-                                <span class="name">אלטשולר שחם</span>
-                            </div>
-                            <p class="fund">השתלמות מניות</p>
-                            <div class="return">
-                                <div class="label">תשואה שנתית</div>
-                                <div class="value">+14.2%</div>
-                            </div>
-                        </div>
-                        <div class="performer-card yalin" >
-                        <div class="category">קופת גמל להשקעה</div>
-                            <div class="company">
-                                <img src="https://www.yl-invest.co.il/content/images/logohq.png" alt="ילין לפידות">
-                                <span class="name">ילין לפידות</span>
-                            </div>
-                            <p class="fund">גמל להשקעה כללי</p>
-                            <div class="return">
-                                <div class="label">תשואה שנתית</div>
-                                <div class="value">+11.8%</div>
-                            </div>
-                        </div>
-                    <div class="performer-card hafenix" style="width:80%">
-                            <div class="category">קרן פנסיה מקיפה (עד 50)</div>
-                            <div class="company">
-                                <img src="https://www.fnx.co.il/_nuxt/img/header-logo.564c209.png" alt="הפניקס">
-                                <span class="name">הפניקס</span>
-                            </div>
-                            <p class="fund">פנסיה מקיפה - מסלול לבני 50 ופחות</p>
-                            <div class="return">
-                                <div class="label">תשואה שנתית</div>
-                                <div class="value">+12.5%</div>
-                            </div>
-                        </div>
-                </div>
-                    <div class="performers-cta">
-                        <a href="#final-cta">גלה איפה הכסף שלך עומד ></a>
-                    </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="how-it-works-v2">
-                <div class="container">
-                    <h2 class="section-title">מבלבול לביטחון ב-3 דקות</h2>
-                    <p class="section-subtitle">הפכנו תהליך שהיה פעם מסורבל ומפחיד לחוויה פשוטה, מהירה ודיגיטלית לחלוטין. בלי אנשי מכירות, בלי אינטרסים, בלי הפתעות.</p>
-                    <div class="process-flow">
-                        <div class="process-line"></div>
-                        <div class="process-step">
-                    <div class="step-content" style="min-width: 300px;";>
-                                <h3>1. תמונה מלאה ומאוחדת</h3>
-                                <p>בחיבור מאובטח וחד-פעמי, אנו מתממשקים למקורות המידע הרשמיים שלך - המסלקה הפנסיונית, הר הביטוח והר הכסף - כדי לאחד את כל הנתונים הפיננסיים שלך לדאשבורד אחד חכם.</p>
-                            </div>
-                            <div class="step-number-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            </div>
-                            <div></div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path><path d="M22 10a3 3 0 0 0-3-3h-2.207a5.502 5.502 0 0 0-10.702.5"></path></svg>
-                            </div>
-                            <div class="step-content" style="min-width: 300px;">
-                                <h3>2. ניתוח AI כפול: תשואות ודמי ניהול</h3>
-                                <p>"כלב השמירה" הפיננסי שלנו נכנס לפעולה, חושף את דמי הניהול האמיתיים שאתה משלם ומשווה את ביצועי התיק שלך למאות מסלולים אחרים.</p>
-                            </div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-content" style="min-width: 300px";>
-                                <h3>3. סרטון אישי וברור</h3>
-                                <p>במקום דוחות של 50 עמודים, אתה מקבל סרטון וידאו אישי של 3 דקות. בשפה פשוטה, נסביר לך בדיוק מה מצבך, איפה הכסף שלך, וכמה תוכל לחסוך.</p>
-                            </div>
-                            <div class="step-number-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1v22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                            </div>
-                            <div></div>
-                        </div>
-                    </div>
-                </div>
-        </section>
-
-        <section class="video-section">
-            <div class="container">
-                <h2 class="section-title">ככה נראה דוח פיננסי שסוף סוף מבינים</h2>
-                <p class="section-subtitle">זהו לא סרטון גנרי, אלא סרטון אישי שנוצר במיוחד עבורך על ידי בינה מלאכותית, עם המספרים וההמלצות שרלוונטיות רק לך.</p>
-                <div class="video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/tGziT9NBCWo" 
-                        title="YouTube video player" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-        </section>
-
-        <section class="returns-comparison-section">
-            <div class="container">
-                <h2 class="section-title" style="margin-bottom: 15px;">מחשבון התשואות הייחודי שלנו</h2>
-                <p class="section-subtitle" style="margin-bottom: 50px;">השוו את הביצועים שלכם מול 500+ מסלולים, תוך שימוש בנתונים הרשמיים והאובייקטיביים של גמל-נט מבית רשות שוק ההון.</p>
-                <div class="comparison-container">
-                    <div class="comparison-controls">
-                        <h3>כך 2% יכולים להפוך למאות אלפי שקלים בפנסיה שלך</h3>
-                        <p>הבדל של 2% בתשואה השנתית יכול להיות שווה מאות אלפי שקלים בפנסיה. שחקו עם המחוונים וראו בעצמכם את כוחה של הריבית דריבית.</p>
-                        <div class="slider-group">
-                            <label for="monthly-deposit-slider">הפקדה חודשית <span class="value" id="monthly-deposit-value"></span></label>
-                            <input type="range" id="monthly-deposit-slider" min="500" max="5000" step="100" value="1500">
-                        </div>
-                        <div class="slider-group">
-                            <label for="years-slider">שנות חיסכון <span class="value" id="years-value"></span></label>
-                            <input type="range" id="years-slider" min="10" max="40" step="1" value="30">
-                        </div>
-                    </div>
-                    <div class="comparison-chart" id="comparison-chart">
-                            <div class="chart-legend">
-                                <div class="legend-item">
-                                    <div class="color-box" style="background-color: var(--green-accent);"></div>
-                                    <span>מסלול מנוהל היטב (9%)</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="color-box" style="background-color: var(--gray-dark);"></div>
-                                    <span>מסלול ממוצע (7%)</span>
-                                </div>
-                            </div>
-                        <svg class="chart-line" id="chart-svg" preserveAspectRatio="none" viewBox="0 0 100 100">
-                            <path class="line-path avg" id="avg-line" d="M0,100 L100,0"></path>
-                            <path class="line-path opt" id="opt-line" d="M0,100 L100,0"></path>
-                        </svg>
-                        <div class="final-amount-label" id="avg-label"></div>
-                        <div class="final-amount-label" id="opt-label"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="calculators-hub-section">
-            <div class="container">
-                    <h2 class="section-title">ארגז הכלים המלא לחיסכון שלכם</h2>
-                    <p class="section-subtitle">ההבדל בתשואה הוא רק ההתחלה. השתמשו במחשבונים הנוספים שלנו כדי להבין לעומק איך לחסוך יותר.</p>
-                    <div class="calculators-grid">
-                            <a href="#" class="calculator-card">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1v22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                <h3>מחשבון דמי ניהול</h3>
-                                <p>גלו כמה אתם משלמים באמת ואיך הנחה קטנה שווה המון כסף.</p>
-                            </a>
-                            <a href="#" class="calculator-card">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                                <h3>מחשבון פרישה</h3>
-                                <p>העריכו מה תהיה הקצבה החודשית שלכם ותכננו את העתיד בביטחון.</p>
-                            </a>
-                            <a href="#" class="calculator-card">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-                                <h3>בדיקת כפל ביטוחים</h3>
-                                <p>מצאו איפה אתם משלמים פעמיים על אותו כיסוי וחסכו מאות שקלים בשנה.</p>
-                            </a>
-                    </div>
-            </div>
-        </section>
-        
-        <section id="calculator" class="calculator-section">
-            <h2 class="section-title">מוכנים לניתוח אישי?</h2>
-            <p class="section-subtitle">הכלי המהיר שלנו נתן לכם הצצה. עכשיו, בואו נצלול למספרים שלכם ונגלה את פוטנציאל החיסכון המדויק שלכם.</p>
-            <div class="savings-calculator-v2" style="margin: 0 auto;">
-                <div id="step1" class="calculator-step active">
-                    <h3>שלב 1 מ-2: המספרים שלך</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="current-savings">חיסכון צבור حالי</label>
-                            <input type="number" id="current-savings" placeholder="לדוגמה: 250000">
-                        </div>
-                        <div class="form-group">
-                            <label for="monthly-contribution">הפקדה חודשית</label>
-                            <input type="number" id="monthly-contribution" placeholder="לדוגמה: 1500">
-                        </div>
-                    </div>
-                    <div class="calculator-buttons">
-                        <button id="next-btn" class="calc-btn primary">הבא</button>
-                    </div>
-                </div>
-                <div id="step2" class="calculator-step">
-                    <h3>שלב 2 מ-2: הפרופיל שלך</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="current-age">הגיל שלך</label>
-                                <input type="number" id="current-age" placeholder="לדוגמה: 35">
-                            </div>
-                            <div class="form-group risk-profile-group">
-                                <label>מסלול השקעה נוכחי (או דומה)</label>
-                                <div class="risk-options">
-                                    <input type="radio" id="risk-low" name="risk-profile" value="low" checked>
-                                    <label for="risk-low">סולידי</label>
-                                    <input type="radio" id="risk-medium" name="risk-profile" value="medium">
-                                    <label for="risk-medium">כללי</label>
-                                    <input type="radio" id="risk-high" name="risk-profile" value="high">
-                                    <label for="risk-high">מנייתי</label>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="calculator-buttons">
-                        <button id="back-btn" class="calc-btn secondary">הקודם</button>
-                        <button id="calculate-btn" class="calc-btn primary">חשב לי את הפוטנציאל</button>
-                    </div>
-                </div>
-                <div id="step3" class="calculator-step">
-                    <div id="results-container">
-                            <h3>זו יכולה להיות הפנסיה שלך!</h3>
-                            <div class="results-summary">
-                                אופטימיזציה של התיק יכולה להוסיף לך
-                                <span id="savings-amount" class="amount"></span>
-                                לחיסכון בפנסיה!
-                            </div>
-                            <div class="chart-container">
-                                <div class="chart-bar">
-                                    <div id="current-bar" class="bar"></div>
-                                    <span id="current-value" class="bar-value"></span>
-                                    <span class="bar-label">הצפי הנוכחי שלך</span>
-                                </div>
-                                <div class="chart-bar">
-                                    <div id="optimized-bar" class="bar optimized"></div>
-                                    <span id="optimized-value" class="bar-value"></span>
-                                    <span class="bar-label">הפוטנציאל עם Klaro</span>
-                                </div>
-                            </div>
-                            <div class="final-cta-from-calc">
-                                <p>רוצה להפוך את הפוטנציאל למציאות? קבל ניתוח מלא ומדויק מהסוכן הדיגיטלי שלנו.</p>
-                                <a href="#final-cta" class="final-cta-button" style="background-color: var(--green-accent); color: var(--blue-dark); padding: 15px 35px; font-size: 18px;">
-                                    כן, אני רוצה את הניתוח המלא
-                                    <span class="microcopy">זה בחינם, מאובטח וללא התחייבות</span>
-                                </a>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="testimonials" class="testimonials-section">
-                <div class="container">
-                    <h2 class="section-title">הכוח חוזר לידיים שלכם</h2>
-                    <p class="section-subtitle">אלפי ישראלים כבר לקחו שליטה על העתיד הפיננסי שלהם. הנה מה שיש לחלקם להגיד על המעבר מפחד וחוסר אונים לביטחון ובהירות:</p>
-                    <div class="testimonial-grid">
-                        <div class="testimonial-card">
-                            <p class="quote">"תמיד הרגשת חוסר ביטחון  ושאני סתם עוד מספר במערכת. בפעם הראשונה, קיבלתי תמונה אובייקטיבית והבנתי שאני יכול לחסוך אלפי שקלים בשנה רק על דמי ניהול. לא ייאמן שזה היה כל כך פשוט"</p>
-                            <div class="testimonial-author">
-                                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="תמונת פנים של דנה כהן">
-                                <div class="author-details">
-                                    <span class="name">דנה כהן, תל אביב</span>
-                                    <span class="savings">חיסכון שנתי: ₪1,850</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="quote">"שנאתי את הדוחות המסורבלים האלה. אף פעם לא הבנתי כלום. הסרטון של 3 הדקות היה פשוט גאוני. סוף סוף, במקום מספרים מפחידים, קיבלתי סיפור פשוט וברור על הכסף שלי. חובה לכל אחד."</p>
-                            <div class="testimonial-author">
-                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="תמונת פנים של יאיר לוי">
-                                    <div class="author-details">
-                                    <span class="name">יאיר לוי, חיפה</span>
-                                    <span class="savings">מצא חלופות עם תשואה גבוהה ב-1.5%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="quote">"הפסקתי להיות תלוי באחרים. הפלטפורמה נתנה לי את כל המידע לקבל החלטה בעצמי, בלי לחץ ובלי אינטרסים. הרגשתי שאני סוף סוף בשליטה על העתיד שלי, וזה שווה הכל."</p>
-                            <div class="testimonial-author">
-                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="תמונת פנים של מיכל שחר">
-                                    <div class="author-details">
-                                    <span class="name">מיכל שחר, ירושלים</span>
-                                    <span class="savings">חסכה 8 שעות של בירוקרטיה</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </section>
-
-        <section id="blog" class="blog-section">
-            <div class="container">
-                <h2 class="section-title">מהבלוג שלנו: מאמרים ומדריכים</h2>
-                <p class="section-subtitle">אנחנו מאמינים שידע הוא כוח. קראו את המאמרים האחרונים שלנו כדי לקבל החלטות פיננסיות חכמות יותר.</p>
-                <div class="blog-grid">
-                    <a href="#" class="blog-post-card">
-                        <img src="https://placehold.co/400x250/3A7DFF/FFFFFF?text=Guide" alt="תמונה למאמר על דמי ניהול">
-                        <div class="blog-post-content">
-                            <span class="category">מדריכים</span>
-                            <h3>דמי ניהול: איך להפסיק לשלם יותר מדי?</h3>
-                            <span class="read-more">קרא עוד ></span>
-                        </div>
-                    </a>
-                    <a href="#" class="blog-post-card">
-                        <img src="https://placehold.co/400x250/00D4C8/FFFFFF?text=Article" alt="תמונה למאמר על מסלולי השקעה">
-                        <div class="blog-post-content">
-                            <span class="category">מאמרים</span>
-                            <h3>איך לבחור את מסלול ההשקעה הנכון לגיל שלך?</h3>
-                            <span class="read-more">קרא עוד ></span>
-                        </div>
-                    </a>
-                    <a href="#" class="blog-post-card">
-                        <img src="https://placehold.co/400x250/0A2540/FFFFFF?text=News" alt="תמונה למאמר על עדכוני שוק">
-                        <div class="blog-post-content">
-                            <span class="category">חדשות ועדכונים</span>
-                            <h3>סיכום 2024: מה היו הקרנות המצטיינות של השנה?</h3>
-                            <span class="read-more">קרא עוד ></span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2 class="section-title">דברו איתנו</h2>
-                <p class="section-subtitle">יש לכם שאלה? רוצים להתייעץ עם מומחה? אנחנו כאן בשבילכם.</p>
-                <div class="contact-grid">
-                    <div class="contact-details">
-                        <h3>פרטי התקשרות</h3>
-                        <p>צוות המומחים שלנו זמין לכל שאלה, כדי להבטיח שתקבלו את השירות הטוב והמתאים ביותר עבורכם.</p>
-                        <div class="contact-info-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            <span>077-1234567</span>
-                        </div>
-                        <div class="contact-info-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            <span>support@klaro.co.il</span>
-                        </div>
-                    </div>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <label for="name">שם מלא</label>
-                            <input type="text" id="name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">אימייל</label>
-                            <input type="email" id="email" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">הודעה</label>
-                            <textarea id="message" name="message"></textarea>
-                        </div>
-                        <button type="submit" class="calc-btn primary">שלח פנייה</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <section id="final-cta" class="final-cta-section">
-            <div class="container shlita">
-                <h2>מוכנים לקבל שליטה מלאה?</h2>
-                <p>המספרים במחשבון הפתיעו אותך? זה רק קצה הקרחון. בסרטון הווידאו האישי שלך, ננתח את כלל המוצרים הפנסיוניים והפיננסיים שלך ונחשוף המלצות קונקרטיות ונטולות פניות שיכולות לחסוך לך הרבה מאוד כסף.</p>
-                <a href="#" class="final-cta-button">
-                    הפיקו את הווידאו האישי שלי
-                    <span class="microcopy">חינם, מאובטח, ו-100% בצד שלך</span>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>Klaro</h4>
-                    <p style="color: var(--gray-dark); max-width: 300px;">Klaro הוא הפרקליט הדיגיטלי שלך. אנחנו בצד שלך, ותמיד נהיה, כדי לתת לך שליטה מלאה על העתיד הפיננסי שלך, בלי פחד ובלי תלות באף אחד.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>מוצרים</h4>
-                    <ul>
-                        <li><a href="#">השוואת קרנות פנסיה</a></li>
-                        <li><a href="#">השוואת קרנות השתלמות</a></li>
-                        <li><a href="#">השוואת קופות גמל</a></li>
-                        <li><a href="#">בדיקת כפל ביטוחים</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>כלים</h4>
-                    <ul>
-                        <li><a href="#">הסוכן הדיגיטלי</a></li>
-                        <li><a href="#">מחשבון פרישה</a></li>
-                        <li><a href="#">מחשבון דמי ניהול</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>חברה</h4>
-                    <ul>
-                        <li><a href="#">אודותינו</a></li>
-                        <li><a href="#">תנאי שימוש</a></li>
-                        <li><a href="#">מדיניות פרטיות</a></li>
-                        <li><a href="#">יצירת קשר</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 כל הזכויות שמורות ל"Klaro בע"מ". אין לראות במידע המופיע באתר ייעוץ או המלצה לפעולה. השירות אינו מהווה תחליף לייעוץ פנסיוני המותאם לצרכים האישיים. התוכן הוא למטרות מידע בלבד. ט.ל.ח.</p>
-            </div>
+    
+        <div class="phone" style="display: flex;flex-direction: row;width: 100%;">
+            <label for="phoneNum" class="chip" style="font-weight: 800;
+            width: 25%;text-align: center;align-content: center;
+              margin-left: 5%;height: 35px;">סלולרי</label>
+            <input id="phoneNum" type="text" value="" inputmode="numeric" autocomplete="off"
+            style="max-width: 35%;height: 35px;text-align: center;" />
         </div>
-    </footer>
+        <div class="code" id="code" style="flex-direction: row;width: 100%;">
+            <label for="codenumber" class="chip" style="font-weight: 800;
+            width: 25%;text-align: center;align-content: center;
+              margin-left: 5%;height: 35px;">הכנס קוד</label>
+            <input id="codenumber" type="text" value="" inputmode="numeric" autocomplete="off"
+            style="max-width: 35%;height: 35px;text-align: center;"/>
+        </div>
+        <button id="btn" style="margin-right: 5%;">שלח בקשה</button>
+    </div>
+  </div>
+  <div class="loader" id="loader"> </div>
+  <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;color: white;">טעינת נתונים</div>
+  <div id="status" class="status" style="color:white;text-align: center;"></div>
+  <div id="mobileContainer" style="display:flex; justify-content:center; width:100%; box-sizing:border-box;
+   max-width:600px; margin:auto; overflow:hidden;background-color: white;padding: 20px;">
+  <div class="mobile-frame">
+    <div class="mobile-frame-screen">
+      <iframe 
+        id="hero-video-iframe"
+        src="https://www.youtube.com/embed/11auOv3bbJM?controls=1"
+        title="YouTube video player"
+        style="width:100%; height:100%; border:0; display:block; overflow:hidden;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 
-    <script>
-        const hamburgerMenu = document.getElementById('hamburger-menu');
-        const menuX=document.getElementById("menuX");
-        const menuContainer=document.getElementById("menu-container");
-        const ezorIshi=document.getElementById("ezorIshi");
-        const harshama=document.getElementById("harshama");
-            function hamb() {
-               // navLinks.classList.toggle('active');
-               // headerActions.classList.toggle('active');
-               
-               if (menuX.style.display !== "block"){
-                menuX.style.display="block";
-                menuX.style.marginLeft="5px";
-                hamburgerMenu.style.display="none";
-                menuContainer.style.display="block";
+<div id="resultsContainer" class="hidden">
 
-               }
-               else{
-                menuX.style.display="none";
-                hamburgerMenu.style.display="block";
-                menuContainer.style.display="none";
-               }
-            };
+<div class="total-summary">
+<div style="font-size: 2rem;">סכום כולל צבור</div>
+<div id="totals" class="total-amount">0 ש״ח</div>
+<p  id="tarNechonot"></p>
+</div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Header Scroll Effect ---
-            const header = document.getElementById('main-header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                    menuX.classList.add('scrolled');
-                    ezorIshi.classList.add('scrolled');
-                    harshama.classList.add('scrolled');
-                    hamburgerMenu.classList.add('scrolled');
+<div class="results-grid">
+<div class="card">
+<h2>פירוט לפי סוג מוצר</h2>
+<div class="table-container">
+  <table class="styled-table">
+    <thead>
+    <tr>
+    <th>שם המוצר</th>
+    <th>סכום צבור</th>
+    </tr>
+    </thead>
+    <tbody id="productTable"></tbody>
+  </table>
+</div>
+</div>
 
-                } else {
-                    header.classList.remove('scrolled');
-                    menuX.classList.remove('scrolled');
-                    ezorIshi.classList.remove('scrolled');
-                    harshama.classList.remove('scrolled');
-                    hamburgerMenu.classList.remove('scrolled');
-                     menuX.classList.remove('scrolled');
-                }
-            });
+<div class="card">
+<h2>התפלגות החיסכון</h2>
+<div class="chart-container">
+<div class="chart-wrapper">
+<canvas id="pieChart"></canvas>
+</div>
+</div>
+</div>
+</div>
 
-            // --- Hamburger Menu Logic ---
-            
-            const navLinks = document.getElementById('nav-links');
-            const headerActions = document.getElementById('header-actions');
-            
+<div class="card">
+<h2>מקרא</h2>
+<div id="legend" class="legend-grid"></div>
+</div>
+<div class="card" style="display:none;margin-right:auto;margin-left: auto;">
+<h2>תוצאה מלאה (JSON)</h2>
+<pre id="output">// התוצאה תופיע כאן</pre>
+</div>
 
-            // Close menu on link click
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    headerActions.classList.remove('active');
-                });
-            });
+</div>
+</div>
 
-            // --- Comparison Chart Logic ---
-            const monthlyDepositSlider = document.getElementById('monthly-deposit-slider');
-            const yearsSlider = document.getElementById('years-slider');
-            const monthlyDepositValue = document.getElementById('monthly-deposit-value');
-            const yearsValue = document.getElementById('years-value');
-            const avgLine = document.getElementById('avg-line');
-            const optLine = document.getElementById('opt-line');
-            const avgLabel = document.getElementById('avg-label');
-            const optLabel = document.getElementById('opt-label');
+<div id="detailsContainer" class="hidden">
+<div class="card details-selector-card">
+ <div class="row" style="align-items: center; justify-content: space-between;">
+ <h2 id="detailsTitle">פירוט חשבונות - [שם המוצר]</h2>
+ <button id="backButton">חזרה</button>
+ </div>
 
-            function calculateCompoundInterest(monthly, years, rate) {
-                let balance = 0;
-                let pathPoints = [{x: 0, y: 0}];
-                const monthlyRate = rate / 12;
+ <div class="details-selector">
+ <h3>בחר מוצר לצפייה בפרטים:</h3>
+ <div class="product-select-container">
+  <select id="productSelector" onchange="showDetailsFromSelector()">
+  <option value="">בחר סוג מוצר...</option>
+  </select>
+ <!-- <button id="showProductDetailsBtn">הצג פרטים</button>-->
+ </div>
+ </div>
 
-                for (let i = 1; i <= years; i++) {
-                    for (let m = 0; m < 12; m++) {
-                        balance = (balance + monthly) * (1 + monthlyRate);
-                    }
-                    pathPoints.push({x: (i / years) * 100, y: balance});
-                }
-                if (years === 0) {
-                    return { finalBalance: 0, path: pathPoints };
-                }
-                return { finalBalance: balance, path: pathPoints };
-            }
+ <div id="accountDetails">
+  </div>
+</div>
+</div>
 
-            function updateChart() {
-                if (!monthlyDepositSlider) return;
-                
-                const monthly = parseInt(monthlyDepositSlider.value);
-                const years = parseInt(yearsSlider.value);
-                
-                monthlyDepositValue.textContent = `₪${monthly.toLocaleString()}`;
-                yearsValue.textContent = `${years} שנים`;
+</div>
 
-                const avgData = calculateCompoundInterest(monthly, years, 0.07); // 7%
-                const optData = calculateCompoundInterest(monthly, years, 0.09); // 9%
-
-                const maxBalance = optData.finalBalance;
-
-                function createPath(data) {
-                    if (maxBalance <= 0 || data.path.length < 1) return "M0,100 L100,100";
-                    const startY = 100 - (data.path[0].y / maxBalance) * 100;
-                    let path = `M${data.path[0].x},${startY} `;
-                    data.path.slice(1).forEach(p => {
-                        const y = 100 - (p.y / maxBalance) * 100;
-                        path += `L${p.x},${y} `;
-                    });
-                    return path;
-                }
-
-                avgLine.setAttribute('d', createPath(avgData));
-                optLine.setAttribute('d', createPath(optData));
-                
-                avgLabel.textContent = `₪${Math.round(avgData.finalBalance).toLocaleString()}`;
-                optLabel.textContent = `₪${Math.round(optData.finalBalance).toLocaleString()}`;
-
-                const avgY = maxBalance > 0 ? 100 - (avgData.finalBalance / maxBalance) * 100 : 100;
-                avgLabel.style.top = `${avgY}%`;
-
-                optLabel.style.top = '0%';
-            }
-
-            if (monthlyDepositSlider) {
-                monthlyDepositSlider.addEventListener('input', updateChart);
-                yearsSlider.addEventListener('input', updateChart);
-                updateChart();
-            }
+<script>
+  
+const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
+const btn = document.getElementById('btn');
+const misparInput = document.getElementById('mispar');
+const out = document.getElementById('output');
+const statusEl = document.getElementById('status');
+const resultsContainer = document.getElementById('resultsContainer');
+let pieChart = null;
+const detailsContainer = document.getElementById('detailsContainer');
+const backButton = document.getElementById('backButton');
+const accountDetails = document.getElementById('accountDetails');
+const detailsTitle = document.getElementById('detailsTitle');
+const productSelector = document.getElementById('productSelector');
+//const showProductDetailsBtn = document.getElementById('showProductDetailsBtn');
+let dataJason;
 
 
-            // --- Calculator Logic ---
-            const step1 = document.getElementById('step1');
-            const step2 = document.getElementById('step2');
-            const step3 = document.getElementById('step3');
-            
-            const nextBtn = document.getElementById('next-btn');
-            const backBtn = document.getElementById('back-btn');
-            const calculateBtn = document.getElementById('calculate-btn');
 
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    step1.classList.remove('active');
-                    step2.classList.add('active');
-                });
-            }
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    step2.classList.remove('active');
-                    step1.classList.add('active');
-                });
-            }
 
-            if (calculateBtn) {
-                calculateBtn.addEventListener('click', () => {
-                    const currentSavings = parseFloat(document.getElementById('current-savings').value) || 0;
-                    const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
-                    const currentAge = parseInt(document.getElementById('current-age').value) || 35;
-                    const riskProfile = document.querySelector('input[name="risk-profile"]:checked').value;
+// שמירת הנתונים הגולמיים במשתנה גלובלי
+let rawData = null; 
 
-                    const retirementAge = 67;
-                    const yearsToRetirement = Math.max(0, retirementAge - currentAge);
 
-                    const riskParams = {
-                        low: { return: 0.03, fee: 0.012 },
-                        medium: { return: 0.06, fee: 0.015 },
-                        high: { return: 0.08, fee: 0.018 }
-                    };
-                    
-                    const optimizedParams = {
-                        returnBoost: 0.01,
-                        feeReduction: 0.005
-                    };
+// צבעים יפים לגרף
+const chartColors = [
+'#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+'#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+];
 
-                    const currentReturn = riskParams[riskProfile].return;
-                    const currentFee = riskParams[riskProfile].fee;
-                    const optimizedReturn = currentReturn + optimizedParams.returnBoost;
-                    const optimizedFee = currentFee - optimizedParams.feeReduction;
+// מיפוי קוד → שם סוג המוצר
+const sugTochnitOHeshbon = {
+1: "פוליסת ביטוח חיים משולב חיסכון",
+2: "קרן פנסיה",
+3: "קופת גמל",
+4: "קרן השתלמות",
+5: "פוליסת חיסכון טהור",
+6: "פוליסת סיכון טהור (ריסק מוות ו/או פוליסת אכ״ע SA)",
+7: "ביטוח חיים משכנתא",
+8: "פוליסת סיכון טהור קולקטיב",
+9: "קופת גמל להשקעה",
+10: "חיסכון לכל ילד"
+};
 
-                    function runSimulation(initial, monthly, years, annualReturn, annualFee) {
-                        let balance = initial;
-                        for (let i = 0; i < years; i++) {
-                            balance += monthly * 12;
-                            balance *= (1 + annualReturn - annualFee);
-                        }
-                        return balance;
-                    }
+function setStatus(msg, loading=false){
+statusEl.innerHTML = loading ? `${msg} <span class="spinner"></span>` : msg;
+}
 
-                    const finalValueCurrent = runSimulation(currentSavings, monthlyContribution, yearsToRetirement, currentReturn, currentFee);
-                    const finalValueOptimized = runSimulation(currentSavings, monthlyContribution, yearsToRetirement, optimizedReturn, optimizedFee);
-                    
-                    const totalSavings = finalValueOptimized - finalValueCurrent;
-                    
-                    document.getElementById('savings-amount').textContent = `~₪${Math.round(totalSavings).toLocaleString('he-IL')}`;
-                    document.getElementById('current-value').textContent = `₪${Math.round(finalValueCurrent).toLocaleString('he-IL')}`;
-                    document.getElementById('optimized-value').textContent = `₪${Math.round(finalValueOptimized).toLocaleString('he-IL')}`;
+function formatNumber(num) {
+if (num === null || num === undefined) {
+return 'אין נתון';
+}
+return new Intl.NumberFormat('he-IL').format(Math.round(num));
+}
 
-                    const maxVal = finalValueOptimized;
-                    const currentHeight = (finalValueCurrent / maxVal) * 100;
-                    
-                    const currentBar = document.getElementById('current-bar');
-                    const optimizedBar = document.getElementById('optimized-bar');
-                    
-                    currentBar.style.height = '0%';
-                    optimizedBar.style.height = '0%';
+function createPieChart(data) {
+const ctx = document.getElementById('pieChart').getContext('2d');
 
-                    setTimeout(() => {
-                        currentBar.style.height = `${currentHeight}%`;
-                        optimizedBar.style.height = '100%';
-                    }, 100);
+if (pieChart) {
+pieChart.destroy();
+}
 
-                    step2.classList.remove('active');
-                    step3.classList.add('active');
-                });
-            }
-        });
+const labels = [];
+const amounts = [];
+const colors = [];
 
-        document.addEventListener('DOMContentLoaded', function() {
-    // ... הקוד הקיים שלך ...
+Object.entries(data).forEach(([type, amount], index) => {
+labels.push(sugTochnitOHeshbon[type] || `סוג ${type}`);
+amounts.push(amount);
+colors.push(chartColors[index % chartColors.length]);
+});
 
-    // הפעלת וידאו מחדש בלחיצה
-    const heroIframe = document.getElementById('hero-video-iframe');
-    const originalSrc = heroIframe.src;
+pieChart = new Chart(ctx, {
+type: 'doughnut',
+data: {
+labels: labels,
+datasets: [{
+data: amounts,
+backgroundColor: colors,
+borderColor: '#ffffff',
+borderWidth: 3,
+hoverBorderWidth: 4
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+display: false
+},
+tooltip: {
+backgroundColor: 'rgba(10,37,64,0.9)',
+titleColor: '#ffffff',
+bodyColor: '#ffffff',
+borderColor: '#F37253',
+borderWidth: 1,
+cornerRadius: 8,
+displayColors: true,
+callbacks: {
+label: function(context) {
+const percentage = ((context.parsed / amounts.reduce((a,b) => a+b, 0)) * 100).toFixed(1);
+return `${context.label}: ${formatNumber(context.parsed)} ש״ח (${percentage}%)`;
+}
+}
+}
+},
+cutout: '50%',
+animation: {
+animateRotate: true,
+duration: 1500
+}
+}
+});
+}
 
-    heroIframe.addEventListener('click', function() {
-        // טעינת ה-iframe מחדש כדי להפעיל את הסרטון
-        heroIframe.src = originalSrc;
+function createLegend(data) {
+const legendContainer = document.getElementById('legend');
+legendContainer.innerHTML = '';
+
+Object.entries(data).forEach(([type, amount], index) => {
+const legendItem = document.createElement('div');
+legendItem.className = 'legend-item';
+
+const color = chartColors[index % chartColors.length];
+const productName = sugTochnitOHeshbon[type] || `סוג ${type}`;
+
+legendItem.innerHTML = `
+<div class="legend-color" style="background-color: ${color}"></div>
+<div class="legend-text">${productName}</div>
+
+`;
+//<div class="legend-amount">${formatNumber(amount)} ש״ח</div>
+legendContainer.appendChild(legendItem);
+});
+}
+
+function show(data) {
+rawData = data;
+out.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+
+if (!data?.matches || !Array.isArray(data.matches) || data.matches.length === 0) {
+ setStatus('אין נתונים זמינים עבור תעודת הזהות שהוזנה.');
+ resultsContainer.classList.add('hidden');
+ return;
+}
+
+const tbody = document.getElementById("productTable");
+tbody.innerHTML = '';
+
+const totalsByType = {};
+let totalSum = 0;var updatedDate;
+updatedDate= data?.matches[0][0].taarichBitzoa || "no";
+updatedDate = updatedDate.slice(6,8)+"/"+updatedDate.slice(4,6)+"/"+updatedDate.slice(0,4)
+data.matches.forEach(level1 => {
+ level1.forEach(yatzran => {
+ if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+  yatzran.heshbonColl.forEach(heshbonItem => {
+  const type = heshbonItem.sugMutzar;
+  if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+   heshbonItem.taktziv.forEach(taktzivItem => {
+   if (taktzivItem.yitrot && Array.isArray(taktzivItem.yitrot)) {
+    taktzivItem.yitrot.forEach(yitraItem => {
+    // מבנה חדש, צריך לגשת דרך yitrot
+    const amount = parseFloat(yitraItem?.yitrot?.totalErkeyPidion) || 0;
+    if (type) {
+     totalsByType[type] = (totalsByType[type] || 0) + amount;
+     totalSum += amount;
+    }
+    });
+   }
+   });
+  }
+  });
+ }
+ });
+});
+
+Object.entries(totalsByType).forEach(([type, total]) => {
+ if (total > 0) {
+ const row = document.createElement("tr");
+ row.innerHTML = `
+ <td>${sugTochnitOHeshbon[type] || `סוג ${type}`}</td>
+ <td class="amount">${formatNumber(total)} ש״ח</td>
+ `;
+ row.addEventListener('click', () => {
+ showDetails(type);
+ });
+ tbody.appendChild(row);
+ }
+});
+
+updateProductSelector(totalsByType);
+document.getElementById("totals").textContent = `${formatNumber(totalSum)} ש״ח`;
+document.getElementById("tarNechonot").textContent=`תאריך מסלקה:
+ ${updatedDate}`;
+createPieChart(totalsByType);
+createLegend(totalsByType);
+resultsContainer.classList.remove('hidden');
+}
+
+function updateProductSelector(totals) {
+ productSelector.innerHTML = '<option value="">בחר סוג מוצר...</option>';
+ Object.keys(totals).forEach(type => {
+  const option = document.createElement('option');
+  option.value = type;
+  option.textContent = sugTochnitOHeshbon[type] || `סוג ${type}`;
+  productSelector.appendChild(option);
+ });
+}
+
+function showDetailsFromSelector() {
+ const selectedType = productSelector.value;
+ if (selectedType) {
+  showDetails(selectedType);
+ }
+}
+
+
+btn.addEventListener('click', async () => {
+  // --- איסוף ערכים וולידציות בסיס ---
+  let mispar = misparInput.value.trim();
+  mispar = mispar.padStart(9, "0");
+
+  btn.innerText = "אשר קוד";
+  document.getElementById("muted").textContent = "בדוק קבלת קוד במכשיר הסלולרי";
+
+  const loader = document.getElementById("loader");
+  const loaderText = document.getElementById("loaderText");
+  const codenumber = document.getElementById("codenumber").value;
+  const mobileContainer = document.getElementById("mobileContainer");
+  const phoneNumber = document.getElementById("phoneNum").value.trim();
+
+  if (!phoneNumber || !mispar) {
+    alert("חסרים פרטים");
+    return;
+  }
+  if (isValidIsraeliID(mispar) === false) {
+    alert("תעודת זהות אינה תקינה");
+    return;
+  }
+  if (!isValidPhone(phoneNumber)) {
+    alert("מספר הטלפון הסלולרי אינו תקין");
+    return;
+  }
+
+  // שלב הצגת שדה קוד בפעם הראשונה
+  document.getElementById("code").style.display = "flex";
+  if (codenumber === '') {
+    // מחכים שהמשתמש יזין קוד ואז ילחץ שוב
+    return;
+  }
+
+  // --- יש קוד, ממשיכים ---
+  btn.innerText = "שלח בקשה";
+  document.getElementById("muted").textContent = 'הזן תעודת זהות ולחץ "שלח בקשה"';
+  document.getElementById("code").style.display = "none";
+
+  loader.style.display = "block";
+  loaderText.style.display = "block";
+  setStatus('מבצע קריאה לשירות…', true);
+  resultsContainer.classList.add('hidden');
+  detailsContainer.classList.add('hidden');
+
+  // גוזרים בסיס שירות כדי להגיע גם ל־/checkTaz וגם ל-/get-by-id
+  const serviceBase = endpointBase.replace(/\/get-by-id\/?$/, '');
+
+  try {
+    // 1) בדיקת התאמה בשרת
+    const checkRes = await fetch(`${serviceBase}/checkTaz`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        taz: mispar,
+        phone: phoneNumber,
+        code: codenumber // אם תשתמש בזה בצד השרת
+      })
     });
 
-});
-
-window.addEventListener('resize', function() {
-    
-    const newWidth = window.innerWidth;
-    
-    if (newWidth > 480) {
-      hamburgerMenu.style.display="none";
-      menuContainer.style.display="none"; 
-      menuX.style.display="none";
-      hamburgerMenu.style.display="none"; 
-    } 
-    else{
-       hamburgerMenu.style.display="block"; 
+    if (!checkRes.ok) {
+      const text = await checkRes.text();
+      setStatus(`שגיאה בבדיקת גישה (HTTP ${checkRes.status})`);
+      out.textContent = text;
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
     }
+
+    const checkJson = await checkRes.json();
+    // מצפים ל: { ok: true/false, exists: true/false, message: "..." }
+    if (!checkJson.ok || !checkJson.exists) {
+      setStatus(checkJson.message || "אין הרשאה");
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
+    }
+
+    // 2) משיכת הנתונים בפועל
+    const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}&code=${encodeURIComponent(codenumber)}&phone=${encodeURIComponent(phoneNumber)}`;
+    const res = await fetch(url, { method: 'GET' });
+
+    if (!res.ok) {
+      const text = await res.text();
+      setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
+      out.textContent = text;
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
+    }
+
+    // אם הכל תקין – ממשיכים
+    const json = await res.json();
+    setStatus('הצלחה ✅');
+    document.getElementById("maincont").style.display = "none";
+    mobileContainer.style.display = "none";
+    loader.style.display = "none";
+    loaderText.style.display = "none";
+
+    dataJason = json;
+    resultsContainer.classList.remove('hidden');
+    show(json);
+
+  } catch (error) {
+    // שגיאת רשת/חריגה כללית
+    console.error("שגיאה בתקשורת:", error);
+    setStatus("שגיאת תקשורת מול השרת");
+    out.textContent = error.message;
+    resultsContainer.classList.remove('hidden');
+    loader.style.display = "none";
+    loaderText.style.display = "none";
+    document.getElementById("code").style.display = "flex";
+    return; // עצירה
+  }
 });
 
-function hideMenu(){
-    
-    menuContainer.style.display="none";
-    hamburgerMenu.style.display="block";
-    menuX.style.display="none";
-
+misparInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') {
+btn.click();
 }
-    </script>
+});
+function showDetails(productType) {
+  
+    const titleText = sugTochnitOHeshbon[productType] || `סוג ${productType}`;
+    detailsTitle.textContent = `פירוט חשבונות - ${titleText}`;
+    accountDetails.innerHTML = '';let tableHTML;
+    const getMaasikName = (yatzran, mispar) => {
+        shemYatzranA=yatzran.shemYatzran;
+        const maasik = yatzran.maasikimColl?.find(m => String(m.misparMaasikBeYatzranR) === String(mispar));
+        if (maasik?.shemMaasik && typeof maasik.shemMaasik === 'object' && maasik.shemMaasik['$']) {
+            return '';
+        }
+        return maasik?.shemMaasik || 'לא ידוע';
+    };
+
+    rawData.matches.forEach(level1 => {
+        level1.forEach(yatzran => {
+            const sugKvetz = yatzran.sugKvetz || '';
+            if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+                heshbonItem: for (const heshbonItem of yatzran.heshbonColl) {
+                    if (String(heshbonItem.sugMutzar) !== String(productType)) {
+                        continue heshbonItem;
+                    }
+
+                    const aggregatedMaslulimInHeshbon = {};
+                    let maasikName = '';
+                    let hasMaslulim = false;
+                    
+                    let unifiedFeeHisachon = null;
+                    let unifiedFeeHafkada = null;
+
+                    if (heshbonItem.taktziv && Array.isArray(heshbonItem.taktziv)) {
+                        heshbonItem.taktziv.forEach(t => {
+                            
+                            const activeMaasik = t.maasikimM?.find(m => m.statusMaasik === '1');
+                            const maasikMispar = activeMaasik?.misparMaasikBeYatzranM;
+                            
+                            if (maasikMispar) {
+                                maasikName = getMaasikName(yatzran, maasikMispar);
+                            }
+
+                            if (t.dmeinihul && Array.isArray(t.dmeinihul)) {
+                                const hisachonFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '1');
+                                const hafkadaFee = t.dmeinihul.find(f => f.dmeiNihulAchidim === '1' && f.sugHotzaa === '2');
+                                
+                                if (hisachonFee) {
+                                    unifiedFeeHisachon = hisachonFee.sheurDmeiNihul;
+                                }
+                                if (hafkadaFee) {
+                                    unifiedFeeHafkada = hafkadaFee.sheurDmeiNihul;
+                                }
+                            }
+
+                            if (t.maslulim && Array.isArray(t.maslulim)) {
+                                t.maslulim.forEach(m => {
+                                    const maslul = m.maslul;var sugmoz;
+                                    const amount = parseFloat(maslul?.schumZviraBeMaslul) || 0;
+                                    let filteredData;
+    if (parseInt(maslul?.kodMaslul)>0 && amount > 0) {
+          const kod = maslul.kodMaslul;
+
+          
+  //    if(!maslulim(kod)==="not find"){
+           
+           
+          
+          let dataNetunimforfilter =  maslulim(kod).muz === "פוליסות חסכון" ?
+            datanetunimKlaliXB :maslulim(kod).muz === "קרנות חדשות" ?
+            datanetunimKlaliXP : maslulim(kod).muz === "קרנות כלליות" ? 
+            datanetunimKlaliXP :datanetunimKlaliXM;                      
+          if(dataNetunimforfilter===datanetunimKlaliXM){
+          filteredData= dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+          item.mozar===maslulim(kod).muz && !item.ochlosiyayaad.includes("עובדי סקטור") &&
+          !item.ochlosiyayaad.includes("עובדי מפעל") ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana) ;
+          }
+          else{
+            filteredData=dataNetunimforfilter.filter(item=>item.mas===maslulim(kod).mas &&
+          item.mozar===maslulim(kod).muz ).sort((a, b) => b.tesuaMitchilatshana - a.tesuaMitchilatshana);
+          }
+
+          if(maslulim(kod).ochlosia==="עובדי מפעל/גוף מסויים"){
+            
+          }
+          else{
+            if(filteredData[0]===undefined){}else{
+              
+            tableHTML = `
+        <p>הנתונים נכונים ל - ${updatedTo}</p>
+        <div style="overflow-x:auto; direction:rtl; margin:20px 0;">
+        <table id="tblTesuot" style="border-radius: 10%;width:100%; border-collapse:collapse; font-family:Arial, sans-serif; text-align:center;">
+        <thead style="background:darkblue; color:white;">
+        <tr>
+          <th style="padding:12px; border:1px solid #ddd;">מספר מסלול</th>
+          <th style="padding:12px; border:1px solid #ddd;">שם המסלול</th>
+          <th style="padding:12px; border:1px solid #ddd;">תשואה מתחילת השנה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f9f9f9;">
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[0].tesuaMitchilatshana}%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[1].tesuaMitchilatshana}%</td>
+        </tr>
+        <tr style="background:#f9f9f9;">
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].mh}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].shemkupa}</td>
+          <td style="padding:10px; border:1px solid #ddd;">${filteredData[2].tesuaMitchilatshana}%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.8rem;">*התשואה המוצגת בטבלה מייצגת תשואה המסלול ברוטו 
+      מתחילת שנה וזאת בהתאם לנתוני רשות שוק ההון</>
+    </div>  `;
+filteredData='';
+             } }
+                                        const dmeiNihulHisachon = unifiedFeeHisachon !== null ? `${unifiedFeeHisachon}%` : (maslul.sheurDmeiNihulHisachon != null ? `${maslul.sheurDmeiNihulHisachon}%` : '0%');
+                                        const dmeiNihulHafkada = unifiedFeeHafkada !== null ? `${unifiedFeeHafkada}%` : (maslul.sheurDmeiNihulHafkada != null ? `${maslul.sheurDmeiNihulHafkada}%` : '0%');
+                                        
+                                        if (!aggregatedMaslulimInHeshbon[kod]) {
+                                            aggregatedMaslulimInHeshbon[kod] = {
+                                                shem: maslul.shemMaslulHashkaa,
+                                                schumZvira: 0,
+                                                dmeiNihulHisachon,
+                                                dmeiNihulHafkada,
+                                                kodMaslul:maslul.kodMaslul
+
+                                            };
+                                        }
+                                        aggregatedMaslulimInHeshbon[kod].schumZvira += amount;
+                                        hasMaslulim = true;
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    if (!hasMaslulim && (!heshbonItem.prisha || heshbonItem.prisha.length === 0)) {
+                        continue;
+                    }
+
+                    const heshbonCard = document.createElement('div');
+                    heshbonCard.className = 'card detail-card';
+                    heshbonCard.style.boxShadow = '5px 10px 10px  rgba(0, 0, 0, 0.2)';
+                    heshbonCard.style.maxWidth = '600px';
+                    heshbonCard.style.marginLeft = 'auto';
+                    heshbonCard.style.marginRight = 'auto';
+                    heshbonCard.style.marginTop = '20px';
+                    heshbonCard.style.boxSizing="border-box";
+                    
+
+                if(sugKvetz !== 'קרנות פנסיה ותיקות') {
+                        
+                   
+                    var taktzivHtml = Object.keys(aggregatedMaslulimInHeshbon).map(kod => {
+                        const maslulData = aggregatedMaslulimInHeshbon[kod];
+
+                        return `
+                            <li>                                
+                                  <p>מספר באוצר: ${parseInt(maslulData.kodMaslul.slice(23))}</p> 
+                                  <strong>${maslulData.shem}</strong><br>
+                                  סכום צבור: ${formatNumber(maslulData.schumZvira)} ש״ח<br>
+                                  דמי ניהול מחיסכון: ${maslulData.dmeiNihulHisachon} | מהפקדה: ${maslulData.dmeiNihulHafkada}
+                            </li>
+                            ${tableHTML}
+
+                        `;
+                    }).join('');
+                    tableHTML='';
+                  }
+                    else {
+                      
+                     
+
+                      // פונקציית סינון שמחזירה רק את האובייקטים הרצויים
+                      const filteredData = dataJason.matches.filter(item => {
+                          // מכיוון שהמבנה הוא מערך בתוך מערך, נבדוק את האובייקט הראשון במערך הפנימי
+                          return item[0] && item[0].sugKvetz === 'קרנות פנסיה ותיקות'
+                          ;
+                      });
+                    
+                   
+                    let amountsum = 0;
+
+                    // נתחיל בלולאה על הנתונים במשתנה amount
+                    filteredData.forEach(level1 => {
+                      level1.forEach(yatzran => {
+                        // בודקים אם קיים מערך של חשבונות
+                        if (yatzran.heshbonColl && Array.isArray(yatzran.heshbonColl)) {
+                          yatzran.heshbonColl.forEach(heshbon => {
+                            // בודקים אם קיים מערך של תקציבים
+                            if (heshbon.taktziv && Array.isArray(heshbon.taktziv)) {
+                              heshbon.taktziv.forEach(taktzivItem => {
+                                // בודקים אם קיים מערך של מסלולים
+                                if (taktzivItem.maslulim && Array.isArray(taktzivItem.maslulim)) {
+                                  taktzivItem.maslulim.forEach(maslulItem => {
+                                    const maslulAmount = parseFloat(maslulItem?.maslul?.schumZviraBeMaslul);
+                                    // מוסיפים את הסכום אם הוא מספר חוקי
+                                    if (!isNaN(maslulAmount)) {
+                                      amountsum += maslulAmount;
+                                    }
+                                  });
+                                }
+                              });
+                            }
+                          });
+                        }
+                      });
+                    });
+
+                  
+                    
+                    
+                  
+                
+                    var taktzivHtml=`
+                           <li>
+                                <strong>${"כללי"}</strong><br>
+                               סכום צבור: ${formatNumber(amountsum)} ש״ח<br>
+                              דמי ניהול מחיסכון: ${0} | מהפקדה: ${0}
+                          </li>                        `;
+                  }
+                     
+                  totalSum = 0;
+                  
+                    
+                    const maasikSection = maasikName ? `<p style="color:blue"><strong>מעסיק:</strong> ${maasikName}</p>` : '';
+
+                    let prishaHtml = '';
+                    if (heshbonItem.prisha && Array.isArray(heshbonItem.prisha) && heshbonItem.prisha.length > 0 && sugKvetz !=='קרנות פנסיה ותיקות') {
+                        prishaHtml = heshbonItem.prisha.map(p => {
+                            const hisachonTzafoi = p.hisachonMitztaberTzafoi != null ? formatNumber(p.hisachonMitztaberTzafoi) : 'אין נתון';
+                            const hisachonTzafoiLelo = p.hisachonMitztaberTzafoiLelo != null ? formatNumber(p.hisachonMitztaberTzafoiLelo) : 'אין נתון';
+                            const gilPrisha = p.gilPrisha != null ? p.gilPrisha : 'אין נתון';
+                            
+                            return `
+                                <h4>יתרות לפרישה (גיל ${Math.round(gilPrisha)}):</h4>
+                                <ul>
+                                    <li>חיסכון מצטבר צפוי: ${hisachonTzafoi} ש״ח</li>
+                                    <li>חיסכון מצטבר צפוי (ללא תוספות): ${hisachonTzafoiLelo} ש״ח</li>
+                                </ul>
+                            `;
+                        }).join('');
+                    }
+                    
+                    const taarich = heshbonItem.taarichHitztarfutMutzar;
+                    const formattedDate = (taarich && typeof taarich === 'string' && taarich.length === 8) ? `${taarich.slice(6)}/${taarich.slice(4,6)}/${taarich.slice(0,4)}` : 'אין נתון';
+
+                    // תיקון: הוספת "קרנות פנסיה חדשות" לתנאי ה-if
+                    if((sugKvetz === 'קופות גמל' || sugKvetz === 'פוליסות ביטוח פרט' ||
+                         sugKvetz === 'קרנות פנסיה חדשות' || sugKvetz === 'קרנות פנסיה ותיקות') 
+                        && taktzivHtml) {
+                        heshbonCard.innerHTML = `
+                            <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                            <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                            <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                            <p><strong>תאריך הצטרפות:</strong> ${formattedDate}</p>
+                            ${maasikSection}  
+                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}                            
+                             ${prishaHtml}
+                             
+                        `;
+                        taktzivHtml='';
+                    } 
+                    else {
+                        const shemMaslulHabituah = heshbonItem.shemMaslulHabituah && (heshbonItem.shemMaslulHabituah.$ && (heshbonItem.shemMaslulHabituah['$']))
+                            ? 'אין נתון'
+                            : heshbonItem.shemMaslulHabituah || 'אין נתון';
+                        if(taktzivHtml){
+                        heshbonCard.innerHTML = `
+                            <h3>${yatzran.shemYatzran} - ${heshbonItem.shemTochnit}</h3>
+                            <p><strong>מספר חשבון:</strong> ${heshbonItem.misparHeshbon}</p>
+                            <p><strong>תשואה נטו:</strong> ${heshbonItem.sheurTesuaNeto != null ? `${heshbonItem.sheurTesuaNeto}%` : 'אין נתון'}</p>
+                            <p><strong>תאריך הצטרפות:</strong> ${formattedDate}</p>
+                            <p><strong>מסלול ביטוח:</strong> ${shemMaslulHabituah}</p>
+                            ${maasikSection}
+                            ${taktzivHtml ? `<h4>מסלולי השקעה:</h4><ul>${taktzivHtml}</ul>` : ''}
+                            ${prishaHtml}
+                        `;
+                        taktzivHtml='';
+                        }
+                    }
+                    
+                    accountDetails.appendChild(heshbonCard);
+                }
+            }
+        });
+    });
+
+    resultsContainer.classList.add('hidden');
+    detailsContainer.classList.remove('hidden');
+}
+
+backButton.addEventListener('click', () => {
+detailsContainer.classList.add('hidden');
+resultsContainer.classList.remove('hidden');
+});
+
+//showProductDetailsBtn.addEventListener('click', showDetailsFromSelector);
+  function isValidIsraeliID(id) {
+  if (!id) return false;
+
+  // הסרת כל תו שאינו ספרה
+  id = String(id).replace(/\D/g, "");
+
+  // השלמה ל-9 ספרות (מוסיפים אפסים משמאל אם קצר יותר)
+  id = id.padStart(9, "0");
+
+  // חייב להיות בדיוק 9 ספרות
+  if (!/^\d{9}$/.test(id)) {
+    return false;
+  }
+
+  // חישוב ספרת ביקורת (אלגוריתם משרד הפנים)
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    let num = Number(id[i]);
+    let step = num * ((i % 2) + 1);
+    if (step > 9) step -= 9;
+    sum += step;
+  }
+
+  return (sum % 10 === 0);
+}
+function isValidPhone(phone) {
+    // בדיקה: מספר סלולרי ישראלי בפורמט 05x עם 9–10 ספרות
+    return /^05\d{8,9}$/.test(phone);
+  }
+</script>
 </body>
 </html>
+
+
+
