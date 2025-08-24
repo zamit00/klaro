@@ -693,6 +693,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
   </div>
   <div class="loader" id="loader"> </div>
   <div  class="loaderText" id="loaderText" style="width: 100%;text-align: center;color: white;">טעינת נתונים</div>
+  <div id="status" class="status" style="color:white;text-align: center;"></div>
   <div id="mobileContainer" style="display:flex; justify-content:center; width:100%; box-sizing:border-box;
    max-width:600px; margin:auto; overflow:hidden;background-color: white;padding: 20px;">
   <div class="mobile-frame">
@@ -708,7 +709,6 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
     </div>
   </div>
 </div>
-<div id="status" class="status">
 </div>
 </div>
 
@@ -1003,73 +1003,122 @@ function showDetailsFromSelector() {
 
 
 btn.addEventListener('click', async () => {
-  
-var mispar = misparInput.value.trim();
-mispar = mispar.padStart(9, "0");
-btn.innerText="אשר קוד";
-document.getElementById("muted").textContent="בדוק קבלת קוד במכשיר הסלולרי"
-const loader = document.getElementById("loader");
-const loaderText = document.getElementById("loaderText");
-const codenumber=document.getElementById("codenumber");
-const mobileContainer=document.getElementById("mobileContainer");
-const phoneNumber=document.getElementById("phoneNum").value;
-console.log("p:"+phoneNumber.value ,"m:"+mispar)
-if(!phoneNumber || !mispar){
-  alert("חסרים פרטים");return;
-} 
-if(isValidIsraeliID(mispar)===false){
-  alert("תעודת זהות אינה תקינה");return;
-}
-if (!isValidPhone(phoneNumber)) {
-      alert("מספר הטלפון הסלולרי אינו תקין");return;
-}
+  // --- איסוף ערכים וולידציות בסיס ---
+  let mispar = misparInput.value.trim();
+  mispar = mispar.padStart(9, "0");
 
-document.getElementById("code").style.display="flex";
-if (codenumber.value===''){return}
-btn.innerText="שלח בקשה";
-document.getElementById("muted").textContent='הזן תעודת זהות ולחץ "שלח בקשה"'
-document.getElementById("code").style.display="none";
+  btn.innerText = "אשר קוד";
+  document.getElementById("muted").textContent = "בדוק קבלת קוד במכשיר הסלולרי";
 
-loader.style.display = "block";
-loaderText.style.display = "block";
-const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}&code=${encodeURIComponent(codenumber.value)}`;
-setStatus('מבצע קריאה לשירות…', true);
-resultsContainer.classList.add('hidden');
-detailsContainer.classList.add('hidden');
-try {
-  const res = await fetch(url, { method: 'GET' });
+  const loader = document.getElementById("loader");
+  const loaderText = document.getElementById("loaderText");
+  const codenumber = document.getElementById("codenumber").value;
+  const mobileContainer = document.getElementById("mobileContainer");
+  const phoneNumber = document.getElementById("phoneNum").value.trim();
 
-  if (!res.ok) {
-    const text = await res.text();
-    setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
-    out.textContent = text;
-    loader.style.display = "none";
-    loaderText.style.display = "none";
-    document.getElementById("code").style.display="flex";
-    //
-    return; // עוצר את הפונקציה כאן
+  if (!phoneNumber || !mispar) {
+    alert("חסרים פרטים");
+    return;
+  }
+  if (isValidIsraeliID(mispar) === false) {
+    alert("תעודת זהות אינה תקינה");
+    return;
+  }
+  if (!isValidPhone(phoneNumber)) {
+    alert("מספר הטלפון הסלולרי אינו תקין");
+    return;
   }
 
-  // אם הכל תקין – ממשיכים
-  resultsContainer.classList.remove('hidden');
-  const json = await res.json();
-  setStatus('הצלחה ✅');
-  document.getElementById("maincont").style.display = "none";
-  mobileContainer.style.display = "none";
-  loader.style.display = "none";
-  loaderText.style.display = "none";
-  dataJason = json;
-  show(json)
+  // שלב הצגת שדה קוד בפעם הראשונה
+  document.getElementById("code").style.display = "flex";
+  if (codenumber === '') {
+    // מחכים שהמשתמש יזין קוד ואז ילחץ שוב
+    return;
+  }
 
-}catch (error) {
-  // אם יש שגיאה ב־fetch עצמו (בעיית אינטרנט, נפילת שרת וכו')
-  console.error("שגיאה בתקשורת:", error);
-  setStatus("שגיאת תקשורת מול השרת");
-  out.textContent = error.message;
-  resultsContainer.classList.remove('hidden');
-  return; // עוצר גם במקרה של שגיאה ב־catch
-}
-      // סימולציה של טעינת נתונים (לדוגמה: 3 שניות)
+  // --- יש קוד, ממשיכים ---
+  btn.innerText = "שלח בקשה";
+  document.getElementById("muted").textContent = 'הזן תעודת זהות ולחץ "שלח בקשה"';
+  document.getElementById("code").style.display = "none";
+
+  loader.style.display = "block";
+  loaderText.style.display = "block";
+  setStatus('מבצע קריאה לשירות…', true);
+  resultsContainer.classList.add('hidden');
+  detailsContainer.classList.add('hidden');
+
+  // גוזרים בסיס שירות כדי להגיע גם ל־/checkTaz וגם ל-/get-by-id
+  const serviceBase = endpointBase.replace(/\/get-by-id\/?$/, '');
+
+  try {
+    // 1) בדיקת התאמה בשרת
+    const checkRes = await fetch(`${serviceBase}/checkTaz`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        taz: mispar,
+        phone: phoneNumber,
+        code: codenumber // אם תשתמש בזה בצד השרת
+      })
+    });
+
+    if (!checkRes.ok) {
+      const text = await checkRes.text();
+      setStatus(`שגיאה בבדיקת גישה (HTTP ${checkRes.status})`);
+      out.textContent = text;
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
+    }
+
+    const checkJson = await checkRes.json();
+    // מצפים ל: { ok: true/false, exists: true/false, message: "..." }
+    if (!checkJson.ok || !checkJson.exists) {
+      setStatus(checkJson.message || "אין הרשאה");
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
+    }
+
+    // 2) משיכת הנתונים בפועל
+    const url = `${endpointBase}?mispar=${encodeURIComponent(mispar)}&code=${encodeURIComponent(codenumber)}&phone=${encodeURIComponent(phoneNumber)}`;
+    const res = await fetch(url, { method: 'GET' });
+
+    if (!res.ok) {
+      const text = await res.text();
+      setStatus(`שגיאה מהשרת (HTTP ${res.status})`);
+      out.textContent = text;
+      loader.style.display = "none";
+      loaderText.style.display = "none";
+      document.getElementById("code").style.display = "flex";
+      return; // עצירה
+    }
+
+    // אם הכל תקין – ממשיכים
+    const json = await res.json();
+    setStatus('הצלחה ✅');
+    document.getElementById("maincont").style.display = "none";
+    mobileContainer.style.display = "none";
+    loader.style.display = "none";
+    loaderText.style.display = "none";
+
+    dataJason = json;
+    resultsContainer.classList.remove('hidden');
+    show(json);
+
+  } catch (error) {
+    // שגיאת רשת/חריגה כללית
+    console.error("שגיאה בתקשורת:", error);
+    setStatus("שגיאת תקשורת מול השרת");
+    out.textContent = error.message;
+    resultsContainer.classList.remove('hidden');
+    loader.style.display = "none";
+    loaderText.style.display = "none";
+    document.getElementById("code").style.display = "flex";
+    return; // עצירה
+  }
 });
 
 misparInput.addEventListener('keypress', (e) => {
