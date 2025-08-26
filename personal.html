@@ -492,8 +492,10 @@ h2 {
 .container {
  padding: 0 4px;
 }
+.results-grid .card{padding:12px;width:90%;margin-right:auto;margin-left:auto;}
 .card {
  padding: 12px;
+ width:100%;
 }
 .chart-wrapper {
  height: 250px;
@@ -533,6 +535,7 @@ min-width: 300px;
 font-size: 14px;
 }
 
+.results-grid .card{padding:12px;width: 100%;}
 .detail-card{min-width: 60% !important;}
 .detail-card h4 {
  font-size: 15px;
@@ -723,7 +726,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 </div>
 
 <div class="results-grid">
-<div class="card">
+<div class="card" >
 <h2>פירוט לפי סוג מוצר</h2>
 
 <div class="table-container">
@@ -787,7 +790,7 @@ position: relative;right:10%;margin-left:10px;" ></i></a>
 
 <script>
   
-const endpointBase = "https://mislaka-service-742661432038.europe-west4.run.app/get-by-id";
+const endpointBase = "https://mislakadb-742661432038.me-west1.run.app/get-by-id";
 const btn = document.getElementById('btn');
 const misparInput = document.getElementById('mispar');
 const out = document.getElementById('output');
